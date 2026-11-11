@@ -287,49 +287,64 @@ DISCLAIMER_COS = "Cosmetic items are not drugs and make no therapeutic claims. P
 def product_page(p):
     f, gid, gt, siblings = HOME[p["id"]]
     cat = NAV_TITLE[f].replace("&", "&amp;")
+    img_src = u("assets/img/" + p["image"])
+    alt = E(p["title"]) + " vial"
     if p["photo"]:
-        media = f'<div style="border-radius: 20px; overflow: hidden; background: {TAUPE}"><img src="{u("assets/img/" + p["image"])}" alt="{E(p["title"])} vial" style="display: block; width: 100%; aspect-ratio: 921 / 722; object-fit: cover"></div>'
+        media = f'<div style="border-radius: 16px; overflow: hidden; background: {TAUPE}"><img src="{img_src}" alt="{alt}" style="display: block; width: 100%; aspect-ratio: 921 / 722; object-fit: cover"></div>'
     else:
-        media = f'<div style="background: {WHITE}; border-radius: 20px; aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center"><img src="{u("assets/img/" + p["image"])}" alt="" style="width: 46%; max-height: 50%; object-fit: contain"></div>'
-    unit = f' <span style="font-size: 15px; color: {MUTED}">/ {E(p["unit"])}</span>' if p["unit"] else ""
+        media = f'<div style="background: {WHITE}; border-radius: 16px; aspect-ratio: 4 / 3; display: flex; align-items: center; justify-content: center"><img src="{img_src}" alt="" style="width: 40%; max-height: 55%; object-fit: contain"></div>'
+    unit = ""
+    if p["unit"]:
+        unit = f' <span style="font-size: 15px; color: {MUTED}">/ {E(p["unit"])}</span>'
     desc = E(p["desc"]) if p["desc"] else "[Product description — pending medical and compliance review.]"
     if p["kind"] == "peptide":
-        spec = [("Total per vial" if p["size"] != "Monthly" else "Dosing", p["size"] if p["size"] != "Monthly" else "Weekly, set by your provider"),
+        monthly = p["size"] == "Monthly"
+        spec = [("Dosing" if monthly else "Total per vial", "Weekly, set by your provider" if monthly else p["size"]),
                 ("Contents", p["contents"]), ("Concentration × fill", p["concentration"]), ("Form", p["form"]),
                 ("Prepared by", "SureCare Specialty Pharmacy, El Paso, TX"), ("Prescription", "Required — online consultation")]
     else:
         spec = [("Form", p["form"]), ("Supply", p["unit"] or "As listed"), ("Prepared by", "SureCare Specialty Pharmacy, El Paso, TX"),
                 ("Prescription", "Required — online consultation")]
-    rows = "".join(f'<div style="display: flex; justify-content: space-between; gap: 24px; padding: 16px 0; border-bottom: 1px solid #E2DDD6; font-size: 15px"><dt style="color: {MUTED}">{a}</dt><dd style="margin: 0; text-align: right; font-weight: 500">{E(b)}</dd></div>' for a, b in spec)
+    row_style = "display: flex; justify-content: space-between; gap: 20px; padding: 12px 0; font-size: 14px; border-top: 1px solid #ECE8E2"
+    rows = "".join(f'<div style="{row_style}"><dt style="color: {MUTED}">{a}</dt><dd style="margin: 0; text-align: right; font-weight: 500">{E(b)}</dd></div>' for a, b in spec)
+    details = f'<div style="background: {WHITE}; border-radius: 16px; padding: 20px 24px 10px; margin-top: 16px"><h2 style="margin: 0 0 8px; font-size: 12px; letter-spacing: 0.2em; font-weight: 600; text-transform: uppercase; color: {MUTED}">Details</h2><dl style="margin: 0">{rows}</dl></div>'
     other = [q for q in PRODUCTS if q["kind"] == "peptide" and q["name"] == p["name"] and q["id"] != p["id"]]
     other_html = ""
     if other:
-        other_html = f'<p style="margin: 16px 0 0; font-size: 15px">Also available: ' + ", ".join(f'<a href="{u(ppath(q))}">{E(q["size"])} ({E(q["price"])})</a>' for q in other) + '</p>'
+        links_html = ", ".join(f'<a href="{u(ppath(q))}">{E(q["size"])} ({E(q["price"])})</a>' for q in other)
+        other_html = f'<p style="margin: 14px 0 0; font-size: 15px">Also available: {links_html}</p>'
     shipping = "Ships discreetly to your door. Up to two vials ship together for one shipping fee." if p["kind"] == "peptide" else "Ships discreetly to your door."
-    acc = [("How it’s used", "Your provider sets your dose and schedule and explains how to use it. [Use instructions — supplied by medical team.]", True),
-           ("Important safety information", "[Safety information, side effects and contraindications — supplied by medical team and reviewed by counsel.]", False),
-           ("Shipping &amp; refills", shipping + " Refills are managed through your patient portal. [Shipping time.]", False)]
-    accs = "".join(f'<details style="border-top: 1px solid #E2DDD6"{" open" if o else ""}><summary style="list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; min-height: 64px; font-size: 16px; font-weight: 600">{q}{CHEV}</summary><p style="{P}; padding-bottom: 22px; max-width: 640px">{a}</p></details>' for q, a, o in acc)
+    acc = [("How it’s used", "Your provider sets your dose and schedule and explains how to use it. [Use instructions — supplied by medical team.]"),
+           ("Important safety information", "[Safety information, side effects and contraindications — supplied by medical team and reviewed by counsel.]"),
+           ("Shipping &amp; refills", shipping + " Refills are managed through your patient portal. [Shipping time.]")]
+    accs = "".join(f'<details style="border-top: 1px solid #E2DDD6"><summary style="list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; min-height: 56px; font-size: 15px; font-weight: 600">{q}{CHEV}</summary><p style="{P}; font-size: 15px; padding-bottom: 18px">{a}</p></details>' for q, a in acc)
     related = [q for q in siblings if q["id"] != p["id"]][:4]
-    rel = f'<section style="background: {TAUPE}; padding: 88px 0"><div style="{WRAP}">{H("h2", 40, "More in " + gt, "margin-bottom: 36px")}<div style="{grid_fill(250)}; gap: 20px">{"".join(product_card(q) for q in related)}</div></div></section>' if related else ""
+    rel = ""
+    if related:
+        cards = "".join(product_card(q) for q in related)
+        rel = f'<section style="background: {TAUPE}; padding: 72px 0"><div style="{WRAP}">{H("h2", 36, "More in " + gt, "margin-bottom: 32px")}<div style="{grid_fill(250)}; gap: 20px">{cards}</div></div></section>'
     disc = DISCLAIMER_COS if p["kind"] == "cosmetic" else DISCLAIMER_RX
-    newtag = f'<span style="display: inline-block; margin-left: 10px; vertical-align: middle; font-size: 11px; letter-spacing: 0.14em; font-weight: 500; padding: 4px 9px; border-radius: 999px; background: {WHITE}; border: 1px solid #E2DDD6">NEW</span>' if p["new"] else ""
-    body = f'''<section style="padding: 40px 0 88px"><div style="{WRAP}">
-<nav aria-label="Breadcrumb" style="font-size: 13px; color: {MUTED}; margin-bottom: 36px"><a href="{u('treatments.html')}" style="color: {MUTED}">Treatments</a> &nbsp;/&nbsp; <a href="{u(f)}" style="color: {MUTED}">{cat}</a> &nbsp;/&nbsp; <a href="{u(f)}#{gid}" style="color: {MUTED}">{gt}</a></nav>
-<div style="{grid(420)}; gap: 72px; align-items: start">
-<div>{media}</div>
-<div>
-<p style="{EYEBROW}; font-size: 12px; color: {MUTED}">{cat}</p>
-{H("h1", 44, f'<span data-treatment-name="{p["slug"]}">{E(p["title"])}</span>{newtag}')}
-<div style="font-size: 28px; margin-top: 24px; font-variant-numeric: tabular-nums">{E(price_text(p))}{unit}</div>
-<p style="margin: 20px 0 0; font-size: 17px; line-height: 1.6; max-width: 520px">{desc}</p>{other_html}
-{consult("Start Your Consultation", p["slug"], extra="width: 100%; max-width: 420px; min-height: 56px; margin-top: 32px; font-size: 16px")}
-<p style="margin: 14px 0 0; font-size: 13px; color: {MUTED}; max-width: 420px; text-align: center">Prescribed only if appropriate after a provider review.</p>
-<dl style="margin: 40px 0 0">{rows}</dl>
-<p style="margin: 20px 0 0; font-size: 12px; line-height: 1.6; color: {MUTED}">{disc}</p>
+    newtag = ""
+    if p["new"]:
+        newtag = f'<span style="display: inline-block; margin-left: 12px; vertical-align: middle; font-family: Inter, sans-serif; font-size: 11px; letter-spacing: 0.14em; font-weight: 500; padding: 4px 9px; border-radius: 999px; background: {WHITE}; border: 1px solid #E2DDD6">NEW</span>'
+    title_html = f'<span data-treatment-name="{p["slug"]}">{E(p["title"])}</span>{newtag}'
+    cta = consult("Start Your Consultation", p["slug"], extra="width: 100%; min-height: 56px; margin-top: 28px; font-size: 16px")
+    crumbs = f'<a href="{u("treatments.html")}" style="color: {MUTED}">Treatments</a> &nbsp;/&nbsp; <a href="{u(f)}" style="color: {MUTED}">{cat}</a> &nbsp;/&nbsp; <a href="{u(f)}#{gid}" style="color: {MUTED}">{gt}</a>'
+    body = f"""<section style="padding: 32px 0 80px"><div style="{WRAP}">
+<nav aria-label="Breadcrumb" style="font-size: 13px; color: {MUTED}; margin-bottom: 28px">{crumbs}</nav>
+<div style="{grid(400)}; gap: clamp(32px, 5vw, 64px); align-items: start">
+<div class="pp-media">{media}{details}</div>
+<div style="max-width: 560px">
+<p style="{EYEBROW}; font-size: 12px; color: {MUTED}; margin-bottom: 12px">{cat}</p>
+{H("h1", 48, title_html)}
+<div style="font-size: 28px; margin-top: 18px; font-variant-numeric: tabular-nums">{E(price_text(p))}{unit}</div>
+<p style="margin: 18px 0 0; font-size: 17px; line-height: 1.6">{desc}</p>{other_html}
+{cta}
+<p style="margin: 12px 0 0; font-size: 13px; color: {MUTED}; text-align: center">Prescribed only if appropriate after a provider review.</p>
+<div style="margin-top: 40px; border-bottom: 1px solid #E2DDD6">{accs}</div>
+<p style="margin: 24px 0 0; font-size: 12px; line-height: 1.6; color: {MUTED}">{disc}</p>
 </div></div></div></section>
-<section style="padding: 0 0 96px"><div style="{WRAP}; {grid(300)}; gap: 56px"><div>{H("h2", 40, "What to know")}</div><div style="grid-column: 1 / -1; border-bottom: 1px solid #E2DDD6">{accs}</div></div></section>
-{rel}{cta_band()}'''
+{rel}{cta_band()}"""
     plain = re.sub("<[^>]+>", "", p["desc"] or p["detail"])[:150]
     return document(p["title"], f"{p['title']} — {price_text(p)}. {plain}", body, "Treatments")
 

@@ -42,3 +42,6 @@ details[open] > summary svg { transform: rotate(180deg); }
 .price-table th { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; color: #4A545B; }
 .price-table td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .table-wrap { overflow-x: auto; }
+
+/* Product page */
+@media (min-width: 900px) { .pp-media { position: sticky; top: 24px; } }
