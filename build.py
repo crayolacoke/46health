@@ -226,7 +226,7 @@ def ids(*xs): return [BY_ID[x] for x in xs]
 
 # Category pages: (file, title html, intro, [(group id, title, products, sub)], extra html after groups)
 PAGES = {
- "peptides.html": ("Peptides", "Provider-guided peptide therapies for recovery, vitality and cellular health. Every vial is prescribed by a licensed provider and prepared by SureCare Specialty Pharmacy.", [
+ "peptides.html": ("Small molecules,<br>thoughtful care.", "Peptides are short chains of amino acids that act as signals in the body. Your provider reviews your labs and goals before recommending any protocol, and every vial is prepared by SureCare Specialty Pharmacy.", [
     ("recovery", "Recovery &amp; Repair", ids("bpc15", "bpc10", "bpctb30", "bpctb10", "bpctbkpv", "glow", "klow"), "Blends built around BPC-157 and TB-500, concentrated into a single 3 mL vial."),
     ("performance", "Performance &amp; Vitality", ids("serm", "sermipa", "cjc"), "Growth hormone–releasing peptides, dosed and monitored by your provider."),
     ("longevity", "Cellular Health &amp; Longevity", ids("nadinj", "nadnasal", "mots10", "mots40", "epi", "ghkepi"), "NAD+, mitochondrial and longevity peptides."),
@@ -235,7 +235,7 @@ PAGES = {
  "weight-management.html": ("Lasting change,<br>medically guided.", "GLP-1 medications act on the hormones that regulate appetite and blood sugar. Paired with nutrition, movement and regular check-ins, your provider builds a program that fits your body and your life.", [
     ("glp1", "GLP-1 programs", ids("sema", "tirz"), "Compounded semaglutide and tirzepatide, dosed weekly and adjusted by your provider. One monthly price at every dose."),
     ("support", "Supporting peptides", ids("mots10", "mots40", "cjc", "sermipa"), "Peptides your provider may add alongside a weight program.")]),
- "mens-health.html": ("Men’s health &amp;<br>sexual wellness", "Care for energy, drive and healthy aging, built around you and your goals. Also offering prescription options for desire and intimacy, starting with a private consult.", [
+ "mens-health.html": ("Built around how<br>you want to feel.", "Your provider reviews your health history, labs and goals, then recommends options that fit — from testosterone and hair to prescription options for desire and intimacy. No treatment is prescribed without a consult.", [
     ("testosterone", "Testosterone &amp; Hormones", in_group("m_test"), "Testosterone replacement in gels, creams, tablets and injection, plus the support medications often prescribed alongside it."),
     ("oral", "Sexual Wellness: Oral &amp; Sublingual", in_group("m_oral") + ids("pt141"), "Fast-dissolving tablets and troches, prescribed after a private consult."),
     ("injections", "Sexual Wellness: Injections", in_group("m_inj"), "Trimix and Bimix, titrated by your provider."),
@@ -243,7 +243,7 @@ PAGES = {
     ("peyronies", "Peyronie’s", in_group("m_peyr"), "Topical treatment prescribed after a provider review."),
     ("hair", "Hair Growth", in_group("hair"), "Topical and oral options for male-pattern hair loss."),
     ("energy", "Energy &amp; Vitality", ids("serm", "sermipa", "cjc", "nadinj"), "Peptides for energy, drive and healthy aging.")]),
- "womens-health.html": ("Women’s health &amp;<br>sexual wellness", "Care for energy, hormones and healthy aging at every stage of life. Also offering prescription options for desire and intimacy, starting with a private consult.", [
+ "womens-health.html": ("Care that keeps<br>up with you.", "Your provider takes the time to understand your health, your history and what you want to change, then recommends options that fit this stage of your life — including prescription options for desire and intimacy.", [
     ("progesterone", "Progesterone &amp; DHEA", in_group("w_prog"), "Bioidentical progesterone and DHEA in gels, creams, capsules and rapid-dissolve tablets."),
     ("estrogen", "Bi-Est &amp; Testosterone", in_group("w_biest"), "Bioidentical estriol/estradiol and low-dose testosterone, in creams, troches and tablets."),
     ("libido", "Libido &amp; Arousal", in_group("w_libido") + ids("pt141"), "Prescription options for desire and intimacy, starting with a private consult."),
@@ -391,12 +391,12 @@ def treatments():
     return document("Treatments", "Weight management, peptides, men’s and women’s health, and skin care — prescribed by licensed providers.", body, "Treatments")
 
 def how():
-    steps = [("Choose your goal", "Browse treatments and pick what you’d like to work on — or tell us your goals and let your provider guide you."),
-             ("Complete your health intake", "Answer a short online intake about your history, medications and goals. About 10 minutes."),
-             ("Consult with a licensed provider", "A provider reviews your history, may order labs, and decides with you whether treatment is appropriate."),
-             ("Get your personalized prescription", "If treatment is right for you, your provider sets the medication, dose and protocol for you."),
-             ("Delivered to your door", "SureCare Specialty Pharmacy prepares your medication and ships it discreetly to your door. [Typical delivery time.]"),
-             ("Ongoing care", "Follow-ups, dose adjustments and refills are handled through your patient portal as you progress.")]
+    steps = [("Choose your goal", "Browse treatments or start with what you want to improve: weight, recovery, energy, skin or intimacy. Not sure? Your provider can help you decide."),
+             ("Complete your health intake", "Answer questions about your health history, medications and goals. It takes about 10 minutes and is reviewed only by your care team."),
+             ("Consult with a licensed provider", "Your provider reviews your intake, may request recent labs or order new ones, and talks with you about options, risks and expectations. Prescribing is always at your provider’s discretion."),
+             ("Get your personalized prescription", "If treatment is right for you, your provider sends a prescription for your specific dose to SureCare Specialty Pharmacy."),
+             ("Delivered to your door", "Your medication ships in discreet, temperature-appropriate packaging with clear instructions. [Typical delivery time.]"),
+             ("Ongoing care", "Scheduled check-ins let your provider track progress, adjust your plan and handle refills through your patient portal.")]
     need = check_list(["A government-issued ID", "Your current medications and supplements", f"Recent lab results, if you have them<br><span style='color:{MUTED}'>(not required to start)</span>", f"A shipping address in a state we serve<br><span style='color:{MUTED}'>[List states]</span>"])
     body = (hero("h_how.jpg", "#C9CDCD", "From first question to your front door.",
         "46 Health pairs licensed medical providers with SureCare Specialty Pharmacy, a licensed compounding pharmacy in El Paso, Texas, so you get real medical oversight without the waiting room.")
@@ -407,8 +407,8 @@ def how():
     return document("How it works", "From a 10-minute online intake to a licensed provider review and pharmacy delivery — here’s exactly what happens.", body, "How it works")
 
 def about():
-    vals = [("rx", "Providers first", "Every prescription starts with a licensed provider who reviews your health first."),
-            ("search", "Honest about evidence", "We tell you what’s known, what isn’t, and what to expect — including that compounded medications aren’t FDA-approved."),
+    vals = [("rx", "Providers first", "Every treatment begins with a licensed provider who reviews your history and decides with you what’s appropriate."),
+            ("search", "Honest about evidence", "Some therapies have decades of clinical use; others are newer. We tell you which is which."),
             ("flask", "Pharmacy-grade preparation", "Medications are prepared by SureCare Specialty Pharmacy, a licensed 503A compounding pharmacy in El Paso, Texas."),
             ("chat", "Care that continues", "Dosing and protocols are adjusted as you progress, with follow-ups along the way.")]
     team = "".join(f'''<article style="display: flex; flex-direction: column; gap: 16px"><div role="img" aria-label="Photo coming soon" style="aspect-ratio: 4 / 5; background: #D9D9D9; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #555">[Photo]</div><div><h3 style="margin: 0; {LABEL}; font-size: 16px">[Firstname Lastname]</h3><div style="font-size: 14px; font-weight: 600; margin-top: 6px">[Credentials]</div><p style="{P}; font-size: 14px; margin-top: 10px">[Two-sentence bio.]</p></div></article>''' for _ in range(3))
@@ -418,7 +418,8 @@ def about():
       + f'''<section style="padding: 104px 0"><div style="{WRAP}">{H("h2", 44, "Our team", "text-align: center; margin-bottom: 56px")}
 <div style="{grid(400)}; gap: 56px; align-items: center; margin-bottom: 72px"><div role="img" aria-label="Photo coming soon" style="aspect-ratio: 1 / 1; background: #D9D9D9; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #555">[Medical director photo]</div><div><p style="{EYEBROW}; font-size: 12px; color: {MUTED}">Medical director</p><h3 style="margin: 0; font-size: 24px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase">[Firstname Lastname]</h3><div style="font-size: 16px; font-weight: 600; margin-top: 10px">[Credentials]</div><p style="margin: 24px 0 0; font-size: 16px; line-height: 1.6">[Bio — training, areas of focus, and why they practice telehealth medicine.]</p></div></div>
 <div style="{grid(260)}; gap: 32px">{team}</div></div></section>'''
-      + f'''<section style="background: {TAUPE}; padding: 88px 0"><div style="{WRAP}; display: flex; justify-content: space-between; align-items: center; gap: 48px; flex-wrap: wrap"><div style="max-width: 640px"><p style="{EYEBROW}">Our pharmacy partner</p>{H("h2", 40, "SureCare Specialty Pharmacy")}<p style="margin: 18px 0 0; font-size: 16px; line-height: 1.6">A licensed 503A compounding pharmacy in El Paso, Texas, preparing each prescription for the individual patient. [Accreditations / licensure details.]</p></div>{consult()}</div></section>''')
+      + f'''<section style="background: {TAUPE}; padding: 88px 0"><div style="{WRAP}; display: flex; justify-content: space-between; align-items: center; gap: 48px; flex-wrap: wrap"><div style="max-width: 640px"><p style="{EYEBROW}">Our pharmacy partner</p>{H("h2", 40, "SureCare Specialty Pharmacy")}<p style="margin: 18px 0 0; font-size: 16px; line-height: 1.6">A licensed 503A compounding pharmacy in El Paso, Texas, preparing each prescription for the individual patient. [Accreditations / licensure details.]</p></div></div></section>'''
+      + f'<section style="padding: 104px 0; text-align: center"><div style="{NARROW}">{H("h2", 52, "Your best is still ahead.<br>Let’s pursue it together.", "line-height: 1.1")}<div style="margin-top: 36px">{consult()}</div></div></section>')
     return document("About", "46 Health is a telehealth practice built on a simple idea: good care should fit into your life.", body, "About")
 
 def contact():
@@ -442,26 +443,25 @@ def contact():
 FAQ = [
  ("Getting started", [
    ("Do I need a prescription?", "Yes. Every treatment requires a consultation with a licensed provider, who decides whether it’s appropriate for you."),
-   ("How long does the consultation take?", "The online intake takes about 10 minutes. A provider will be in touch within [X] business days."),
+   ("How long does the consultation take?", "The online intake takes about 10 minutes. A provider typically reviews it within [X] business days and may follow up by message or video."),
    ("Do I need lab work?", "Not to start. Depending on the treatment and your history, your provider may order labs. If you have recent results, you can share them in your intake."),
    ("Which states do you serve?", "[List of states served.]"),
    ("What if I’m not approved?", "Not everyone is a candidate for every treatment. If your provider decides a therapy isn’t right for you, they’ll explain why and what else to consider. [Refund policy for the consultation fee.]")]),
  ("About the medications", [
-   ("What is a compounded medication?", "A medication prepared by a licensed pharmacy for an individual patient, based on a prescription. Compounded medications are not FDA-approved, and the FDA does not review them for safety, effectiveness or quality."),
+   ("What is a compounded medication?", "A medication prepared by a licensed pharmacy for an individual patient’s prescription, often to provide a specific strength or combination. Compounded medications are not FDA-approved, meaning FDA hasn’t reviewed them for safety, effectiveness or quality."),
    ("Who makes my medication?", "SureCare Specialty Pharmacy, a licensed 503A compounding pharmacy in El Paso, Texas."),
-   ("Is compounded semaglutide the same as Ozempic or Wegovy?", "No. Ozempic and Wegovy are FDA-approved brand-name products. Compounded semaglutide is prepared by a compounding pharmacy and is not FDA-approved. [Final wording to be reviewed by counsel.]"),
-   ("Why are some peptides on a waitlist?", "[Answer to be supplied.]"),
+   ("Is compounded semaglutide the same as Ozempic or Wegovy?", "No. It contains the same active ingredient but is a different, compounded product that is not FDA-approved. Your provider will prescribe it only when it fits your individual clinical needs."),
    ("Are these safe for competitive athletes?", "Many peptides — including BPC-157, TB-500 and growth hormone secretagogues — are on the World Anti-Doping Agency prohibited list. If you compete in a tested sport, talk with your provider before starting.")]),
  ("Orders and shipping", [
-   ("How is my medication shipped?", "Discreetly, directly from SureCare Specialty Pharmacy. Up to two peptide vials ship together for one shipping fee. [Carrier, packaging and typical delivery time.]"),
+   ("How is my medication shipped?", "In discreet packaging, with cold packs when required, directly from SureCare Specialty Pharmacy. Up to two peptide vials ship together for one shipping fee. Most orders arrive within [X] business days after the prescription is approved."),
    ("Are needles and supplies included?", "[Confirm which supplies ship with each order.]"),
-   ("How do refills work?", "Refills are managed through your patient portal. [Refill timing and approval process.]"),
-   ("Can I cancel?", "[Cancellation policy.]")]),
+   ("How do refills work?", "Your provider reviews your progress at each check-in and authorizes refills when appropriate."),
+   ("Can I cancel?", "[Cancellation and refund policy.] Prescription medications generally cannot be returned once shipped.")]),
  ("Costs", [
    ("How much does it cost?", "Your consultation fee and medication price are shown before you commit. Peptides start at $69 per vial and GLP-1 programs at $139 per month. See every price on our <a href=\"pricing.html\">pricing page</a>. [Consultation fee.]"),
    ("Do you take insurance?", "[Insurance policy — e.g. HSA/FSA eligibility.]")]),
  ("Privacy", [
-   ("Is my information private?", "[Privacy and HIPAA statement — supplied by counsel.]")]),
+   ("Is my information private?", "Your health information is protected under HIPAA and shared only with your care team and pharmacy as needed for your treatment. See our <a href=\"privacy.html\">Privacy Policy</a> and <a href=\"notice-of-privacy-practices.html\">Notice of Privacy Practices</a>.")]),
 ]
 
 def faq():
@@ -495,8 +495,8 @@ def pricing():
 def waitlist():
     names = "".join(f'<span hidden data-treatment-name="{p["slug"]}">{E(p["title"])}</span>' for p in PRODUCTS)
     body = f'''<section style="padding: 104px 0 120px"><div style="{NARROW}; text-align: center">
-<p style="{EYEBROW}">Opening soon</p>{H("h1", 60, "Consultations open soon.")}
-<p style="margin: 24px auto 0; font-size: 17px; line-height: 1.65; max-width: 560px">We’re finishing our patient intake. Leave your email and we’ll let you know the moment consultations open.</p>
+<p style="{EYEBROW}">Opening soon</p>{H("h1", 60, "Be first to know.")}
+<p style="margin: 24px auto 0; font-size: 17px; line-height: 1.65; max-width: 560px">Consultations open soon. We’ll email you the moment they do. Joining doesn’t commit you to anything.</p>
 <p hidden style="margin: 20px 0 0; font-size: 15px">You were looking at: <strong id="waitlist-treatment"></strong></p>
 <form data-form="waitlist" style="margin: 40px auto 0; max-width: 560px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center"><label for="wl-email" class="sr-only">Email address</label><input id="wl-email" name="email" type="email" required autocomplete="email" placeholder="Email address" style="flex: 1 1 280px; min-height: 52px; border-radius: 999px; border: 1px solid #CFC7BF; background: {WHITE}; padding: 0 24px; font: inherit; font-size: 15px"><input type="hidden" name="treatment" value=""><button type="submit" style="min-height: 52px; padding: 0 32px; border-radius: 999px; background: {NAVY}; color: #FFFFFF; border: 0; font: inherit; font-size: 16px; font-weight: 500; cursor: pointer">Notify Me</button><p class="form-msg" role="status" hidden style="flex-basis: 100%; margin: 8px 0 0; font-size: 15px"></p></form>
 <p style="margin: 20px auto 0; font-size: 13px; color: {MUTED}; max-width: 480px">We only ask for your email here — please don’t share health information.</p>
@@ -511,7 +511,7 @@ def legal(title):
     return document(title, f"46 Health {title.lower()}.", body)
 
 def notfound():
-    body = f'<section style="padding: 120px 0"><div style="{NARROW}; text-align: center">{H("h1", 56, "Page not found.")}<p style="margin: 24px 0 0; font-size: 17px">The page you’re looking for has moved or doesn’t exist.</p><div style="margin-top: 36px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap">{btn("Go Home", u("index.html"))}{link("Browse treatments", u("treatments.html"))}</div></div></section>'
+    body = f'<section style="padding: 120px 0"><div style="{NARROW}; text-align: center">{H("h1", 56, "This page has wandered off.")}<p style="margin: 24px 0 0; font-size: 17px">Let’s get you back on track.</p><div style="margin-top: 36px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap">{btn("Go Home", u("index.html"))}{link("Browse treatments", u("treatments.html"))}</div></div></section>'
     return document("Page not found", "Page not found.", body)
 
 FAVICON = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="{NAVY}"/><text x="32" y="43" text-anchor="middle" font-family="Georgia, serif" font-size="32" fill="#F5F4F0">46</text></svg>'

@@ -63,7 +63,7 @@ window.SITE_CONFIG = {
         .then(function (r) {
           if (!r.ok) throw new Error();
           f.reset();
-          say(kind === "contact" ? "Thanks — we’ll reply within one business day." : "Thanks — you’re on the list.");
+          say(kind === "contact" ? "Thanks, we’ve got it. Our team will reply within one business day." : "You’re on the list. We’ll be in touch.");
         })
         .catch(function () { say("Something went wrong. Please try again."); });
     });
