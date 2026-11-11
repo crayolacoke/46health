@@ -14,8 +14,10 @@
   "form": "Injectable",
   "image": "bpc15.jpg",
   "photo": true,
-  "desc": "",
-  "kind": "peptide"
+  "desc": "BPC-157 is a synthetic peptide of 15 amino acids, based on a protein found in the stomach. Laboratory and animal studies have explored its role in tendon, muscle and gut-lining repair. Human research is still limited.",
+  "kind": "peptide",
+  "summary": "A peptide studied for its role in tissue repair.",
+  "know": "BPC-157 is not FDA-approved. It is prohibited in competitive sports by the World Anti-Doping Agency."
  },
  {
   "id": "bpc10",
@@ -32,8 +34,10 @@
   "form": "Injectable",
   "image": "bpc10.jpg",
   "photo": true,
-  "desc": "",
-  "kind": "peptide"
+  "desc": "BPC-157 is a synthetic peptide of 15 amino acids, based on a protein found in the stomach. Laboratory and animal studies have explored its role in tendon, muscle and gut-lining repair. Human research is still limited.",
+  "kind": "peptide",
+  "summary": "A peptide studied for its role in tissue repair.",
+  "know": "BPC-157 is not FDA-approved. It is prohibited in competitive sports by the World Anti-Doping Agency."
  },
  {
   "id": "bpctb30",
@@ -50,8 +54,10 @@
   "form": "Injectable",
   "image": "bpctb30.jpg",
   "photo": true,
-  "desc": "",
-  "kind": "peptide"
+  "desc": "These blends pair BPC-157 with TB-500, a synthetic fragment related to the naturally occurring protein thymosin beta-4, and optionally KPV, a three-amino-acid peptide studied for inflammation, and GHK-Cu, a copper peptide studied for collagen and wound repair. Evidence for each is mostly preclinical.",
+  "kind": "peptide",
+  "summary": "Combination peptide formulas, prescribed together in one vial.",
+  "know": "Not FDA-approved, and prohibited in competitive sports by the World Anti-Doping Agency."
  },
  {
   "id": "bpctb10",
@@ -68,8 +74,10 @@
   "form": "Injectable",
   "image": "bpctb10.jpg",
   "photo": true,
-  "desc": "",
-  "kind": "peptide"
+  "desc": "These blends pair BPC-157 with TB-500, a synthetic fragment related to the naturally occurring protein thymosin beta-4, and optionally KPV, a three-amino-acid peptide studied for inflammation, and GHK-Cu, a copper peptide studied for collagen and wound repair. Evidence for each is mostly preclinical.",
+  "kind": "peptide",
+  "summary": "Combination peptide formulas, prescribed together in one vial.",
+  "know": "Not FDA-approved, and prohibited in competitive sports by the World Anti-Doping Agency."
  },
  {
   "id": "bpctbkpv",
@@ -86,8 +94,10 @@
   "form": "Injectable",
   "image": "bpctbkpv.jpg",
   "photo": true,
-  "desc": "",
-  "kind": "peptide"
+  "desc": "These blends pair BPC-157 with TB-500, a synthetic fragment related to the naturally occurring protein thymosin beta-4, and optionally KPV, a three-amino-acid peptide studied for inflammation, and GHK-Cu, a copper peptide studied for collagen and wound repair. Evidence for each is mostly preclinical.",
+  "kind": "peptide",
+  "summary": "Combination peptide formulas, prescribed together in one vial.",
+  "know": "Not FDA-approved, and prohibited in competitive sports by the World Anti-Doping Agency."
  },
  {
   "id": "glow",
@@ -104,8 +114,10 @@
   "form": "Injectable",
   "image": "glow.jpg",
   "photo": true,
-  "desc": "",
-  "kind": "peptide"
+  "desc": "These blends pair BPC-157 with TB-500, a synthetic fragment related to the naturally occurring protein thymosin beta-4, and optionally KPV, a three-amino-acid peptide studied for inflammation, and GHK-Cu, a copper peptide studied for collagen and wound repair. Evidence for each is mostly preclinical.",
+  "kind": "peptide",
+  "summary": "Combination peptide formulas, prescribed together in one vial.",
+  "know": "Not FDA-approved, and prohibited in competitive sports by the World Anti-Doping Agency."
  },
  {
   "id": "klow",
@@ -122,8 +134,10 @@
   "form": "Injectable",
   "image": "klow.jpg",
   "photo": true,
-  "desc": "",
-  "kind": "peptide"
+  "desc": "These blends pair BPC-157 with TB-500, a synthetic fragment related to the naturally occurring protein thymosin beta-4, and optionally KPV, a three-amino-acid peptide studied for inflammation, and GHK-Cu, a copper peptide studied for collagen and wound repair. Evidence for each is mostly preclinical.",
+  "kind": "peptide",
+  "summary": "Combination peptide formulas, prescribed together in one vial.",
+  "know": "Not FDA-approved, and prohibited in competitive sports by the World Anti-Doping Agency."
  },
  {
   "id": "cjc",
@@ -140,8 +154,10 @@
   "form": "Injectable",
   "image": "cjc.jpg",
   "photo": true,
-  "desc": "",
-  "kind": "peptide"
+  "desc": "CJC-1295 is a synthetic analog of growth-hormone-releasing hormone; Ipamorelin is a selective growth hormone secretagogue. Together they signal the pituitary to release growth hormone in natural pulses.",
+  "kind": "peptide",
+  "summary": "A two-peptide protocol that supports your body’s natural growth hormone release.",
+  "know": "Your provider will review labs and history first. Possible effects include injection-site reactions, water retention and changes in blood sugar. Not FDA-approved."
  },
  {
   "id": "ghk",
@@ -158,8 +174,10 @@
   "form": "Injectable",
   "image": "ghk.jpg",
   "photo": true,
-  "desc": "",
-  "kind": "peptide"
+  "desc": "GHK-Cu is a copper-binding peptide found naturally in the body, studied for collagen production and tissue repair.",
+  "kind": "peptide",
+  "summary": "A copper peptide studied for collagen and tissue repair.",
+  "know": "Not FDA-approved."
  },
  {
   "id": "ghkepi",
@@ -176,8 +194,10 @@
   "form": "Injectable",
   "image": "ghkepi.jpg",
   "photo": true,
-  "desc": "",
-  "kind": "peptide"
+  "desc": "GHK-Cu is a copper-binding peptide found naturally in the body, studied for collagen production and tissue repair. Epitalon is a synthetic four-amino-acid peptide studied, mostly in small and early research, for its effects on cellular aging.",
+  "kind": "peptide",
+  "summary": "A copper peptide paired with Epitalon.",
+  "know": "Not FDA-approved."
  },
  {
   "id": "epi",
@@ -194,8 +214,10 @@
   "form": "Injectable",
   "image": "epi.jpg",
   "photo": true,
-  "desc": "",
-  "kind": "peptide"
+  "desc": "Epitalon is a synthetic four-amino-acid peptide studied, mostly in small and early research, for its effects on cellular aging.",
+  "kind": "peptide",
+  "summary": "A synthetic peptide studied for cellular aging.",
+  "know": "Not FDA-approved."
  },
  {
   "id": "mots10",
@@ -212,8 +234,10 @@
   "form": "Injectable",
   "image": "mots10.jpg",
   "photo": true,
-  "desc": "",
-  "kind": "peptide"
+  "desc": "MOTS-c is a peptide encoded by your mitochondria. Animal studies have explored its role in metabolism and insulin sensitivity; human research is early.",
+  "kind": "peptide",
+  "summary": "A mitochondrial peptide studied for metabolic health.",
+  "know": "Not FDA-approved."
  },
  {
   "id": "mots40",
@@ -230,8 +254,10 @@
   "form": "Injectable",
   "image": "mots40.jpg",
   "photo": true,
-  "desc": "",
-  "kind": "peptide"
+  "desc": "MOTS-c is a peptide encoded by your mitochondria. Animal studies have explored its role in metabolism and insulin sensitivity; human research is early.",
+  "kind": "peptide",
+  "summary": "A mitochondrial peptide studied for metabolic health.",
+  "know": "Not FDA-approved."
  },
  {
   "id": "nadinj",
@@ -248,8 +274,10 @@
   "form": "Injectable",
   "image": "nadinj.jpg",
   "photo": true,
-  "desc": "",
-  "kind": "peptide"
+  "desc": "NAD+ (nicotinamide adenine dinucleotide) is present in every cell and is essential to energy metabolism and DNA repair. Levels naturally decline with age.",
+  "kind": "peptide",
+  "summary": "A coenzyme at the center of cellular energy.",
+  "know": "Injections can cause temporary flushing, nausea or chest tightness if given too quickly; your provider will explain how to administer it comfortably. Compounded and not FDA-approved."
  },
  {
   "id": "nadnasal",
@@ -266,8 +294,10 @@
   "form": "Nasal spray",
   "image": "nadnasal.jpg",
   "photo": true,
-  "desc": "",
-  "kind": "peptide"
+  "desc": "NAD+ (nicotinamide adenine dinucleotide) is a coenzyme present in every cell and essential to energy metabolism. This is the same coenzyme in a convenient nasal format.",
+  "kind": "peptide",
+  "summary": "NAD+ in a needle-free nasal spray.",
+  "know": "May cause mild nasal irritation. Compounded and not FDA-approved."
  },
  {
   "id": "pt141",
@@ -284,8 +314,10 @@
   "form": "Injectable",
   "image": "pt141.jpg",
   "photo": true,
-  "desc": "",
-  "kind": "peptide"
+  "desc": "PT-141 (bremelanotide) works on melanocortin receptors in the brain involved in desire, rather than on blood flow.",
+  "kind": "peptide",
+  "summary": "A prescription option for sexual desire and arousal.",
+  "know": "Common effects include nausea, flushing and headache, and it can temporarily raise blood pressure, so your provider will check your cardiovascular health first. Compounded and not FDA-approved."
  },
  {
   "id": "serm",
@@ -302,8 +334,10 @@
   "form": "Injectable",
   "image": "serm.jpg",
   "photo": true,
-  "desc": "",
-  "kind": "peptide"
+  "desc": "Sermorelin is a shortened form of the body’s own growth-hormone-releasing hormone. It prompts the pituitary to release growth hormone on its own rhythm.",
+  "kind": "peptide",
+  "summary": "A growth-hormone-releasing peptide with a long clinical history.",
+  "know": "Usually given as a nightly injection. Possible effects include injection-site reactions, flushing and headache. Compounded and not FDA-approved."
  },
  {
   "id": "sermipa",
@@ -320,8 +354,10 @@
   "form": "Injectable",
   "image": "sermipa.jpg",
   "photo": true,
-  "desc": "",
-  "kind": "peptide"
+  "desc": "Sermorelin is a shortened form of the body’s own growth-hormone-releasing hormone. It prompts the pituitary to release growth hormone on its own rhythm. The blend adds Ipamorelin for a complementary signal.",
+  "kind": "peptide",
+  "summary": "A growth-hormone-releasing peptide with a long clinical history.",
+  "know": "Usually given as a nightly injection. Possible effects include injection-site reactions, flushing and headache. Compounded and not FDA-approved."
  },
  {
   "id": "sema",
@@ -338,8 +374,10 @@
   "form": "Injectable",
   "image": "sema.jpg",
   "photo": true,
-  "desc": "",
-  "kind": "peptide"
+  "desc": "Semaglutide mimics GLP-1, a hormone that helps regulate appetite, fullness and blood sugar. It is given as a once-weekly injection under the skin. Your provider starts at a low dose and adjusts gradually.",
+  "kind": "peptide",
+  "summary": "A once-weekly GLP-1 medication for provider-guided weight management.",
+  "know": "Common side effects include nausea, constipation and diarrhea, especially as doses increase. It is not for people with a personal or family history of medullary thyroid cancer or MEN 2, and your provider will screen for pancreatitis, gallbladder disease and other conditions. This is a compounded medication prescribed for your individual needs; it is not FDA-approved and is not a generic version of any brand-name drug."
  },
  {
   "id": "tirz",
@@ -356,8 +394,10 @@
   "form": "Injectable",
   "image": "tirz.jpg",
   "photo": true,
-  "desc": "",
-  "kind": "peptide"
+  "desc": "Tirzepatide acts on two hormone receptors, GIP and GLP-1, that help regulate appetite and blood sugar. It is a once-weekly injection, started low and adjusted by your provider.",
+  "kind": "peptide",
+  "summary": "A once-weekly dual-action medication for provider-guided weight management.",
+  "know": "Side effects and safety screening are similar to semaglutide: digestive side effects are common, and it isn’t for people with a history of medullary thyroid cancer or MEN 2. Compounded, not FDA-approved, and not a generic of any brand-name drug."
  },
  {
   "id": "testosterone-0-5pct-20pct-topical-gel-atrevis-hydrogel",

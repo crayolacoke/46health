@@ -282,6 +282,8 @@ def category_page(fname):
     return body
 
 DISCLAIMER_RX = "This is a compounded prescription drug. Compounded drugs are not FDA-approved and have not been evaluated by the FDA for safety, effectiveness or quality. Descriptions are for education and are not claims of therapeutic efficacy. A licensed prescriber determines whether a product is appropriate for you."
+DISCLAIMER_PEPTIDE = "This peptide is not FDA-approved. Much of the research on it comes from laboratory and animal studies, and its long-term effects in humans are not well established. Your provider will discuss potential benefits and risks with you."
+DISCLAIMER_GLP1 = "Compounded semaglutide and tirzepatide are not FDA-approved and are not generic versions of any brand-name medication. They are prescribed only when a provider determines they meet a patient’s individual clinical needs. Do not use if you or a family member have had medullary thyroid carcinoma or Multiple Endocrine Neoplasia syndrome type 2. Tell your provider if you have a history of pancreatitis, gallbladder disease, kidney problems or diabetic retinopathy, or are pregnant or planning pregnancy."
 DISCLAIMER_COS = "Cosmetic items are not drugs and make no therapeutic claims. Prepared by SureCare Specialty Pharmacy."
 
 def product_page(p):
@@ -297,6 +299,9 @@ def product_page(p):
     if p["unit"]:
         unit = f' <span style="font-size: 15px; color: {MUTED}">/ {E(p["unit"])}</span>'
     desc = E(p["desc"]) if p["desc"] else "[Product description — pending medical and compliance review.]"
+    summary_html = ""
+    if p.get("summary"):
+        summary_html = f'<p style="margin: 14px 0 0; font-family: {SERIF}; font-size: 22px; line-height: 1.35">{E(p["summary"])}</p>'
     if p["kind"] == "peptide":
         monthly = p["size"] == "Monthly"
         spec = [("Dosing" if monthly else "Total per vial", "Weekly, set by your provider" if monthly else p["size"]),
@@ -314,16 +319,24 @@ def product_page(p):
         links_html = ", ".join(f'<a href="{u(ppath(q))}">{E(q["size"])} ({E(q["price"])})</a>' for q in other)
         other_html = f'<p style="margin: 14px 0 0; font-size: 15px">Also available: {links_html}</p>'
     shipping = "Ships discreetly to your door. Up to two vials ship together for one shipping fee." if p["kind"] == "peptide" else "Ships discreetly to your door."
-    acc = [("How it’s used", "Your provider sets your dose and schedule and explains how to use it. [Use instructions — supplied by medical team.]"),
-           ("Important safety information", "[Safety information, side effects and contraindications — supplied by medical team and reviewed by counsel.]"),
+    know = p.get("know")
+    safety = ("What to know", E(know)) if know else ("Important safety information", "[Safety information, side effects and contraindications — supplied by medical team and reviewed by counsel.]")
+    acc = [safety, ("How it’s used", "Your provider sets your dose and schedule and explains how to use it. [Use instructions — supplied by medical team.]"),
            ("Shipping &amp; refills", shipping + " Refills are managed through your patient portal. [Shipping time.]")]
-    accs = "".join(f'<details style="border-top: 1px solid #E2DDD6"><summary style="list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; min-height: 56px; font-size: 15px; font-weight: 600">{q}{CHEV}</summary><p style="{P}; font-size: 15px; padding-bottom: 18px">{a}</p></details>' for q, a in acc)
+    accs = "".join(f'<details style="border-top: 1px solid #E2DDD6"{" open" if i == 0 else ""}><summary style="list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; min-height: 56px; font-size: 15px; font-weight: 600">{q}{CHEV}</summary><p style="{P}; font-size: 15px; padding-bottom: 18px">{a}</p></details>' for i, (q, a) in enumerate(acc))
     related = [q for q in siblings if q["id"] != p["id"]][:4]
     rel = ""
     if related:
         cards = "".join(product_card(q) for q in related)
         rel = f'<section style="background: {TAUPE}; padding: 72px 0"><div style="{WRAP}">{H("h2", 36, "More in " + gt, "margin-bottom: 32px")}<div style="{grid_fill(250)}; gap: 20px">{cards}</div></div></section>'
-    disc = DISCLAIMER_COS if p["kind"] == "cosmetic" else DISCLAIMER_RX
+    if p["id"] in ("sema", "tirz"):
+        disc = DISCLAIMER_GLP1
+    elif p["kind"] == "peptide" and p["id"] not in ("nadinj", "nadnasal"):
+        disc = DISCLAIMER_PEPTIDE
+    elif p["kind"] == "cosmetic":
+        disc = DISCLAIMER_COS
+    else:
+        disc = DISCLAIMER_RX
     newtag = ""
     if p["new"]:
         newtag = f'<span style="display: inline-block; margin-left: 12px; vertical-align: middle; font-family: Inter, sans-serif; font-size: 11px; letter-spacing: 0.14em; font-weight: 500; padding: 4px 9px; border-radius: 999px; background: {WHITE}; border: 1px solid #E2DDD6">NEW</span>'
@@ -338,7 +351,7 @@ def product_page(p):
 <p style="{EYEBROW}; font-size: 12px; color: {MUTED}; margin-bottom: 12px">{cat}</p>
 {H("h1", 48, title_html)}
 <div style="font-size: 28px; margin-top: 18px; font-variant-numeric: tabular-nums">{E(price_text(p))}{unit}</div>
-<p style="margin: 18px 0 0; font-size: 17px; line-height: 1.6">{desc}</p>{other_html}
+{summary_html}<p style="margin: 18px 0 0; font-size: 17px; line-height: 1.6">{desc}</p>{other_html}
 {cta}
 <p style="margin: 12px 0 0; font-size: 13px; color: {MUTED}; text-align: center">Prescribed only if appropriate after a provider review.</p>
 <div style="margin-top: 40px; border-bottom: 1px solid #E2DDD6">{accs}</div>
