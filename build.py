@@ -80,12 +80,12 @@ def footer():
     def col(t, ls):
         return f'<div><h2 style="margin: 0 0 18px; font-family: {SERIF}; font-weight: 400; font-size: 24px">{t}</h2><ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px">' + "".join(f'<li><a href="{u(h)}" style="font-size: 14px; letter-spacing: 0.04em; color: {INK}; text-decoration: none; min-height: 32px; display: flex; align-items: center; text-transform: uppercase">{l}</a></li>' for l, h in ls) + '</ul></div>'
     treat = [(c[2], c[0]) for c in CATEGORY_PAGES]
-    return f'''<section style="background: {NAVY}; color: #FFFFFF; padding: 72px 0">
+    return f'''<section style="background: {NAVY}; color: #FFFFFF; padding: 56px 0">
 <div style="{WRAP}; display: flex; justify-content: space-between; align-items: center; gap: 40px; flex-wrap: wrap">
 <div>{H("h2", 44, "Stay informed.<br>Choose excellence.", "color: #C9D1D8")}<p style="margin: 18px 0 0; font-size: 16px; line-height: 1.6; color: #E6EAED; max-width: 380px">Notes on health, performance and longevity from our providers. No spam.</p></div>
 <form data-form="newsletter" style="flex: 0 1 600px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center"><label for="nl-email" class="sr-only">Email address</label><input id="nl-email" name="email" type="email" required autocomplete="email" placeholder="Email address" style="flex: 1 1 260px; min-height: 52px; border-radius: 999px; border: 1.5px solid #FFFFFF; background: transparent; color: #FFFFFF; padding: 0 24px; font: inherit; font-size: 15px"><button type="submit" style="min-height: 52px; padding: 0 34px; border-radius: 999px; background: #FFFFFF; color: {NAVY}; border: 0; font: inherit; font-size: 16px; font-weight: 500; cursor: pointer">Sign Up</button><p class="form-msg" role="status" hidden style="flex-basis: 100%; margin: 4px 0 0; font-size: 14px; color: #E6EAED"></p></form>
 </div></section>
-<footer style="background: {BG}; padding: 80px 0 64px">
+<footer style="background: {BG}; padding: 64px 0 48px">
 <div style="{WRAP}; {grid(260)}; gap: 48px">
 <div><div style="display: inline-flex; flex-direction: column; align-items: center; line-height: 1"><span style="font-family: {SERIF}; font-size: 96px; letter-spacing: -0.05em">46</span><span style="font-size: 16px; letter-spacing: 0.5em; padding-left: 0.5em; margin-top: 8px">HEALTH</span><span style="width: 28px; height: 1px; background: {INK}; margin: 10px 0"></span><span style="font-size: 15px; letter-spacing: 0.4em; padding-left: 0.4em">XX·XY</span></div>
 <p style="margin: 36px 0 0; font-size: 12px; line-height: 1.6; max-width: 360px">46 Health connects patients with independent licensed healthcare providers through telehealth. Prescriptions are issued only at a provider’s discretion after review of each patient’s medical history. Medications are prepared by SureCare Specialty Pharmacy, a licensed 503A compounding pharmacy in El Paso, Texas. Compounded medications are not FDA-approved; FDA does not review them for safety, effectiveness or quality. Information on this site is for educational purposes and is not medical advice. Individual results vary. If you are experiencing a medical emergency, call 911.</p></div>
@@ -139,10 +139,10 @@ def centered_intro(title, body, crumbs=None):
     bc = ""
     if crumbs:
         bc = f'<nav aria-label="Breadcrumb" style="font-size: 13px; color: {MUTED}; margin-bottom: 28px">' + " &nbsp;/&nbsp; ".join(f'<a href="{u(h)}" style="color: {MUTED}">{t}</a>' if h else t for t, h in crumbs) + '</nav>'
-    return f'<section style="padding: 72px 0 56px; text-align: center"><div style="{NARROW}">{bc}{H("h1", 60, title, "line-height: 1.08")}<div style="width: 96px; height: 2px; background: {INK}; margin: 28px auto"></div><p style="margin: 0 auto; font-size: 17px; line-height: 1.65; max-width: 620px">{body}</p></div></section>'
+    return f'<section style="padding: 56px 0 40px; text-align: center"><div style="{NARROW}">{bc}{H("h1", 60, title, "line-height: 1.08")}<div style="width: 96px; height: 2px; background: {INK}; margin: 28px auto"></div><p style="margin: 0 auto; font-size: 17px; line-height: 1.65; max-width: 620px">{body}</p></div></section>'
 
 def cta_band():
-    return f'''<section style="background: #B9C3CC; padding: 104px 0; text-align: center">
+    return f'''<section style="background: #B9C3CC; padding: 80px 0; text-align: center">
 <div style="{NARROW}">{H("h2", 64, "Excellence is a practice.<br>Start yours today.", "line-height: 1.08")}
 <p style="margin: 28px auto 0; font-size: 17px; line-height: 1.6; max-width: 560px">Your consultation takes about 10 minutes. A provider will be in touch within [X] business days.</p>
 <div style="margin-top: 40px">{consult()}</div></div></section>'''
@@ -163,9 +163,9 @@ def icon(kind):
      "flask": '<path d="M19 6h10M21 6v12L11 38c-1 2 0 4 3 4h20c3 0 4-2 3-4L27 18V6"/><path d="M15 30h18"/>'}[kind]
     return f'<div style="width: 96px; height: 96px; border-radius: 50%; border: 1px solid #E6E1DA; display: flex; align-items: center; justify-content: center; margin: 0 auto"><svg width="48" height="48" viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="{INK}" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">{paths}</svg></div>'
 
-def values_panel(title, vals):
+def values_panel(title, vals, top=56):
     items = "".join(f'''<div style="text-align: center">{icon(ic)}<h3 style="margin: 28px auto 0; {LABEL}; font-size: 17px; line-height: 1.4; max-width: 240px">{t}</h3><div style="width: 40px; height: 1.5px; background: {TAN}; margin: 18px auto"></div><p style="margin: 0 auto; font-size: 15px; line-height: 1.6; max-width: 300px">{d}</p></div>''' for ic, t, d in vals)
-    return f'''<section style="background: {TAUPE}; padding: 72px 0"><div style="{WRAP}"><div style="background: {CARD}; border-radius: 8px; padding: clamp(48px, 7vw, 80px) clamp(20px, 4vw, 40px)">{H("h2", 44, title, "text-align: center; margin-bottom: 64px")}<div style="{grid(280)}; gap: 72px 48px; max-width: 900px; margin: 0 auto">{items}</div></div></div></section>'''
+    return f'''<section style="background: {TAUPE}; padding: {top}px 0 56px"><div style="{WRAP}"><div style="background: {CARD}; border-radius: 8px; padding: clamp(48px, 7vw, 80px) clamp(20px, 4vw, 40px)">{H("h2", 44, title, "text-align: center; margin-bottom: 48px")}<div style="{grid(280)}; gap: 72px 48px; max-width: 900px; margin: 0 auto">{items}</div></div></div></section>'''
 
 def cat_card(c, cta="Learn More", tall=False):
     href, _, t, d, img = c
@@ -266,13 +266,13 @@ assert not missing, missing
 
 def peptide_extra():
     stats = "".join(f'<div style="background: {CARD}; border-radius: 8px; padding: 24px 16px; text-align: center"><div style="font-family: {SERIF}; font-size: 36px">{a}</div><div style="font-size: 12px; letter-spacing: 0.1em; margin-top: 8px; color: {MUTED}">{b}</div></div>' for a, b in [("3 mL", "PEPTIDE VIALS"), ("$69", "STARTING PRICE"), ("2", "VIALS PER SHIPMENT")])
-    return f'''<section style="background: {TAUPE}; padding: 88px 0"><div style="{WRAP}; display: flex; gap: 64px; flex-wrap: wrap; align-items: center">
+    return f'''<section style="background: {TAUPE}; padding: 72px 0"><div style="{WRAP}; display: flex; gap: 64px; flex-wrap: wrap; align-items: center">
 <div style="flex: 1 1 380px">{H("h2", 44, "Same total milligrams.<br>A smaller vial.")}<p style="margin: 18px 0 0; font-size: 17px; line-height: 1.6; max-width: 520px">Our peptides are concentrated into 3 mL vials that hold the same total mg as a standard 5 mL telehealth vial. NAD+ comes in a 10 mL vial. Every vial has one fixed price, and up to two ship for a single shipping fee.</p></div>
 <div style="flex: 1 1 340px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px">{stats}</div></div></section>
-<section style="padding: 56px 0"><div style="{NARROW}"><p role="note" style="margin: 0; font-size: 14px; line-height: 1.6; color: {MUTED}; text-align: center">Competing in a tested sport? Many peptides, including BPC-157, TB-500 and growth hormone secretagogues, are on the World Anti-Doping Agency prohibited list. Talk with your provider before starting.</p></div></section>'''
+<section style="padding: 40px 0"><div style="{NARROW}"><p role="note" style="margin: 0; font-size: 14px; line-height: 1.6; color: {MUTED}; text-align: center">Competing in a tested sport? Many peptides, including BPC-157, TB-500 and growth hormone secretagogues, are on the World Anti-Doping Agency prohibited list. Talk with your provider before starting.</p></div></section>'''
 
 def weight_extra():
-    return f'<section style="background: {TAUPE}; padding: 88px 0"><div style="{WRAP}; display: flex; gap: 64px; flex-wrap: wrap; align-items: center"><div style="flex: 1 1 340px">{H("h2", 44, "What’s included")}<p style="margin: 18px 0 0; font-size: 17px; line-height: 1.6">Every program is provider-guided from the first consult.</p></div><ul style="flex: 1 1 420px; list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 18px">{check_list(["A licensed provider reviews your history and sets your dose", "Ongoing check-ins and dose adjustments as you progress", "Medication prepared by SureCare Specialty Pharmacy", "Discreet shipping to your door", "[Supplies included — confirm]"])}</ul></div></section>'
+    return f'<section style="background: {TAUPE}; padding: 72px 0"><div style="{WRAP}; display: flex; gap: 64px; flex-wrap: wrap; align-items: center"><div style="flex: 1 1 340px">{H("h2", 44, "What’s included")}<p style="margin: 18px 0 0; font-size: 17px; line-height: 1.6">Every program is provider-guided from the first consult.</p></div><ul style="flex: 1 1 420px; list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 18px">{check_list(["A licensed provider reviews your history and sets your dose", "Ongoing check-ins and dose adjustments as you progress", "Medication prepared by SureCare Specialty Pharmacy", "Discreet shipping to your door", "[Supplies included — confirm]"])}</ul></div></section>'
 
 def category_page(fname):
     title, intro, groups = PAGES[fname]
@@ -328,7 +328,7 @@ def product_page(p):
     rel = ""
     if related:
         cards = "".join(product_card(q) for q in related)
-        rel = f'<section style="background: {TAUPE}; padding: 72px 0"><div style="{WRAP}">{H("h2", 36, "More in " + gt, "margin-bottom: 32px")}<div style="{grid_fill(250)}; gap: 20px">{cards}</div></div></section>'
+        rel = f'<section style="background: {TAUPE}; padding: 56px 0"><div style="{WRAP}">{H("h2", 36, "More in " + gt, "margin-bottom: 32px")}<div style="{grid_fill(250)}; gap: 20px">{cards}</div></div></section>'
     if p["id"] in ("sema", "tirz"):
         disc = DISCLAIMER_GLP1
     elif p["kind"] == "peptide" and p["id"] not in ("nadinj", "nadnasal"):
@@ -343,7 +343,7 @@ def product_page(p):
     title_html = f'<span data-treatment-name="{p["slug"]}">{E(p["title"])}</span>{newtag}'
     cta = consult("Start Your Consultation", p["slug"], extra="width: 100%; min-height: 56px; margin-top: 28px; font-size: 16px")
     crumbs = f'<a href="{u("treatments.html")}" style="color: {MUTED}">Treatments</a> &nbsp;/&nbsp; <a href="{u(f)}" style="color: {MUTED}">{cat}</a> &nbsp;/&nbsp; <a href="{u(f)}#{gid}" style="color: {MUTED}">{gt}</a>'
-    body = f"""<section style="padding: 32px 0 80px"><div style="{WRAP}">
+    body = f"""<section style="padding: 32px 0 64px"><div style="{WRAP}">
 <nav aria-label="Breadcrumb" style="font-size: 13px; color: {MUTED}; margin-bottom: 28px">{crumbs}</nav>
 <div style="{grid(400)}; gap: clamp(32px, 5vw, 64px); align-items: start">
 <div class="pp-media">{media}{details}</div>
@@ -376,18 +376,18 @@ def home():
         "Personalized peptide, NAD+, hormone and weight management programs from licensed providers, prepared by SureCare Specialty Pharmacy in El Paso, Texas, and delivered to your door.",
         "Physician-guided telehealth", consult() + link("Explore Treatments", u("treatments.html")))
       + f'<section aria-label="Why patients choose us" style="background: {NAVY}; color: #FFFFFF; padding: 28px 0"><ul style="{WRAP}; list-style: none; margin-top: 0; margin-bottom: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between">{trust}</ul></section>'
-      + f'<section style="padding: 104px 0 96px"><div style="{WRAP}">{H("h2", 44, "The 3-step process", "text-align: center; margin-bottom: 72px")}{bignum_steps(steps)}<div style="text-align: center; margin-top: 48px">{btn("See How It Works", u("how-it-works.html"))}</div></div></section>'
-      + f'<section style="background: {TAUPE}; padding: 96px 0"><div style="{WRAP}"><div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 40px">{H("h2", 44, "Treatments")}{link("View all treatments", u("treatments.html"))}</div>{cat_grid()}</div></section>'
-      + values_panel("Why 46 Health", vals)
-      + f'''<section style="background: {NAVY}; color: #FFFFFF; padding: 104px 0"><div style="{WRAP}"><div style="text-align: center; max-width: 640px; margin: 0 auto">{H("h2", 56, "Clear pricing.<br>No surprises.", "color: #DDE3E8; line-height: 1.08")}<p style="margin: 24px 0 0; font-size: 17px; line-height: 1.6; color: #E6EAED">Your consultation fee and medication price are shown before you commit. No hidden membership fees.</p></div><div style="display: flex; flex-wrap: wrap; gap: 32px; margin-top: 64px">{prices}</div><div style="text-align: center; margin-top: 56px">{btn("See Pricing", u("pricing.html"), "light")}</div></div></section>'''
+      + f'<section style="padding: 80px 0 72px"><div style="{WRAP}">{H("h2", 44, "The 3-step process", "text-align: center; margin-bottom: 56px")}{bignum_steps(steps)}<div style="text-align: center; margin-top: 48px">{btn("See How It Works", u("how-it-works.html"))}</div></div></section>'
+      + f'<section style="background: {TAUPE}; padding: 72px 0"><div style="{WRAP}"><div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 40px">{H("h2", 44, "Treatments")}{link("View all treatments", u("treatments.html"))}</div>{cat_grid()}</div></section>'
+      + values_panel("Why 46 Health", vals, top=0)
+      + f'''<section style="background: {NAVY}; color: #FFFFFF; padding: 80px 0"><div style="{WRAP}"><div style="text-align: center; max-width: 640px; margin: 0 auto">{H("h2", 56, "Clear pricing.<br>No surprises.", "color: #DDE3E8; line-height: 1.08")}<p style="margin: 24px 0 0; font-size: 17px; line-height: 1.6; color: #E6EAED">Your consultation fee and medication price are shown before you commit. No hidden membership fees.</p></div><div style="display: flex; flex-wrap: wrap; gap: 32px; margin-top: 64px">{prices}</div><div style="text-align: center; margin-top: 56px">{btn("See Pricing", u("pricing.html"), "light")}</div></div></section>'''
       + cta_band())
     return document("46 Health", "Physician-guided telehealth: peptides, NAD+, hormones and weight management from licensed providers, prepared by SureCare Specialty Pharmacy and delivered to your door.", body)
 
 def treatments():
     body = (hero("h_treat.jpg", "#D9D3D0", "Therapies built around your goals.",
         "Every 46 Health treatment is prescribed by a licensed provider after a review of your health, and prepared by SureCare Specialty Pharmacy, a licensed compounding pharmacy in El Paso, Texas. Compounded medications are not FDA-approved; your provider will explain what that means for you.")
-      + f'<section style="background: {TAUPE}; padding: 96px 0"><div style="{WRAP}">{H("h2", 44, "Treatments", "margin-bottom: 40px")}{cat_grid("View Products")}</div></section>'
-      + f'<section style="padding: 96px 0"><div style="{WRAP}; display: flex; justify-content: space-between; align-items: center; gap: 40px; flex-wrap: wrap"><div style="max-width: 620px">{H("h2", 44, "Not sure where to start?")}<p style="margin: 18px 0 0; font-size: 17px; line-height: 1.6">Tell us your goals in the intake. Your provider will recommend what makes sense — and tell you when something doesn’t.</p></div>{consult()}</div></section>')
+      + f'<section style="background: {TAUPE}; padding: 72px 0"><div style="{WRAP}">{H("h2", 44, "Treatments", "margin-bottom: 40px")}{cat_grid("View Products")}</div></section>'
+      + f'<section style="padding: 72px 0"><div style="{WRAP}; display: flex; justify-content: space-between; align-items: center; gap: 40px; flex-wrap: wrap"><div style="max-width: 620px">{H("h2", 44, "Not sure where to start?")}<p style="margin: 18px 0 0; font-size: 17px; line-height: 1.6">Tell us your goals in the intake. Your provider will recommend what makes sense — and tell you when something doesn’t.</p></div>{consult()}</div></section>')
     return document("Treatments", "Weight management, peptides, men’s and women’s health, and skin care — prescribed by licensed providers.", body, "Treatments")
 
 def how():
@@ -400,7 +400,7 @@ def how():
     need = check_list(["A government-issued ID", "Your current medications and supplements", f"Recent lab results, if you have them<br><span style='color:{MUTED}'>(not required to start)</span>", f"A shipping address in a state we serve<br><span style='color:{MUTED}'>[List states]</span>"])
     body = (hero("h_how.jpg", "#C9CDCD", "From first question to your front door.",
         "46 Health pairs licensed medical providers with SureCare Specialty Pharmacy, a licensed compounding pharmacy in El Paso, Texas, so you get real medical oversight without the waiting room.")
-      + f'''<section style="padding: 104px 0"><div style="{WRAP}">{H("h2", 44, "Here’s exactly what happens", "text-align: center; margin-bottom: 80px")}{bignum_steps(steps)}
+      + f'''<section style="padding: 80px 0"><div style="{WRAP}">{H("h2", 44, "Here’s exactly what happens", "text-align: center; margin-bottom: 56px")}{bignum_steps(steps)}
 <div style="background: {TAUPE}; border-radius: 8px; padding: 56px clamp(20px, 4vw, 40px); margin-top: 88px"><h2 style="margin: 0 0 40px; {LABEL}; font-size: 18px; text-align: center">What you’ll need</h2><ul style="list-style: none; margin: 0 auto; padding: 0; {grid(280)}; gap: 28px 56px; max-width: 760px">{need}</ul></div>
 <p style="text-align: center; margin: 32px auto 0; max-width: 680px; font-size: 15px; line-height: 1.6">Not everyone is a candidate for every treatment. If your provider decides a therapy isn’t right for you, they’ll explain why and what else to consider.</p>
 <div style="text-align: center; margin-top: 40px">{consult()}</div></div></section>''')
@@ -415,11 +415,11 @@ def about():
     body = (hero("h_about.jpg", "#EDE8E1", "Better health, on your terms.",
         "46 Health is a telehealth practice built on a simple idea: good care should fit into your life, not the other way around. Our licensed providers take the time to understand your health and your goals, then recommend treatments that make sense for you. When a prescription is right, it’s prepared by a licensed pharmacy and shipped to your door.")
       + values_panel("How we practice", vals)
-      + f'''<section style="padding: 104px 0"><div style="{WRAP}">{H("h2", 44, "Our team", "text-align: center; margin-bottom: 56px")}
+      + f'''<section style="padding: 80px 0"><div style="{WRAP}">{H("h2", 44, "Our team", "text-align: center; margin-bottom: 56px")}
 <div style="{grid(400)}; gap: 56px; align-items: center; margin-bottom: 72px"><div role="img" aria-label="Photo coming soon" style="aspect-ratio: 1 / 1; background: #D9D9D9; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #555">[Medical director photo]</div><div><p style="{EYEBROW}; font-size: 12px; color: {MUTED}">Medical director</p><h3 style="margin: 0; font-size: 24px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase">[Firstname Lastname]</h3><div style="font-size: 16px; font-weight: 600; margin-top: 10px">[Credentials]</div><p style="margin: 24px 0 0; font-size: 16px; line-height: 1.6">[Bio — training, areas of focus, and why they practice telehealth medicine.]</p></div></div>
 <div style="{grid(260)}; gap: 32px">{team}</div></div></section>'''
-      + f'''<section style="background: {TAUPE}; padding: 88px 0"><div style="{WRAP}; display: flex; justify-content: space-between; align-items: center; gap: 48px; flex-wrap: wrap"><div style="max-width: 640px"><p style="{EYEBROW}">Our pharmacy partner</p>{H("h2", 40, "SureCare Specialty Pharmacy")}<p style="margin: 18px 0 0; font-size: 16px; line-height: 1.6">A licensed 503A compounding pharmacy in El Paso, Texas, preparing each prescription for the individual patient. [Accreditations / licensure details.]</p></div></div></section>'''
-      + f'<section style="padding: 104px 0; text-align: center"><div style="{NARROW}">{H("h2", 52, "Your best is still ahead.<br>Let’s pursue it together.", "line-height: 1.1")}<div style="margin-top: 36px">{consult()}</div></div></section>')
+      + f'''<section style="background: {TAUPE}; padding: 72px 0"><div style="{WRAP}; display: flex; justify-content: space-between; align-items: center; gap: 48px; flex-wrap: wrap"><div style="max-width: 640px"><p style="{EYEBROW}">Our pharmacy partner</p>{H("h2", 40, "SureCare Specialty Pharmacy")}<p style="margin: 18px 0 0; font-size: 16px; line-height: 1.6">A licensed 503A compounding pharmacy in El Paso, Texas, preparing each prescription for the individual patient. [Accreditations / licensure details.]</p></div></div></section>'''
+      + f'<section style="padding: 80px 0; text-align: center"><div style="{NARROW}">{H("h2", 52, "Your best is still ahead.<br>Let’s pursue it together.", "line-height: 1.1")}<div style="margin-top: 36px">{consult()}</div></div></section>')
     return document("About", "46 Health is a telehealth practice built on a simple idea: good care should fit into your life.", body, "About")
 
 def contact():
@@ -427,7 +427,7 @@ def contact():
         return f'<div style="display: flex; flex-direction: column; gap: 12px"><label for="{i}" style="{LABEL}; font-size: 15px">{l}{opt}</label><input id="{i}" name="{i[2:]}" type="{t}" {ac} {"" if opt else "required"} style="min-height: 52px; border: 1px solid #DDD8D0; background: {BG}; border-radius: 6px; padding: 0 16px; font: inherit; font-size: 15px"></div>'
     radios = "".join(f'<label style="display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-size: 16px; cursor: pointer"><input type="radio" name="topic" value="{v}" {"required" if v == "treatments" else ""} style="width: 22px; height: 22px; accent-color: {NAVY}; margin: 0">{t}</label>' for v, t in [("treatments", "Treatments"), ("orders", "Orders &amp; Shipping"), ("billing", "Billing"), ("other", "Other")])
     info = "".join(f'<div><div style="{LABEL}; font-size: 13px; color: {MUTED}">{a}</div><div style="font-size: 16px; margin-top: 8px">{b}</div></div>' for a, b in [("Email", "[care@ email]"), ("Phone", "[Phone number]"), ("Hours", "[Mon–Fri, hours, time zone]")])
-    body = f'''<section style="padding: 96px 0 56px"><div style="{WRAP}; {grid(420)}; gap: 56px; align-items: start">
+    body = f'''<section style="padding: 72px 0 40px"><div style="{WRAP}; {grid(420)}; gap: 56px; align-items: start">
 <div>{H("h1", 64, "We’re here to help.")}<p style="margin: 28px 0 0; font-size: 17px; line-height: 1.6; max-width: 460px">Questions about treatments, your order or your account? Reach our care team and we’ll respond within one business day.</p><div style="display: flex; gap: 40px; flex-wrap: wrap; margin-top: 40px">{info}</div></div>
 <div style="background: {TAUPE}; border-radius: 8px; padding: 40px; text-align: center"><h2 style="margin: 0; font-size: 20px; letter-spacing: 0.1em; font-weight: 500">EXISTING PATIENTS</h2><p style="margin: 16px auto 0; font-size: 16px; line-height: 1.6; max-width: 360px">For medical questions, message your provider through your patient portal.</p><div style="margin-top: 24px">{btn("Open Patient Portal", u("waitlist.html"), attrs="data-portal")}</div></div>
 </div></section>
@@ -470,7 +470,7 @@ def faq():
     for i, (t, qs) in enumerate(FAQ):
         items = "".join(f'<details style="background: {WHITE}; border-radius: 8px; box-shadow: 0 1px 2px rgba(15,27,36,0.06)"{" open" if i == 0 and j == 0 else ""}><summary style="list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 24px; min-height: 64px; padding: 0 clamp(18px, 3vw, 30px); font-size: 16px; font-weight: 600">{q}{CHEV}</summary><p style="margin: 0; padding: 0 clamp(18px, 3vw, 30px) 26px; font-size: 15px; line-height: 1.6">{a}</p></details>' for j, (q, a) in enumerate(qs))
         secs += f'<section id="faq-{i}" style="margin-top: 64px; scroll-margin-top: 24px"><h2 style="margin: 0 0 20px; font-size: 22px; letter-spacing: 0.08em; font-weight: 500; text-transform: uppercase">{t}</h2><div style="display: flex; flex-direction: column; gap: 14px">{items}</div></section>'
-    body = f'''<section style="padding: 88px 0 112px"><div style="{NARROW}">{H("h1", 64, "FAQ", "text-align: center")}<nav aria-label="FAQ sections" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 36px">{jump}</nav>{secs}
+    body = f'''<section style="padding: 72px 0 88px"><div style="{NARROW}">{H("h1", 64, "FAQ", "text-align: center")}<nav aria-label="FAQ sections" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 36px">{jump}</nav>{secs}
 <div style="text-align: center; margin-top: 72px"><p style="margin: 0; font-size: 16px">Still have a question?</p><div style="margin-top: 20px">{btn("Contact Us", u("contact.html"))}</div></div></div></section>'''
     return document("FAQ", "Answers about consultations, compounded medications, shipping, costs and privacy at 46 Health.", body, "FAQ")
 
@@ -494,7 +494,7 @@ def pricing():
 
 def waitlist():
     names = "".join(f'<span hidden data-treatment-name="{p["slug"]}">{E(p["title"])}</span>' for p in PRODUCTS)
-    body = f'''<section style="padding: 104px 0 120px"><div style="{NARROW}; text-align: center">
+    body = f'''<section style="padding: 80px 0 96px"><div style="{NARROW}; text-align: center">
 <p style="{EYEBROW}">Opening soon</p>{H("h1", 60, "Be first to know.")}
 <p style="margin: 24px auto 0; font-size: 17px; line-height: 1.65; max-width: 560px">Consultations open soon. We’ll email you the moment they do. Joining doesn’t commit you to anything.</p>
 <p hidden style="margin: 20px 0 0; font-size: 15px">You were looking at: <strong id="waitlist-treatment"></strong></p>
@@ -507,11 +507,11 @@ def waitlist():
 LEGAL = {"terms.html": "Terms of use", "privacy.html": "Privacy policy", "notice-of-privacy-practices.html": "Notice of privacy practices",
          "telehealth-consent.html": "Telehealth consent", "careers.html": "Careers"}
 def legal(title):
-    body = f'<section style="padding: 104px 0 120px"><div style="{NARROW}">{H("h1", 56, title)}<p style="margin: 28px 0 0; font-size: 17px; line-height: 1.65">[{title} — {"to be supplied by counsel" if title != "Careers" else "open roles coming soon"}.]</p><div style="margin-top: 40px">{link("Back to home", u("index.html"))}</div></div></section>'
+    body = f'<section style="padding: 80px 0 96px"><div style="{NARROW}">{H("h1", 56, title)}<p style="margin: 28px 0 0; font-size: 17px; line-height: 1.65">[{title} — {"to be supplied by counsel" if title != "Careers" else "open roles coming soon"}.]</p><div style="margin-top: 40px">{link("Back to home", u("index.html"))}</div></div></section>'
     return document(title, f"46 Health {title.lower()}.", body)
 
 def notfound():
-    body = f'<section style="padding: 120px 0"><div style="{NARROW}; text-align: center">{H("h1", 56, "This page has wandered off.")}<p style="margin: 24px 0 0; font-size: 17px">Let’s get you back on track.</p><div style="margin-top: 36px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap">{btn("Go Home", u("index.html"))}{link("Browse treatments", u("treatments.html"))}</div></div></section>'
+    body = f'<section style="padding: 96px 0"><div style="{NARROW}; text-align: center">{H("h1", 56, "This page has wandered off.")}<p style="margin: 24px 0 0; font-size: 17px">Let’s get you back on track.</p><div style="margin-top: 36px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap">{btn("Go Home", u("index.html"))}{link("Browse treatments", u("treatments.html"))}</div></div></section>'
     return document("Page not found", "Page not found.", body)
 
 FAVICON = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="{NAVY}"/><text x="32" y="43" text-anchor="middle" font-family="Georgia, serif" font-size="32" fill="#F5F4F0">46</text></svg>'
