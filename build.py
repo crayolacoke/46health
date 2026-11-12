@@ -273,9 +273,9 @@ missing = [p["id"] for p in PRODUCTS if p["id"] not in HOME]
 assert not missing, missing
 
 def peptide_extra():
-    stats = "".join(f'<div style="background: {CARD}; border-radius: 8px; padding: 24px 16px; text-align: center"><div style="font-family: {SERIF}; font-size: 36px">{a}</div><div style="font-size: 12px; letter-spacing: 0.1em; margin-top: 8px; color: {MUTED}">{b}</div></div>' for a, b in [("3 mL", "PEPTIDE VIALS"), ("$69", "STARTING PRICE"), ("2", "VIALS PER SHIPMENT")])
+    stats = "".join(f'<div style="background: {CARD}; border-radius: 8px; padding: 24px 16px; text-align: center"><div style="font-family: {SERIF}; font-size: 36px">{a}</div><div style="font-size: 12px; letter-spacing: 0.1em; margin-top: 8px; color: {MUTED}">{b}</div></div>' for a, b in [("3 mL", "PEPTIDE VIALS"), ("$69", "STARTING PRICE"), ("5", "MEDS PER SHIPMENT")])
     return f'''<section style="background: {TAUPE}; padding: 72px 0"><div style="{WRAP}; display: flex; gap: 64px; flex-wrap: wrap; align-items: center">
-<div style="flex: 1 1 380px">{H("h2", 44, "Same total milligrams.<br>A smaller vial.")}<p style="margin: 18px 0 0; font-size: 17px; line-height: 1.6; max-width: 520px">Our peptides are concentrated into 3 mL vials that hold the same total mg as a standard 5 mL telehealth vial. NAD+ comes in a 10 mL vial. Every vial has one fixed price, and up to two ship for a single shipping fee.</p></div>
+<div style="flex: 1 1 380px">{H("h2", 44, "Same total milligrams.<br>A smaller vial.")}<p style="margin: 18px 0 0; font-size: 17px; line-height: 1.6; max-width: 520px">Our peptides are concentrated into 3 mL vials that hold the same total mg as a standard 5 mL telehealth vial. NAD+ comes in a 10 mL vial. Every vial has one fixed price, and up to five medications ship for a single shipping fee.</p></div>
 <div style="flex: 1 1 340px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px">{stats}</div></div></section>
 <section style="padding: 40px 0"><div style="{NARROW}"><p role="note" style="margin: 0; font-size: 14px; line-height: 1.6; color: {MUTED}; text-align: center">Competing in a tested sport? Many peptides, including BPC-157, TB-500 and growth hormone secretagogues, are on the World Anti-Doping Agency prohibited list. Talk with your provider before starting.</p></div></section>'''
 
@@ -326,7 +326,7 @@ def product_page(p):
     if other:
         links_html = ", ".join(f'<a href="{u(ppath(q))}">{E(q["size"])} ({E(q["price"])})</a>' for q in other)
         other_html = f'<p style="margin: 14px 0 0; font-size: 15px">Also available: {links_html}</p>'
-    shipping = "Ships discreetly to your door. Up to two vials ship together for one shipping fee." if p["kind"] == "peptide" else "Ships discreetly to your door."
+    shipping = "Ships discreetly to your door. Up to five medications ship together for one shipping fee."
     know = p.get("know")
     safety = ("What to know", E(know)) if know else ("Important safety information", "[Safety information, side effects and contraindications — supplied by medical team and reviewed by counsel.]")
     acc = [safety, ("How it’s used", "Your provider sets your dose and schedule and explains how to use it. [Use instructions — supplied by medical team.]"),
@@ -458,10 +458,10 @@ def home():
 <nav aria-label="Treatment categories" style="display: flex; gap: 10px; flex-wrap: wrap">{pills}</nav>
 <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin: 40px 0 16px"><h3 style="margin: 0; {LABEL}; font-size: 14px">Popular places to start</h3><span style="font-size: 13px; color: {MUTED}">Tap + to save for your consult</span></div>
 <div style="{grid_fill(240)}; gap: 16px">{feat}</div></div></section>'''
-    stats = "".join(f'<div style="flex: 1 1 180px; border-top: 1px solid #3A4852; padding-top: 14px"><div style="font-family: {SERIF}; font-size: 34px; color: #FFFFFF">{a}</div><div style="margin-top: 6px; font-size: 13px; letter-spacing: 0.06em; color: #C9D1D8">{b}</div></div>' for a, b in [("$69", "PEPTIDES FROM, PER VIAL"), ("$139", "GLP-1 FROM, PER MONTH"), ("2 vials", "SHIP FOR ONE FEE"), ("$0", "MEMBERSHIP FEES")])
-    pricing_band = f'''<section style="background: {NAVY}; color: #fff; padding: 64px 0"><div style="{WRAP}; display: flex; gap: 48px; align-items: center; flex-wrap: wrap">
-<div style="flex: 1 1 300px">{H("h2", 40, "Clear pricing.<br>No surprises.", "color: #DDE3E8")}<p style="margin: 14px 0 0; font-size: 15px; line-height: 1.6; color: #E6EAED">Every price is listed. No membership fees.</p><div style="margin-top: 20px">{btn("See all prices", u("pricing.html"), "light", "min-height: 44px")}</div></div>
-<div style="flex: 2 1 520px; display: flex; gap: 24px; flex-wrap: wrap">{stats}</div></div></section>'''
+    ladder = "".join(f'<a href="{u("pricing.html")}#{c[0][:-5]}" class="ladder-row"><span>{c[2]}</span><span class="ladder-from">from <strong>{from_price(c[0]).replace("From ", "").replace(" per vial", "").replace(" / month", "/mo")}</strong></span></a>' for c in CATEGORY_PAGES)
+    pricing_band = f'''<section style="background: {NAVY}; color: #fff; padding: 64px 0"><div style="{WRAP}; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 48px; align-items: center">
+<div>{H("h2", 40, "Clear pricing.<br>No surprises.", "color: #DDE3E8")}<p style="margin: 14px 0 0; font-size: 15px; line-height: 1.6; color: #E6EAED; max-width: 420px">Every price is listed. No membership fees. Up to five medications ship for one fee.</p><div style="margin-top: 22px">{btn("See all prices", u("pricing.html"), "light", "min-height: 44px")}</div></div>
+<nav aria-label="Starting prices by category" class="ladder">{ladder}</nav></div></section>'''
     cta = f'''<section style="background: #B9C3CC; padding: 80px 0; text-align: center"><div style="{NARROW}">{H("h2", 52, "Excellence is a practice.<br>Start yours today.", "line-height: 1.08")}
 <p style="margin: 22px auto 0; font-size: 17px; line-height: 1.6; max-width: 560px">Your consultation takes about 10 minutes. A provider will be in touch within [X] business days.</p>
 <div style="margin-top: 32px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap">{consult()}{btn("View my consult list", u("consult-list.html"), "light")}</div></div></section>'''
@@ -538,7 +538,7 @@ FAQ = [
    ("Is compounded semaglutide the same as Ozempic or Wegovy?", "No. It contains the same active ingredient but is a different, compounded product that is not FDA-approved. Your provider will prescribe it only when it fits your individual clinical needs."),
    ("Are these safe for competitive athletes?", "Many peptides — including BPC-157, TB-500 and growth hormone secretagogues — are on the World Anti-Doping Agency prohibited list. If you compete in a tested sport, talk with your provider before starting.")]),
  ("Orders and shipping", [
-   ("How is my medication shipped?", "In discreet packaging, with cold packs when required, directly from SureCare Specialty Pharmacy. Up to two peptide vials ship together for one shipping fee. Most orders arrive within [X] business days after the prescription is approved."),
+   ("How is my medication shipped?", "In discreet packaging, with cold packs when required, directly from SureCare Specialty Pharmacy. Up to five medications ship together for one shipping fee. Most orders arrive within [X] business days after the prescription is approved."),
    ("Are needles and supplies included?", "[Confirm which supplies ship with each order.]"),
    ("How do refills work?", "Your provider reviews your progress at each check-in and authorizes refills when appropriate."),
    ("Can I cancel?", "[Cancellation and refund policy.] Prescription medications generally cannot be returned once shipped.")]),
@@ -583,7 +583,7 @@ def pricing():
 <div class="pr-body"><div class="table-wrap"><table class="price-table"><thead><tr><th scope="col">Treatment</th><th scope="col">Supply</th><th scope="col" style="text-align: right">Price</th><th scope="col"><span class="sr-only">Add to list</span></th></tr></thead><tbody>{rows}</tbody></table></div>
 <p class="pr-empty" hidden>No treatments in this category match that filter.</p><div style="margin-top: 12px">{link("View " + label, u(f))}</div></div></details>'''
     filters = "".join(f'<button type="button" class="pr-filter" data-filter="{k}" aria-pressed="{"true" if k == "all" else "false"}">{t}</button>' for k, t in [("all", "All"), ("under100", "Under $100"), ("monthly", "Monthly programs"), ("new", "New")])
-    body = (centered_intro("Clear pricing.<br>No surprises.", "Every treatment has one listed price. Your consultation fee and medication price are shown before you commit, with no membership fees. Peptide vials: up to two ship for one shipping fee.")
+    body = (centered_intro("Clear pricing.<br>No surprises.", "Every treatment has one listed price. Your consultation fee and medication price are shown before you commit, with no membership fees. Up to five medications ship together for one shipping fee.")
             + f'''<div style="max-width: 1000px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px) 80px">
 <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px"><div role="group" aria-label="Filter prices" style="display: flex; gap: 8px; flex-wrap: wrap">{filters}</div><button type="button" id="pr-expand" class="pr-expand">Expand all</button></div>
 {blocks}<p style="margin: 24px 0 0; font-size: 13px; color: {MUTED}; line-height: 1.6">Prices are for medication only and are subject to change. [Consultation fee and shipping cost.] Treatments require a consultation with a licensed provider and are prescribed only when appropriate.</p></div>'''

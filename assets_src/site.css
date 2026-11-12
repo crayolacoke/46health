@@ -113,3 +113,11 @@ details[open] > summary svg { transform: rotate(180deg); }
 .pr-expand { border-color: transparent; background: transparent; text-decoration: underline; }
 .pr-empty { font-size: 14px; color: #4A545B; }
 @media (max-width: 600px) { .pr-cat > summary { padding: 18px; gap: 6px 14px; } .pr-from { min-width: 0; text-align: left; } .pr-body { padding: 0 14px 18px; } .pr-unit { display: none; } }
+
+/* Homepage price ladder */
+.ladder { display: flex; flex-direction: column; border-bottom: 1px solid #33424A; }
+.ladder-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 16px 0; border-top: 1px solid #33424A; color: #FFFFFF; text-decoration: none; font-size: 17px; }
+.ladder-row:hover { color: #FFFFFF; }
+.ladder-row:hover span:first-child { text-decoration: underline; text-underline-offset: 4px; }
+.ladder-from { color: #C9D1D8; font-size: 15px; white-space: nowrap; }
+.ladder-from strong { color: #FFFFFF; font-weight: 500; font-size: 17px; }

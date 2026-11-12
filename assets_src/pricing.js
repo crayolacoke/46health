@@ -31,5 +31,12 @@
       syncExpand();
     });
   });
+  function openFromHash() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    var t = id && document.getElementById(id);
+    if (t && t.classList.contains("pr-cat")) { t.open = true; t.scrollIntoView({ block: "start" }); syncExpand(); }
+  }
+  window.addEventListener("hashchange", openFromHash);
+  openFromHash();
   syncExpand();
 })();
