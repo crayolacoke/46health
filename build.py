@@ -17,7 +17,7 @@ for p in PRODUCTS:
     p.setdefault("groups", [])
 
 # ---------------------------------------------------------------- tokens
-BG, WHITE, TAUPE, NAVY, TAN, INK, MUTED, CARD = "#F5F4F0", "#FFFFFF", "#DDD6D0", "#0F1B24", "#C8B49B", "#16202A", "#4A545B", "#FAF9F6"
+BG, WHITE, TAUPE, NAVY, TAN, INK, MUTED, CARD = "#F2F0EA", "#FFFFFF", "#D3CCC4", "#141D21", "#C0AA96", "#141D21", "#4A545B", "#FAF9F6"
 SERIF = "'Prata', Georgia, serif"
 WRAP = "max-width: 1240px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px)"
 NARROW = "max-width: 880px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px)"
@@ -93,8 +93,8 @@ def footer():
     treat = [(c[2], c[0]) for c in CATEGORY_PAGES]
     return f'''<section style="background: {NAVY}; color: #FFFFFF; padding: 56px 0">
 <div style="{WRAP}; display: flex; justify-content: space-between; align-items: center; gap: 40px; flex-wrap: wrap">
-<div>{H("h2", 44, "Stay informed.<br>Choose excellence.", "color: #C9D1D8")}<p style="margin: 18px 0 0; font-size: 16px; line-height: 1.6; color: #E6EAED; max-width: 380px">Notes on health, performance and longevity from our providers. No spam.</p></div>
-<form data-form="newsletter" style="flex: 0 1 600px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center"><label for="nl-email" class="sr-only">Email address</label><input id="nl-email" name="email" type="email" required autocomplete="email" placeholder="Email address" style="flex: 1 1 260px; min-height: 52px; border-radius: 999px; border: 1.5px solid #FFFFFF; background: transparent; color: #FFFFFF; padding: 0 24px; font: inherit; font-size: 15px"><button type="submit" style="min-height: 52px; padding: 0 34px; border-radius: 999px; background: #FFFFFF; color: {NAVY}; border: 0; font: inherit; font-size: 16px; font-weight: 500; cursor: pointer">Sign Up</button><p class="form-msg" role="status" hidden style="flex-basis: 100%; margin: 4px 0 0; font-size: 14px; color: #E6EAED"></p></form>
+<div>{H("h2", 44, "Stay informed.<br>Choose excellence.", "color: #ADB7BD")}<p style="margin: 18px 0 0; font-size: 16px; line-height: 1.6; color: #F2F0EA; max-width: 380px">Notes on health, performance and longevity from our providers. No spam.</p></div>
+<form data-form="newsletter" style="flex: 0 1 600px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center"><label for="nl-email" class="sr-only">Email address</label><input id="nl-email" name="email" type="email" required autocomplete="email" placeholder="Email address" style="flex: 1 1 260px; min-height: 52px; border-radius: 999px; border: 1.5px solid #FFFFFF; background: transparent; color: #FFFFFF; padding: 0 24px; font: inherit; font-size: 15px"><button type="submit" style="min-height: 52px; padding: 0 34px; border-radius: 999px; background: #FFFFFF; color: {NAVY}; border: 0; font: inherit; font-size: 16px; font-weight: 500; cursor: pointer">Sign Up</button><p class="form-msg" role="status" hidden style="flex-basis: 100%; margin: 4px 0 0; font-size: 14px; color: #F2F0EA"></p></form>
 </div></section>
 <footer style="background: {BG}; padding: 64px 0 48px">
 <div style="{WRAP}; {grid(260)}; gap: 48px">
@@ -153,7 +153,7 @@ def centered_intro(title, body, crumbs=None):
     return f'<section style="padding: 56px 0 40px; text-align: center"><div style="{NARROW}">{bc}{H("h1", 60, title, "line-height: 1.08")}<div style="width: 96px; height: 2px; background: {INK}; margin: 28px auto"></div><p style="margin: 0 auto; font-size: 17px; line-height: 1.65; max-width: 620px">{body}</p></div></section>'
 
 def cta_band():
-    return f'''<section style="background: #B9C3CC; padding: 80px 0; text-align: center">
+    return f'''<section style="background: #ADB7BD; padding: 80px 0; text-align: center">
 <div style="{NARROW}">{H("h2", 64, "Excellence is a practice.<br>Start yours today.", "line-height: 1.08")}
 <p style="margin: 28px auto 0; font-size: 17px; line-height: 1.6; max-width: 560px">Your consultation takes about 10 minutes. A provider will be in touch within [X] business days.</p>
 <div style="margin-top: 40px">{consult()}</div></div></section>'''
@@ -180,7 +180,7 @@ def values_panel(title, vals, top=56):
 
 def cat_card(c, cta="Learn More", tall=False):
     href, _, t, d, img = c
-    return f'''<article style="background: {CARD}; border-radius: 8px; padding: 16px; display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(15,27,36,0.06)">
+    return f'''<article style="background: {CARD}; border-radius: 8px; padding: 16px; display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(20,29,33,0.06)">
 <img src="{u('assets/img/' + img)}" alt="" style="width: 100%; height: {300 if tall else 220}px; object-fit: cover; border-radius: 6px; display: block">
 <div style="padding: 24px 10px 8px; display: flex; flex-direction: column; gap: 10px; flex: 1"><h3 style="margin: 0; {LABEL}; font-size: 17px; line-height: 1.35">{t}</h3><p style="margin: 0; font-size: 15px; line-height: 1.6">{d}</p><div style="margin-top: auto; padding-top: 8px">{link(cta + f'<span class="sr-only"> about {t}</span>', u(href))}</div></div></article>'''
 
@@ -237,7 +237,7 @@ def group_panel(gid, title, prods, sub=""):
 <div style="{grid_fill(250)}; gap: 20px">{"".join(product_card(p) for p in prods)}</div></section>'''
 
 def chipnav(groups):
-    chips = "".join(f'<a href="#{g[0]}" style="display: inline-flex; align-items: center; min-height: 40px; padding: 0 18px; border-radius: 999px; border: 1px solid #CFC7BF; background: {WHITE}; font-size: 14px; color: {INK}; text-decoration: none; white-space: nowrap">{g[1]}</a>' for g in groups)
+    chips = "".join(f'<a href="#{g[0]}" style="display: inline-flex; align-items: center; min-height: 40px; padding: 0 18px; border-radius: 999px; border: 1px solid #D3CCC4; background: {WHITE}; font-size: 14px; color: {INK}; text-decoration: none; white-space: nowrap">{g[1]}</a>' for g in groups)
     return f'<nav aria-label="On this page" style="position: sticky; top: 0; z-index: 2; background: {BG}; border-top: 1px solid #E6E1DA; border-bottom: 1px solid #E6E1DA; padding: 14px 0; margin-bottom: 40px"><div style="{WRAP}; display: flex; gap: 10px; overflow-x: auto">{chips}</div></nav>'
 
 def in_group(gid): return [p for p in PRODUCTS if gid in p["groups"]]
@@ -390,7 +390,7 @@ def chip(text, dark=False):
     return f'<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 5px 10px; border-radius: 999px; background: {bg}; color: {fg}">{text}</span>'
 
 def vframe(inner):
-    return f'<div aria-hidden="true" style="background: {WHITE}; border-radius: 14px; box-shadow: 0 10px 30px rgba(15,27,36,0.10); padding: 20px; width: 100%; max-width: 360px; text-align: left">{inner}</div>'
+    return f'<div aria-hidden="true" style="background: {WHITE}; border-radius: 14px; box-shadow: 0 10px 30px rgba(20,29,33,0.10); padding: 20px; width: 100%; max-width: 360px; text-align: left">{inner}</div>'
 
 def v_list(n=3, label=""):
     items = [("bpc15.jpg", "BPC-157 15 mg", "$79"), ("nadinj.jpg", "NAD+ Injectable", "$99"), ("sema.jpg", "Semaglutide", "$139 / mo")][:n]
@@ -462,7 +462,7 @@ def home():
 <div style="display: flex; justify-content: space-between; align-items: end; gap: 32px; flex-wrap: wrap; margin-bottom: 40px"><div><p style="{EYEBROW}">How it works</p>{H("h2", 48, "Start with a list, not a checkout.")}</div><p style="margin: 0; font-size: 16px; line-height: 1.6; max-width: 420px">Save what you’re curious about, then talk it through with a licensed provider. Nothing is charged until they decide a treatment is right for you.</p></div>
 <ol style="list-style: none; margin: 0; padding: 0; {grid(250)}; gap: 28px">{cols}</ol>
 <div style="display: flex; gap: 20px; align-items: center; margin-top: 44px; flex-wrap: wrap">{consult()}{link("See the full process", u("how-it-works.html"))}</div></div></section>'''
-    pills = "".join(f'<a href="{u(c[0])}" style="display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 20px; border-radius: 999px; background: {WHITE}; border: 1px solid #CFC7BF; text-decoration: none; color: {INK}; font-size: 15px; white-space: nowrap">{c[2]}<span style="font-size: 12px; color: {MUTED}">{from_price(c[0])}</span></a>' for c in CATEGORY_PAGES)
+    pills = "".join(f'<a href="{u(c[0])}" style="display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 20px; border-radius: 999px; background: {WHITE}; border: 1px solid #D3CCC4; text-decoration: none; color: {INK}; font-size: 15px; white-space: nowrap">{c[2]}<span style="font-size: 12px; color: {MUTED}">{from_price(c[0])}</span></a>' for c in CATEGORY_PAGES)
     feat = "".join(product_card(BY_ID[i]) for i in ("sema", "bpc15", "nadinj", "pt141"))
     shop = f'''<section style="background: {TAUPE}; padding: 64px 0"><div style="{WRAP}">
 <div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 24px">{H("h2", 40, "Shop by goal")}{link(f"View all {len(PRODUCTS)} treatments", u("treatments.html"))}</div>
@@ -471,9 +471,9 @@ def home():
 <div style="{grid_fill(240)}; gap: 16px">{feat}</div></div></section>'''
     ladder = "".join(f'<a href="{u("pricing.html")}#{c[0][:-5]}" class="ladder-row"><span>{c[2]}</span><span class="ladder-from">from <strong>{from_price(c[0]).replace("From ", "").replace(" per vial", "").replace(" / month", "/mo")}</strong></span></a>' for c in CATEGORY_PAGES)
     pricing_band = f'''<section style="background: {NAVY}; color: #fff; padding: 64px 0"><div style="{WRAP}; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 48px; align-items: center">
-<div>{H("h2", 40, "Clear pricing.<br>No surprises.", "color: #DDE3E8")}<p style="margin: 14px 0 0; font-size: 15px; line-height: 1.6; color: #E6EAED; max-width: 420px">Every price is listed. No membership fees. Up to five medications ship for one fee.</p><div style="margin-top: 22px">{btn("See all prices", u("pricing.html"), "light", "min-height: 44px")}</div></div>
+<div>{H("h2", 40, "Clear pricing.<br>No surprises.", "color: #F2F0EA")}<p style="margin: 14px 0 0; font-size: 15px; line-height: 1.6; color: #F2F0EA; max-width: 420px">Every price is listed. No membership fees. Up to five medications ship for one fee.</p><div style="margin-top: 22px">{btn("See all prices", u("pricing.html"), "light", "min-height: 44px")}</div></div>
 <nav aria-label="Starting prices by category" class="ladder">{ladder}</nav></div></section>'''
-    cta = f'''<section style="background: #B9C3CC; padding: 80px 0; text-align: center"><div style="{NARROW}">{H("h2", 52, "Excellence is a practice.<br>Start yours today.", "line-height: 1.08")}
+    cta = f'''<section style="background: #ADB7BD; padding: 80px 0; text-align: center"><div style="{NARROW}">{H("h2", 52, "Excellence is a practice.<br>Start yours today.", "line-height: 1.08")}
 <p style="margin: 22px auto 0; font-size: 17px; line-height: 1.6; max-width: 560px">Your consultation takes about 10 minutes. A provider will be in touch within [X] business days.</p>
 <div style="margin-top: 32px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap">{consult()}{btn("View my consult list", u("consult-list.html"), "light")}</div></div></section>'''
     body = hero_html + trust_html + hiw + shop + pricing_band + cta
@@ -561,16 +561,16 @@ FAQ = [
 ]
 
 def faq():
-    jump = "".join(f'<a href="#faq-{i}" style="display: inline-flex; align-items: center; min-height: 40px; padding: 0 18px; border-radius: 999px; border: 1px solid #CFC7BF; background: {WHITE}; font-size: 14px; color: {INK}; text-decoration: none">{t}</a>' for i, (t, _) in enumerate(FAQ))
+    jump = "".join(f'<a href="#faq-{i}" style="display: inline-flex; align-items: center; min-height: 40px; padding: 0 18px; border-radius: 999px; border: 1px solid #D3CCC4; background: {WHITE}; font-size: 14px; color: {INK}; text-decoration: none">{t}</a>' for i, (t, _) in enumerate(FAQ))
     secs = ""
     for i, (t, qs) in enumerate(FAQ):
-        items = "".join(f'<details style="background: {WHITE}; border-radius: 8px; box-shadow: 0 1px 2px rgba(15,27,36,0.06)"{" open" if i == 0 and j == 0 else ""}><summary style="list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 24px; min-height: 64px; padding: 0 clamp(18px, 3vw, 30px); font-size: 16px; font-weight: 600">{q}{CHEV}</summary><p style="margin: 0; padding: 0 clamp(18px, 3vw, 30px) 26px; font-size: 15px; line-height: 1.6">{a}</p></details>' for j, (q, a) in enumerate(qs))
+        items = "".join(f'<details style="background: {WHITE}; border-radius: 8px; box-shadow: 0 1px 2px rgba(20,29,33,0.06)"{" open" if i == 0 and j == 0 else ""}><summary style="list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 24px; min-height: 64px; padding: 0 clamp(18px, 3vw, 30px); font-size: 16px; font-weight: 600">{q}{CHEV}</summary><p style="margin: 0; padding: 0 clamp(18px, 3vw, 30px) 26px; font-size: 15px; line-height: 1.6">{a}</p></details>' for j, (q, a) in enumerate(qs))
         secs += f'<section id="faq-{i}" style="margin-top: 64px; scroll-margin-top: 24px"><h2 style="margin: 0 0 20px; font-size: 22px; letter-spacing: 0.08em; font-weight: 500; text-transform: uppercase">{t}</h2><div style="display: flex; flex-direction: column; gap: 14px">{items}</div></section>'
     body = f'''<section style="padding: 72px 0 88px"><div style="{NARROW}">{H("h1", 64, "FAQ", "text-align: center")}<nav aria-label="FAQ sections" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 36px">{jump}</nav>{secs}
 <div style="text-align: center; margin-top: 72px"><p style="margin: 0; font-size: 16px">Still have a question?</p><div style="margin-top: 20px">{btn("Contact Us", u("contact.html"))}</div></div></div></section>'''
     return document("FAQ", "Answers about consultations, compounded medications, shipping, costs and privacy at 46 Health.", body, "FAQ")
 
-NEWPILL = ' <span style="font-size:11px;letter-spacing:0.12em;border:1px solid #CFC7BF;border-radius:999px;padding:2px 7px;margin-left:6px">NEW</span>'
+NEWPILL = ' <span style="font-size:11px;letter-spacing:0.12em;border:1px solid #D3CCC4;border-radius:999px;padding:2px 7px;margin-left:6px">NEW</span>'
 
 def pricing():
     order = ["weight-management.html", "peptides.html", "mens-health.html", "womens-health.html", "skin-aesthetics.html"]
@@ -609,7 +609,7 @@ def waitlist():
 <p style="{EYEBROW}">Opening soon</p>{H("h1", 60, "Be first to know.")}
 <p style="margin: 24px auto 0; font-size: 17px; line-height: 1.65; max-width: 560px">Consultations open soon. We’ll email you the moment they do. Joining doesn’t commit you to anything.</p>
 <p hidden style="margin: 20px 0 0; font-size: 15px">You were looking at: <strong id="waitlist-treatment"></strong></p>
-<form data-form="waitlist" style="margin: 40px auto 0; max-width: 560px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center"><label for="wl-email" class="sr-only">Email address</label><input id="wl-email" name="email" type="email" required autocomplete="email" placeholder="Email address" style="flex: 1 1 280px; min-height: 52px; border-radius: 999px; border: 1px solid #CFC7BF; background: {WHITE}; padding: 0 24px; font: inherit; font-size: 15px"><input type="hidden" name="treatment" value=""><button type="submit" style="min-height: 52px; padding: 0 32px; border-radius: 999px; background: {NAVY}; color: #FFFFFF; border: 0; font: inherit; font-size: 16px; font-weight: 500; cursor: pointer">Notify Me</button><p class="form-msg" role="status" hidden style="flex-basis: 100%; margin: 8px 0 0; font-size: 15px"></p></form>
+<form data-form="waitlist" style="margin: 40px auto 0; max-width: 560px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center"><label for="wl-email" class="sr-only">Email address</label><input id="wl-email" name="email" type="email" required autocomplete="email" placeholder="Email address" style="flex: 1 1 280px; min-height: 52px; border-radius: 999px; border: 1px solid #D3CCC4; background: {WHITE}; padding: 0 24px; font: inherit; font-size: 15px"><input type="hidden" name="treatment" value=""><button type="submit" style="min-height: 52px; padding: 0 32px; border-radius: 999px; background: {NAVY}; color: #FFFFFF; border: 0; font: inherit; font-size: 16px; font-weight: 500; cursor: pointer">Notify Me</button><p class="form-msg" role="status" hidden style="flex-basis: 100%; margin: 8px 0 0; font-size: 15px"></p></form>
 <p style="margin: 20px auto 0; font-size: 13px; color: {MUTED}; max-width: 480px">We only ask for your email here — please don’t share health information.</p>
 <div style="margin-top: 48px">{link("Browse treatments", u("treatments.html"))}</div>{names}
 </div></section>'''
@@ -622,7 +622,7 @@ def legal(title):
     return document(title, f"46 Health {title.lower()}.", body)
 
 def consult_list_page():
-    actions_btn = "min-height: 44px; padding: 0 20px; border-radius: 999px; border: 1px solid #CFC7BF; background: #FFFFFF; color: #16202A; font: inherit; font-size: 14px; font-weight: 500; cursor: pointer"
+    actions_btn = "min-height: 44px; padding: 0 20px; border-radius: 999px; border: 1px solid #D3CCC4; background: #FFFFFF; color: #141D21; font: inherit; font-size: 14px; font-weight: 500; cursor: pointer"
     body = f'''<section style="padding: 64px 0 88px"><div style="max-width: 920px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px)">
 <p style="{EYEBROW}; margin-bottom: 12px">A private note for your consultation</p>
 <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap">{H("h1", 56, "My Consult List")}<span id="list-count-label" style="font-size: 15px; color: {MUTED}"></span></div>
@@ -663,7 +663,7 @@ def notfound():
     body = f'<section style="padding: 96px 0"><div style="{NARROW}; text-align: center">{H("h1", 56, "This page has wandered off.")}<p style="margin: 24px 0 0; font-size: 17px">Let’s get you back on track.</p><div style="margin-top: 36px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap">{btn("Go Home", u("index.html"))}{link("Browse treatments", u("treatments.html"))}</div></div></section>'
     return document("Page not found", "Page not found.", body)
 
-FAVICON = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="{NAVY}"/><text x="32" y="43" text-anchor="middle" font-family="Georgia, serif" font-size="32" fill="#F5F4F0">46</text></svg>'
+FAVICON = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="{NAVY}"/><text x="32" y="43" text-anchor="middle" font-family="Georgia, serif" font-size="32" fill="#F2F0EA">46</text></svg>'
 
 # ---------------------------------------------------------------- build
 def write(path, text):
