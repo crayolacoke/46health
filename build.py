@@ -371,26 +371,103 @@ def product_page(p):
     return document(p["title"], f"{p['title']} — {price_text(p)}. {plain}", body, "Treatments")
 
 # ---------------------------------------------------------------- core pages
+CHECK_W = '<svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2.5 7.5l3 3 6-6.5"/></svg>'
+
+def chip(text, dark=False):
+    bg = NAVY if dark else "#EFEBE4"
+    fg = "#fff" if dark else INK
+    return f'<span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 5px 10px; border-radius: 999px; background: {bg}; color: {fg}">{text}</span>'
+
+def vframe(inner):
+    return f'<div aria-hidden="true" style="background: {WHITE}; border-radius: 14px; box-shadow: 0 10px 30px rgba(15,27,36,0.10); padding: 20px; width: 100%; max-width: 360px; text-align: left">{inner}</div>'
+
+def v_list(n=3, label=""):
+    items = [("bpc15.jpg", "BPC-157 15 mg", "$79"), ("nadinj.jpg", "NAD+ Injectable", "$99"), ("sema.jpg", "Semaglutide", "$139 / mo")][:n]
+    rows = "".join(f'<div style="display: flex; align-items: center; gap: 12px; padding: 9px 0; border-top: 1px solid #EFEBE4"><img src="{u("assets/img/" + i)}" alt="" style="width: 44px; height: 34px; object-fit: cover; border-radius: 6px"><div style="flex: 1; font-size: 13px; font-weight: 600">{t}</div><div style="font-size: 13px">{pr}</div></div>' for i, t, pr in items)
+    tag = chip(label) if label else chip(f"{n} treatments")
+    return vframe(f'<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; gap: 8px"><div style="font-family: {SERIF}; font-size: 19px">My Consult List</div>{tag}</div>{rows}<div style="margin-top: 10px; padding: 9px 12px; border-radius: 8px; background: {BG}; font-size: 12px; color: {MUTED}">Questions for my provider: “Which strength is right for me?”</div>')
+
+def v_intake():
+    return vframe(f'''<div style="display: flex; justify-content: space-between; font-size: 12px; color: {MUTED}"><span>Step 2 of 5</span><span>About 10 min</span></div>
+<div style="height: 6px; border-radius: 999px; background: #EFEBE4; margin: 10px 0 16px"><div style="width: 40%; height: 100%; border-radius: 999px; background: {NAVY}"></div></div>
+<div style="font-family: {SERIF}; font-size: 19px; line-height: 1.25">Your health history</div>
+<p style="margin: 10px 0 12px; font-size: 13px">Are you currently taking any prescription medications?</p>
+<div style="display: flex; gap: 8px">{chip("Yes", True)}{chip("No")}</div>''')
+
+def v_provider():
+    items = "".join(f'<div style="display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-top: 1px solid #EFEBE4; font-size: 13px"><span style="flex: 0 0 20px; height: 20px; border-radius: 50%; background: {TAN}; display: inline-flex; align-items: center; justify-content: center; color: {INK}">{CHECK_W}</span>{t}</div>' for t in ["Reviews your intake and consult list", "May request recent labs", "Talks through options with you"])
+    return vframe(f'<div style="display: flex; gap: 12px; align-items: center; margin-bottom: 10px"><div style="width: 38px; height: 38px; border-radius: 50%; background: {TAUPE}; display: flex; align-items: center; justify-content: center; font-family: {SERIF}; font-size: 15px">46</div><div><div style="font-size: 14px; font-weight: 600">Your licensed provider</div><div style="font-size: 12px; color: {MUTED}">Decides with you what’s appropriate</div></div></div>{items}')
+
+def v_delivery():
+    steps = [("Prescription sent to SureCare", True), ("Prepared for you", True), ("Shipped in discreet packaging", True), ("First check-in", False)]
+    rows = ""
+    for t, done in steps:
+        bg = NAVY if done else WHITE
+        mark = CHECK_W if done else ""
+        col = "" if done else f"color: {MUTED}"
+        rows += f'<div style="display: flex; gap: 12px; align-items: center; padding: 7px 0"><span style="flex: 0 0 20px; height: 20px; border-radius: 50%; border: 1.5px solid {NAVY}; background: {bg}; color: #fff; display: inline-flex; align-items: center; justify-content: center">{mark}</span><span style="font-size: 13px; {col}">{t}</span></div>'
+    return vframe(f'<div style="font-family: {SERIF}; font-size: 19px; margin-bottom: 6px">Your order is on its way</div>{rows}')
+
+HOME_STEPS = [
+ ("Build your consult list", "Browse treatments and tap + on anything you’d like to ask about. Your list stays private on your device.", v_list),
+ ("Complete a 10-minute intake", "Answer questions about your health history, medications and goals. Reviewed only by your care team.", v_intake),
+ ("Meet your licensed provider", "Your provider reviews your intake and your list, may request labs, and decides with you what’s appropriate.", v_provider),
+ ("Delivered, then ongoing care", "If prescribed, SureCare Specialty Pharmacy ships your medication to your door. Check-ins and refills from there.", v_delivery),
+]
+
+def page_products(f):
+    seen, out = set(), []
+    for _, _, prods, _ in PAGES[f][2]:
+        for p in prods:
+            if p["id"] not in seen:
+                seen.add(p["id"]); out.append(p)
+    return out
+
+def price_num(p):
+    m = re.match(r"\$([\d,]+)", p["price"] or "")
+    return int(m.group(1).replace(",", "")) if m else None
+
+def from_price(f):
+    prods = PAGES[f][2][0][2] if f == "weight-management.html" else page_products(f)
+    nums = [n for n in (price_num(p) for p in prods) if n]
+    lo = min(nums)
+    suffix = " / month" if f == "weight-management.html" else (" per vial" if f == "peptides.html" else "")
+    return f"From ${lo}{suffix}"
+
 def home():
-    trust = "".join(f'<li style="flex: 1 1 200px; text-align: center; font-size: 14px; letter-spacing: 0.1em; line-height: 1.5; padding: 8px 16px">{t}</li>' for t in ["LICENSED U.S.<br>PROVIDERS", "PREPARED BY SURECARE<br>SPECIALTY PHARMACY", "DISCREET<br>SHIPPING", "ONGOING PROVIDER<br>SUPPORT"])
-    steps = [("Tell us about you.", "Complete a short online health intake. About 10 minutes."),
-             ("Meet your provider.", "A licensed provider reviews your history, may order labs, and decides with you whether treatment is appropriate."),
-             ("Receive your plan.", "If prescribed, your medication is prepared by our partner pharmacy and shipped to your door, with follow-ups as you go.")]
-    vals = [("rx", "Medicine, not a marketplace", "Every prescription starts with a licensed provider who reviews your health first."),
-            ("dial", "Personalized, not one-size-fits-all", "Dosing and protocols are set for you and adjusted as you progress."),
-            ("shield", "A pharmacy you can trust", "Medications are prepared by SureCare Specialty Pharmacy, a licensed 503A compounding pharmacy in El Paso, Texas."),
-            ("chat", "Support that keeps going", "Follow-ups, dose adjustments and refills are handled through your patient portal.")]
-    prices = "".join(f'<div style="flex: 1 1 200px; border-top: 1px solid #3A4852; padding-top: 18px"><div style="font-family: {SERIF}; font-size: 40px; color: #FFFFFF">{a}</div><div style="margin-top: 8px; font-size: 14px; letter-spacing: 0.06em; color: #C9D1D8">{b}</div></div>' for a, b in [("$69", "PEPTIDES FROM, PER VIAL"), ("$139", "GLP-1 PROGRAMS FROM, PER MONTH"), ("2 vials", "SHIP FOR ONE SHIPPING FEE"), ("$0", "MEMBERSHIP FEES")])
-    body = (hero("h_home.jpg", "#ECE6DA", "The pursuit of excellence.",
-        "Personalized peptide, NAD+, hormone and weight management programs from licensed providers, prepared by SureCare Specialty Pharmacy in El Paso, Texas, and delivered to your door.",
-        "Physician-guided telehealth", consult() + link("Explore Treatments", u("treatments.html")))
-      + f'<section aria-label="Why patients choose us" style="background: {NAVY}; color: #FFFFFF; padding: 28px 0"><ul style="{WRAP}; list-style: none; margin-top: 0; margin-bottom: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between">{trust}</ul></section>'
-      + f'<section style="padding: 80px 0 72px"><div style="{WRAP}">{H("h2", 44, "The 3-step process", "text-align: center; margin-bottom: 56px")}{bignum_steps(steps)}<div style="text-align: center; margin-top: 48px">{btn("See How It Works", u("how-it-works.html"))}</div></div></section>'
-      + f'<section style="background: {TAUPE}; padding: 72px 0"><div style="{WRAP}"><div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 40px">{H("h2", 44, "Treatments")}{link("View all treatments", u("treatments.html"))}</div>{cat_grid()}</div></section>'
-      + values_panel("Why 46 Health", vals, top=0)
-      + f'''<section style="background: {NAVY}; color: #FFFFFF; padding: 80px 0"><div style="{WRAP}"><div style="text-align: center; max-width: 640px; margin: 0 auto">{H("h2", 56, "Clear pricing.<br>No surprises.", "color: #DDE3E8; line-height: 1.08")}<p style="margin: 24px 0 0; font-size: 17px; line-height: 1.6; color: #E6EAED">Your consultation fee and medication price are shown before you commit. No hidden membership fees.</p></div><div style="display: flex; flex-wrap: wrap; gap: 32px; margin-top: 64px">{prices}</div><div style="text-align: center; margin-top: 56px">{btn("See Pricing", u("pricing.html"), "light")}</div></div></section>'''
-      + cta_band())
-    return document("46 Health", "Physician-guided telehealth: peptides, NAD+, hormones and weight management from licensed providers, prepared by SureCare Specialty Pharmacy and delivered to your door.", body)
+    hero_html = f'''<section style="background: #ECE6DA; overflow: hidden"><div style="display: flex; flex-wrap: wrap">
+<div class="hero-text" style="flex: 1 1 520px; display: flex; justify-content: flex-end; padding: 80px 56px 80px 40px"><div style="width: 100%; max-width: 560px"><p style="{EYEBROW}">Physician-guided telehealth</p>{H("h1", 60, "The pursuit of excellence.")}
+<p style="margin: 24px 0 0; font-size: 17px; line-height: 1.65; max-width: 520px">Browse {len(PRODUCTS)} provider-guided treatments, save the ones you’re curious about, and talk them through with a licensed provider. Prepared by SureCare Specialty Pharmacy and delivered to your door.</p>
+<div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: center; margin-top: 32px">{consult()}{link("Browse &amp; build your list", u("treatments.html"))}</div></div></div>
+<div class="hero-img" style="flex: 1 1 480px; position: relative"><img src="{u("assets/img/h_home.jpg")}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top"><div style="position: absolute; top: 0; bottom: 0; left: 0; width: 120px; background: linear-gradient(90deg, #ECE6DA, rgba(0,0,0,0))"></div>
+<div class="hero-list-card">{v_list(2, "Example")}</div></div></div></section>'''
+    trust = "".join(f'<li style="flex: 1 1 200px; text-align: center; font-size: 13px; letter-spacing: 0.1em; line-height: 1.5; padding: 6px 16px">{t}</li>' for t in ["LICENSED U.S.<br>PROVIDERS", "PREPARED BY SURECARE<br>SPECIALTY PHARMACY", "DISCREET<br>SHIPPING", "NO MEMBERSHIP<br>FEES"])
+    trust_html = f'<section aria-label="Why patients choose us" style="background: {NAVY}; color: #FFFFFF; padding: 24px 0"><ul style="{WRAP}; list-style: none; margin-top: 0; margin-bottom: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between">{trust}</ul></section>'
+    cols = ""
+    for i, (t, d, vig) in enumerate(HOME_STEPS, 1):
+        cols += f'''<li style="display: flex; flex-direction: column; gap: 16px"><div class="hiw-visual">{vig()}</div>
+<div style="display: flex; align-items: center; gap: 12px"><span aria-hidden="true" style="flex: 0 0 32px; height: 32px; border-radius: 50%; background: {NAVY}; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600">{i}</span><h3 style="margin: 0; {LABEL}; font-size: 15px"><span class="sr-only">Step {i}: </span>{t}</h3></div>
+<p style="margin: 0; font-size: 15px; line-height: 1.6">{d}</p></li>'''
+    hiw = f'''<section style="padding: 80px 0"><div style="{WRAP}">
+<div style="display: flex; justify-content: space-between; align-items: end; gap: 32px; flex-wrap: wrap; margin-bottom: 40px"><div><p style="{EYEBROW}">How it works</p>{H("h2", 48, "Start with a list, not a checkout.")}</div><p style="margin: 0; font-size: 16px; line-height: 1.6; max-width: 420px">Save what you’re curious about, then talk it through with a licensed provider. Nothing is charged until they decide a treatment is right for you.</p></div>
+<ol style="list-style: none; margin: 0; padding: 0; {grid(250)}; gap: 28px">{cols}</ol>
+<div style="display: flex; gap: 20px; align-items: center; margin-top: 44px; flex-wrap: wrap">{consult()}{link("See the full process", u("how-it-works.html"))}</div></div></section>'''
+    pills = "".join(f'<a href="{u(c[0])}" style="display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 20px; border-radius: 999px; background: {WHITE}; border: 1px solid #CFC7BF; text-decoration: none; color: {INK}; font-size: 15px; white-space: nowrap">{c[2]}<span style="font-size: 12px; color: {MUTED}">{from_price(c[0])}</span></a>' for c in CATEGORY_PAGES)
+    feat = "".join(product_card(BY_ID[i]) for i in ("sema", "bpc15", "nadinj", "pt141"))
+    shop = f'''<section style="background: {TAUPE}; padding: 64px 0"><div style="{WRAP}">
+<div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 24px">{H("h2", 40, "Shop by goal")}{link(f"View all {len(PRODUCTS)} treatments", u("treatments.html"))}</div>
+<nav aria-label="Treatment categories" style="display: flex; gap: 10px; flex-wrap: wrap">{pills}</nav>
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin: 40px 0 16px"><h3 style="margin: 0; {LABEL}; font-size: 14px">Popular places to start</h3><span style="font-size: 13px; color: {MUTED}">Tap + to save for your consult</span></div>
+<div style="{grid_fill(240)}; gap: 16px">{feat}</div></div></section>'''
+    stats = "".join(f'<div style="flex: 1 1 180px; border-top: 1px solid #3A4852; padding-top: 14px"><div style="font-family: {SERIF}; font-size: 34px; color: #FFFFFF">{a}</div><div style="margin-top: 6px; font-size: 13px; letter-spacing: 0.06em; color: #C9D1D8">{b}</div></div>' for a, b in [("$69", "PEPTIDES FROM, PER VIAL"), ("$139", "GLP-1 FROM, PER MONTH"), ("2 vials", "SHIP FOR ONE FEE"), ("$0", "MEMBERSHIP FEES")])
+    pricing_band = f'''<section style="background: {NAVY}; color: #fff; padding: 64px 0"><div style="{WRAP}; display: flex; gap: 48px; align-items: center; flex-wrap: wrap">
+<div style="flex: 1 1 300px">{H("h2", 40, "Clear pricing.<br>No surprises.", "color: #DDE3E8")}<p style="margin: 14px 0 0; font-size: 15px; line-height: 1.6; color: #E6EAED">Every price is listed. No membership fees.</p><div style="margin-top: 20px">{btn("See all prices", u("pricing.html"), "light", "min-height: 44px")}</div></div>
+<div style="flex: 2 1 520px; display: flex; gap: 24px; flex-wrap: wrap">{stats}</div></div></section>'''
+    cta = f'''<section style="background: #B9C3CC; padding: 80px 0; text-align: center"><div style="{NARROW}">{H("h2", 52, "Excellence is a practice.<br>Start yours today.", "line-height: 1.08")}
+<p style="margin: 22px auto 0; font-size: 17px; line-height: 1.6; max-width: 560px">Your consultation takes about 10 minutes. A provider will be in touch within [X] business days.</p>
+<div style="margin-top: 32px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap">{consult()}{btn("View my consult list", u("consult-list.html"), "light")}</div></div></section>'''
+    body = hero_html + trust_html + hiw + shop + pricing_band + cta
+    return document("46 Health", "Physician-guided telehealth: browse provider-guided treatments, save the ones you’re curious about, and talk them through with a licensed provider.", body)
 
 def treatments():
     body = (hero("h_treat.jpg", "#D9D3D0", "Therapies built around your goals.",
@@ -486,20 +563,35 @@ def faq():
 NEWPILL = ' <span style="font-size:11px;letter-spacing:0.12em;border:1px solid #CFC7BF;border-radius:999px;padding:2px 7px;margin-left:6px">NEW</span>'
 
 def pricing():
-    secs = ""
     order = ["weight-management.html", "peptides.html", "mens-health.html", "womens-health.html", "skin-aesthetics.html"]
-    for f in order:
-        title, _, groups = PAGES[f]
+    blocks = ""
+    for n, f in enumerate(order):
+        _, _, groups = PAGES[f]
         rows = ""
         for gid, gt, prods, _ in groups:
-            rows += f'<tr><th colspan="3" scope="colgroup" style="padding-top: 28px; color: {INK}">{gt}</th></tr>'
+            rows += f'<tr class="pr-group"><th colspan="4" scope="colgroup">{gt}</th></tr>'
             for p in prods:
-                rows += f'<tr><td><a href="{u(ppath(p))}">{E(p["title"])}</a>{NEWPILL if p["new"] else ""}</td><td style="color: {MUTED}">{E(p["unit"] or "")}</td><td class="num">{E(price_text(p))}</td></tr>'
-        secs += f'<section id="{f[:-5]}" style="background: {WHITE}; border-radius: 8px; padding: clamp(24px, 4vw, 48px); margin-bottom: 28px"><div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap">{H("h2", 36, NAV_TITLE[f].replace("&", "&amp;"))}{link("View treatments", u(f))}</div><div class="table-wrap" style="margin-top: 16px"><table class="price-table"><thead><tr><th scope="col">Treatment</th><th scope="col">Supply</th><th scope="col" style="text-align: right">Price</th></tr></thead><tbody>{rows}</tbody></table></div></section>'
+                num = price_num(p) or 0
+                monthly = "1" if "month" in (p["unit"] or "") else "0"
+                isnew = "1" if p["new"] else "0"
+                newpill = NEWPILL if p["new"] else ""
+                tog = list_toggle(p).replace('class="list-toggle"', 'class="list-toggle inline"', 1)
+                rows += f'<tr class="pr-row" data-price="{num}" data-monthly="{monthly}" data-new="{isnew}"><td><a href="{u(ppath(p))}">{E(p["title"])}</a>{newpill}</td><td class="pr-unit">{E(p["unit"] or "")}</td><td class="num">{E(price_text(p))}</td><td class="pr-add">{tog}</td></tr>'
+        count = len(page_products(f))
+        label = NAV_TITLE[f].replace("&", "&amp;")
+        opened = " open" if n == 0 else ""
+        blocks += f'''<details class="pr-cat" id="{f[:-5]}"{opened}><summary><span class="pr-name">{label}</span><span class="pr-count">{count} treatments</span><span class="pr-from">{from_price(f)}</span>{CHEV}</summary>
+<div class="pr-body"><div class="table-wrap"><table class="price-table"><thead><tr><th scope="col">Treatment</th><th scope="col">Supply</th><th scope="col" style="text-align: right">Price</th><th scope="col"><span class="sr-only">Add to list</span></th></tr></thead><tbody>{rows}</tbody></table></div>
+<p class="pr-empty" hidden>No treatments in this category match that filter.</p><div style="margin-top: 12px">{link("View " + label, u(f))}</div></div></details>'''
+    filters = "".join(f'<button type="button" class="pr-filter" data-filter="{k}" aria-pressed="{"true" if k == "all" else "false"}">{t}</button>' for k, t in [("all", "All"), ("under100", "Under $100"), ("monthly", "Monthly programs"), ("new", "New")])
     body = (centered_intro("Clear pricing.<br>No surprises.", "Every treatment has one listed price. Your consultation fee and medication price are shown before you commit, with no membership fees. Peptide vials: up to two ship for one shipping fee.")
-            + f'<div style="{WRAP}; padding-bottom: 96px">{secs}<p style="font-size: 13px; color: {MUTED}; line-height: 1.6">Prices are for medication only and are subject to change. [Consultation fee and shipping cost.] Treatments require a consultation with a licensed provider and are prescribed only when appropriate.</p></div>'
+            + f'''<div style="max-width: 1000px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px) 80px">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px"><div role="group" aria-label="Filter prices" style="display: flex; gap: 8px; flex-wrap: wrap">{filters}</div><button type="button" id="pr-expand" class="pr-expand">Expand all</button></div>
+{blocks}<p style="margin: 24px 0 0; font-size: 13px; color: {MUTED}; line-height: 1.6">Prices are for medication only and are subject to change. [Consultation fee and shipping cost.] Treatments require a consultation with a licensed provider and are prescribed only when appropriate.</p></div>'''
             + cta_band())
-    return document("Pricing", "Every 46 Health treatment and its price — peptides from $69 per vial, GLP-1 programs from $139 per month.", body, "Pricing")
+    scripts = f'<script src="{u("assets/pricing.js")}"></script>'
+    return document("Pricing", "Every 46 Health treatment and its price — peptides from $69 per vial, GLP-1 programs from $139 per month.", body, "Pricing", scripts=scripts)
+
 
 def waitlist():
     names = "".join(f'<span hidden data-treatment-name="{p["slug"]}">{E(p["title"])}</span>' for p in PRODUCTS)
@@ -576,7 +668,8 @@ def main():
         shutil.copy(os.path.join(ROOT, "assets_src", f), os.path.join(DIST, "assets", f))
     shutil.copytree(os.path.join(ROOT, "assets_src", "img"), os.path.join(DIST, "assets", "img"), dirs_exist_ok=True)
     write("assets/favicon.svg", FAVICON)
-    shutil.copy(os.path.join(ROOT, "assets_src", "consult-list.js"), os.path.join(DIST, "assets", "consult-list.js"))
+    for js in ("consult-list.js", "pricing.js"):
+        shutil.copy(os.path.join(ROOT, "assets_src", js), os.path.join(DIST, "assets", js))
     PFX = ""
     pages = {"index.html": home(), "treatments.html": treatments(), "how-it-works.html": how(), "about.html": about(),
              "contact.html": contact(), "faq.html": faq(), "pricing.html": pricing(), "waitlist.html": waitlist(), "404.html": notfound(), "consult-list.html": consult_list_page()}
