@@ -462,11 +462,11 @@ def home():
 <div style="display: flex; justify-content: space-between; align-items: end; gap: 32px; flex-wrap: wrap; margin-bottom: 40px"><div><p style="{EYEBROW}">How it works</p>{H("h2", 48, "Start with a list, not a checkout.")}</div><p style="margin: 0; font-size: 16px; line-height: 1.6; max-width: 420px">Save what you’re curious about, then talk it through with a licensed provider. Nothing is charged until they decide a treatment is right for you.</p></div>
 <ol style="list-style: none; margin: 0; padding: 0; {grid(250)}; gap: 28px">{cols}</ol>
 <div style="display: flex; gap: 20px; align-items: center; margin-top: 44px; flex-wrap: wrap">{consult()}{link("See the full process", u("how-it-works.html"))}</div></div></section>'''
-    pills = "".join(f'<a href="{u(c[0])}" style="display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 20px; border-radius: 999px; background: {WHITE}; border: 1px solid #D3CCC4; text-decoration: none; color: {INK}; font-size: 15px; white-space: nowrap">{c[2]}<span style="font-size: 12px; color: {MUTED}">{from_price(c[0])}</span></a>' for c in CATEGORY_PAGES)
+    pills = "".join(f'<a href="{u(c[0])}" class="goal-pill"><span>{c[2]}</span><span class="goal-from">{from_price(c[0])}</span></a>' for c in CATEGORY_PAGES)
     feat = "".join(product_card(BY_ID[i]) for i in ("sema", "bpc15", "nadinj", "pt141"))
     shop = f'''<section style="background: {TAUPE}; padding: 64px 0"><div style="{WRAP}">
 <div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 24px">{H("h2", 40, "Shop by goal")}{link(f"View all {len(PRODUCTS)} treatments", u("treatments.html"))}</div>
-<nav aria-label="Treatment categories" style="display: flex; gap: 10px; flex-wrap: wrap">{pills}</nav>
+<nav aria-label="Treatment categories" class="goal-pills">{pills}</nav>
 <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin: 40px 0 16px"><h3 style="margin: 0; {LABEL}; font-size: 14px">Popular places to start</h3><span style="font-size: 13px; color: {MUTED}">Tap + to save for your consult</span></div>
 <div style="{grid_fill(240)}; gap: 16px">{feat}</div></div></section>'''
     ladder = "".join(f'<a href="{u("pricing.html")}#{c[0][:-5]}" class="ladder-row"><span>{c[2]}</span><span class="ladder-from">from <strong>{from_price(c[0]).replace("From ", "").replace(" per vial", "").replace(" / month", "/mo")}</strong></span></a>' for c in CATEGORY_PAGES)

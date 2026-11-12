@@ -121,3 +121,11 @@ details[open] > summary svg { transform: rotate(180deg); }
 .ladder-row:hover span:first-child { text-decoration: underline; text-underline-offset: 4px; }
 .ladder-from { color: #ADB7BD; font-size: 15px; white-space: nowrap; }
 .ladder-from strong { color: #FFFFFF; font-weight: 500; font-size: 17px; }
+
+/* Shop by goal: 3 + 2 grid */
+.goal-pills { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+.goal-pill { grid-column: span 2; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 0 24px; border-radius: 999px; background: #FFFFFF; border: 1px solid #D3CCC4; text-decoration: none; color: #141D21; font-size: 15px; }
+.goal-pill:nth-child(n+4) { grid-column: span 3; }
+.goal-pill:hover { border-color: #141D21; color: #141D21; }
+.goal-from { font-size: 13px; color: #4A545B; white-space: nowrap; }
+@media (max-width: 900px) { .goal-pills { grid-template-columns: 1fr; } .goal-pill, .goal-pill:nth-child(n+4) { grid-column: auto; } }
