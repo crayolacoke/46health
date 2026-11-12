@@ -69,6 +69,39 @@ window.SITE_CONFIG = {
     });
   });
 
+
+  // My Consult List (stored only in this browser)
+  var LKEY = "46h_consult_list";
+  function lget() { try { return JSON.parse(localStorage.getItem(LKEY) || "[]"); } catch (e) { return []; } }
+  function lset(v) { try { localStorage.setItem(LKEY, JSON.stringify(v)); } catch (e) {} }
+  var toastEl;
+  function toast(text, showLink) {
+    if (!toastEl) { toastEl = document.createElement("div"); toastEl.className = "toast"; toastEl.setAttribute("role", "status"); document.body.appendChild(toastEl); }
+    toastEl.textContent = text;
+    if (showLink) { var a = document.createElement("a"); a.href = (document.querySelector(".list-link") || {}).getAttribute ? document.querySelector(".list-link").getAttribute("href") : "consult-list.html"; a.textContent = "View list"; toastEl.appendChild(a); }
+    toastEl.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(function () { toastEl.hidden = true; }, 3500);
+  }
+  function syncList() {
+    var list = lget();
+    document.querySelectorAll(".list-count").forEach(function (c) { c.textContent = list.length; c.hidden = list.length === 0; });
+    document.querySelectorAll(".list-link").forEach(function (a) { a.setAttribute("aria-label", "My Consult List" + (list.length ? ", " + list.length + (list.length === 1 ? " treatment" : " treatments") : "")); });
+    document.querySelectorAll("[data-list-add]").forEach(function (b) {
+      var on = list.indexOf(b.getAttribute("data-list-add")) > -1, n = b.getAttribute("data-list-name");
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      if (b.classList.contains("list-toggle")) { var l = (on ? "Remove " : "Add ") + n + (on ? " from" : " to") + " My Consult List"; b.setAttribute("aria-label", l); b.title = on ? "On your consult list" : "Add to My Consult List"; }
+    });
+  }
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest && e.target.closest("[data-list-add]");
+    if (!b) return;
+    var slug = b.getAttribute("data-list-add"), n = b.getAttribute("data-list-name"), list = lget(), i = list.indexOf(slug);
+    if (i > -1) { list.splice(i, 1); toast("Removed " + n + " from your list."); } else { list.push(slug); toast("Added " + n + " to your list.", true); }
+    lset(list); syncList();
+  });
+  document.addEventListener("consultlist:change", syncList);
+  window.addEventListener("storage", syncList);
+  syncList();
+
   // Mobile menu
   var btn = document.querySelector(".menu-btn");
   if (btn) btn.addEventListener("click", function () {

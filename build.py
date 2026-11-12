@@ -72,7 +72,7 @@ def header(active):
 <header class="site-header"><div class="bar">
 {logo()}
 <nav class="site-nav" aria-label="Main">{links}</nav>
-<div class="nav-actions">{btn("Log In", u("waitlist.html"), "ghost", "min-height: 44px; padding: 0 22px; font-size: 14px", 'class="login" data-portal')}{consult("Get Started", extra="min-height: 44px; padding: 0 24px; font-size: 14px").replace("<a ", '<a class="cta" ', 1)}
+<div class="nav-actions"><a href="{u('consult-list.html')}" class="list-link" aria-label="My Consult List"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M9 3.5V2.5h6v1M8.5 9h7M8.5 13h7M8.5 17h4"/></svg><span class="list-count" hidden></span></a>{btn("Log In", u("waitlist.html"), "ghost", "min-height: 44px; padding: 0 22px; font-size: 14px", 'class="login" data-portal')}{consult("Get Started", extra="min-height: 44px; padding: 0 24px; font-size: 14px").replace("<a ", '<a class="cta" ', 1)}
 <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true" fill="none" stroke="{INK}" stroke-width="1.5"><path d="M3 7h16M3 15h16"/></svg></button></div>
 </div></header>'''
 
@@ -94,7 +94,7 @@ def footer():
 </div></footer>
 <div style="background: {TAN}; text-align: center; padding: 18px 16px; font-size: 15px">© 2026 46 Health. All rights reserved.</div>'''
 
-def document(title, desc, body, active=""):
+def document(title, desc, body, active="", scripts=""):
     t = f"{title} | 46 Health" if title != "46 Health" else "46 Health — Physician-guided telehealth"
     return f'''<!doctype html>
 <html lang="en">
@@ -117,7 +117,7 @@ def document(title, desc, body, active=""):
 {body}
 </main>
 {footer()}
-<script src="{u('assets/site.js')}"></script>
+<script src="{u('assets/site.js')}"></script>{scripts}
 </body>
 </html>
 '''
@@ -188,6 +188,13 @@ def price_text(p): return p["price"] or "Price coming soon"
 
 NEW = f'<span style="position: absolute; top: 14px; left: 14px; font-size: 11px; letter-spacing: 0.14em; font-weight: 500; padding: 4px 9px; border-radius: 999px; background: {WHITE}; color: {INK}">NEW</span>'
 
+ADD_SVG = '<svg class="ic-add" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 3v12M3 9h12"/></svg>'
+ADDED_SVG = '<svg class="ic-added" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3.5 9.5l3.5 3.5 7.5-8"/></svg>'
+
+def list_toggle(p):
+    t = E(p["title"])
+    return f'<button type="button" class="list-toggle" data-list-add="{p["slug"]}" data-list-name="{t}" aria-pressed="false" aria-label="Add {t} to My Consult List" title="Add to My Consult List">{ADD_SVG}{ADDED_SVG}</button>'
+
 def product_card(p):
     unit = p["unit"]
     href = u(ppath(p))
@@ -204,10 +211,11 @@ def product_card(p):
         u_html = ""
         unit_line = f'<div style="font-size: 12px; color: {MUTED}">{E(unit)}</div>' if unit else ""
     badge = NEW if p["new"] else ""
+    toggle = list_toggle(p)
     return f'''<article style="position: relative; background: {TAUPE}; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; text-align: center">
 <a href="{href}" class="card-link" style="display: flex; flex-direction: column; flex: 1">{media}{badge}
 <div style="padding: 18px 18px 0; display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1">{title}
-<div style="font-size: 20px; font-weight: 500; font-variant-numeric: tabular-nums; margin-top: auto; padding-top: 10px">{E(price_text(p))}{u_html}</div>{unit_line}</div></a>
+<div style="font-size: 20px; font-weight: 500; font-variant-numeric: tabular-nums; margin-top: auto; padding-top: 10px">{E(price_text(p))}{u_html}</div>{unit_line}</div></a>{toggle}
 <div style="padding: 12px 18px 22px; display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap">{consult("Get Started", p["slug"], extra="min-height: 40px; padding: 0 20px; font-size: 13px")}{link('Learn More<span class="sr-only"> about ' + name + '</span>', href, "font-size: 13px")}</div>
 </article>'''
 
@@ -353,7 +361,8 @@ def product_page(p):
 <div style="font-size: 28px; margin-top: 18px; font-variant-numeric: tabular-nums">{E(price_text(p))}{unit}</div>
 {summary_html}<p style="margin: 18px 0 0; font-size: 17px; line-height: 1.6">{desc}</p>{other_html}
 {cta}
-<p style="margin: 12px 0 0; font-size: 13px; color: {MUTED}; text-align: center">Prescribed only if appropriate after a provider review.</p>
+<button type="button" class="list-btn" data-list-add="{p["slug"]}" data-list-name="{E(p["title"])}" aria-pressed="false"><span class="when-off">+ Add to My Consult List</span><span class="when-on">✓ On your consult list</span></button>
+<p style="margin: 12px 0 0; font-size: 13px; color: {MUTED}; text-align: center">Prescribed only if appropriate after a provider review. <a href="{u('consult-list.html')}">View my list</a></p>
 <div style="margin-top: 40px; border-bottom: 1px solid #E2DDD6">{accs}</div>
 <p style="margin: 24px 0 0; font-size: 12px; line-height: 1.6; color: {MUTED}">{disc}</p>
 </div></div></div></section>
@@ -510,6 +519,44 @@ def legal(title):
     body = f'<section style="padding: 80px 0 96px"><div style="{NARROW}">{H("h1", 56, title)}<p style="margin: 28px 0 0; font-size: 17px; line-height: 1.65">[{title} — {"to be supplied by counsel" if title != "Careers" else "open roles coming soon"}.]</p><div style="margin-top: 40px">{link("Back to home", u("index.html"))}</div></div></section>'
     return document(title, f"46 Health {title.lower()}.", body)
 
+def consult_list_page():
+    actions_btn = "min-height: 44px; padding: 0 20px; border-radius: 999px; border: 1px solid #CFC7BF; background: #FFFFFF; color: #16202A; font: inherit; font-size: 14px; font-weight: 500; cursor: pointer"
+    body = f'''<section style="padding: 64px 0 88px"><div style="max-width: 920px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px)">
+<p style="{EYEBROW}; margin-bottom: 12px">A private note for your consultation</p>
+<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap">{H("h1", 56, "My Consult List")}<span id="list-count-label" style="font-size: 15px; color: {MUTED}"></span></div>
+<p style="margin: 18px 0 0; font-size: 16px; line-height: 1.6; max-width: 640px">Save treatments you’d like to ask about. Your provider will review them with you and decide what’s appropriate — this isn’t an order, and you won’t be charged for anything here.</p>
+<p style="margin: 10px 0 0; font-size: 14px; line-height: 1.6; color: {MUTED}; max-width: 640px">Your list is saved only in this browser on this device. Nothing is sent to 46 Health.</p>
+<noscript><p style="margin-top: 24px">Turn on JavaScript to use your consult list.</p></noscript>
+<div id="consult-list" style="margin-top: 36px"></div>
+<div id="list-actions" hidden>
+<div style="margin-top: 28px"><label for="list-notes" style="display: block; font-size: 15px; font-weight: 600; margin-bottom: 10px">Questions for my provider <span style="font-weight: 400; color: {MUTED}">(optional, saved on this device)</span></label>
+<textarea id="list-notes" rows="4" style="width: 100%; border: 1px solid #DDD8D0; background: #FFFFFF; border-radius: 8px; padding: 14px 16px; font: inherit; font-size: 15px; resize: vertical" placeholder="e.g. Which strength is right for me? How long until I’d see a change?"></textarea></div>
+<div class="no-print" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px">
+<button type="button" id="list-print" style="{actions_btn}">Print or save as PDF</button>
+<button type="button" id="list-copy" style="{actions_btn}">Copy list</button>
+<button type="button" id="list-email" style="{actions_btn}">Email to myself</button>
+<button type="button" id="list-clear" style="{actions_btn}; margin-left: auto; border-color: transparent; background: transparent; text-decoration: underline">Clear list</button>
+</div>
+<p id="list-msg" role="status" hidden style="margin: 14px 0 0; font-size: 14px"></p>
+<div class="no-print" style="margin-top: 40px; padding-top: 32px; border-top: 1px solid #E2DDD6; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap"><p style="margin: 0; font-size: 16px; max-width: 440px">Ready to talk it through? Your consultation takes about 10 minutes.</p>{consult()}</div>
+<p class="print-only" style="margin-top: 28px; font-size: 12px; color: {MUTED}">Your provider decides what’s appropriate. This list isn’t an order. 46 Health · Prepared by SureCare Specialty Pharmacy, El Paso, TX.</p>
+</div></div></section>'''
+    scripts = f'<script src="{u("assets/products.js")}"></script><script src="{u("assets/consult-list.js")}"></script>'
+    return document("My Consult List", "A private list of treatments to discuss with your 46 Health provider.", body, scripts=scripts)
+
+def products_js():
+    out = []
+    for p in PRODUCTS:
+        f = HOME[p["id"]][0]
+        summ = p.get("summary") or ""
+        if not summ and p.get("desc"):
+            first = re.split(r"(?<=[.!?])\s", p["desc"].strip())[0]
+            summ = first if len(first) <= 160 else first[:157].rsplit(" ", 1)[0] + "…"
+        out.append({"slug": p["slug"], "id": p["id"], "name": p["name"], "title": p["title"], "price": price_text(p), "unit": p["unit"] or "",
+                    "img": "assets/img/" + p["image"], "photo": bool(p["photo"]), "url": "products/" + p["slug"] + ".html",
+                    "category": NAV_TITLE[f], "summary": summ})
+    return "window.PRODUCTS = " + json.dumps(out, ensure_ascii=False) + ";\n"
+
 def notfound():
     body = f'<section style="padding: 96px 0"><div style="{NARROW}; text-align: center">{H("h1", 56, "This page has wandered off.")}<p style="margin: 24px 0 0; font-size: 17px">Let’s get you back on track.</p><div style="margin-top: 36px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap">{btn("Go Home", u("index.html"))}{link("Browse treatments", u("treatments.html"))}</div></div></section>'
     return document("Page not found", "Page not found.", body)
@@ -529,9 +576,10 @@ def main():
         shutil.copy(os.path.join(ROOT, "assets_src", f), os.path.join(DIST, "assets", f))
     shutil.copytree(os.path.join(ROOT, "assets_src", "img"), os.path.join(DIST, "assets", "img"), dirs_exist_ok=True)
     write("assets/favicon.svg", FAVICON)
+    shutil.copy(os.path.join(ROOT, "assets_src", "consult-list.js"), os.path.join(DIST, "assets", "consult-list.js"))
     PFX = ""
     pages = {"index.html": home(), "treatments.html": treatments(), "how-it-works.html": how(), "about.html": about(),
-             "contact.html": contact(), "faq.html": faq(), "pricing.html": pricing(), "waitlist.html": waitlist(), "404.html": notfound()}
+             "contact.html": contact(), "faq.html": faq(), "pricing.html": pricing(), "waitlist.html": waitlist(), "404.html": notfound(), "consult-list.html": consult_list_page()}
     for f in PAGES:
         t = NAV_TITLE[f]
         pages[f] = document(t, re.sub("<[^>]+>", "", PAGES[f][1]), category_page(f), "Treatments")
@@ -542,6 +590,7 @@ def main():
     PFX = "../"
     for p in PRODUCTS:
         write(ppath(p), product_page(p))
+    write("assets/products.js", products_js())
     PFX = ""
     print(f"Built {len(pages)} pages + {len(PRODUCTS)} product pages into dist/")
 
