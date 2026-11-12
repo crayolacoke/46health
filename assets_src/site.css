@@ -94,8 +94,6 @@ details[open] > summary svg { transform: rotate(180deg); }
 }
 
 /* Homepage (list-first) */
-.hero-list-card { position: absolute; right: 48px; bottom: 48px; width: 320px; transform: rotate(-1.5deg); }
-@media (max-width: 1000px) { .hero-list-card { display: none; } }
 .hiw-visual { background: #DDD6D0; border-radius: 14px; height: 280px; display: flex; align-items: center; justify-content: center; padding: 20px; overflow: hidden; }
 .hiw-visual > div { transform: scale(0.86); }
 
