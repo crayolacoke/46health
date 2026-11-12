@@ -29,6 +29,17 @@ CHEV = f'<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill
 CHECK = f'<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="{INK}" stroke-width="1.8" aria-hidden="true"><path d="M2.5 7.5l3 3 6-6.5"/></svg>'
 E = html.escape
 
+import hashlib
+def _asset_version():
+    h = hashlib.sha1()
+    for f in sorted(os.listdir(os.path.join(ROOT, "assets_src"))):
+        p = os.path.join(ROOT, "assets_src", f)
+        if os.path.isfile(p):
+            h.update(open(p, "rb").read())
+    h.update(open(os.path.join(ROOT, "data", "products.json"), "rb").read())
+    return h.hexdigest()[:8]
+ASSET_V = _asset_version()
+
 PFX = ""  # relative prefix for the page being rendered ("" or "../")
 def u(path): return PFX + path
 
@@ -109,7 +120,7 @@ def document(title, desc, body, active="", scripts=""):
 <link rel="icon" href="{u('assets/favicon.svg')}" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Prata&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{u('assets/site.css')}">
+<link rel="stylesheet" href="{u('assets/site.css') + '?v=' + ASSET_V}">
 </head>
 <body>
 {header(active)}
@@ -117,7 +128,7 @@ def document(title, desc, body, active="", scripts=""):
 {body}
 </main>
 {footer()}
-<script src="{u('assets/site.js')}"></script>{scripts}
+<script src="{u('assets/site.js') + '?v=' + ASSET_V}"></script>{scripts}
 </body>
 </html>
 '''
@@ -588,7 +599,7 @@ def pricing():
 <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px"><div role="group" aria-label="Filter prices" style="display: flex; gap: 8px; flex-wrap: wrap">{filters}</div><button type="button" id="pr-expand" class="pr-expand">Expand all</button></div>
 {blocks}<p style="margin: 24px 0 0; font-size: 13px; color: {MUTED}; line-height: 1.6">Prices are for medication only and are subject to change. [Consultation fee and shipping cost.] Treatments require a consultation with a licensed provider and are prescribed only when appropriate.</p></div>'''
             + cta_band())
-    scripts = f'<script src="{u("assets/pricing.js")}"></script>'
+    scripts = f'<script src="{u("assets/pricing.js") + "?v=" + ASSET_V}"></script>'
     return document("Pricing", "Every 46 Health treatment and its price — peptides from $69 per vial, GLP-1 programs from $139 per month.", body, "Pricing", scripts=scripts)
 
 
@@ -632,7 +643,7 @@ def consult_list_page():
 <div class="no-print" style="margin-top: 40px; padding-top: 32px; border-top: 1px solid #E2DDD6; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap"><p style="margin: 0; font-size: 16px; max-width: 440px">Ready to talk it through? Your consultation takes about 10 minutes.</p>{consult()}</div>
 <p class="print-only" style="margin-top: 28px; font-size: 12px; color: {MUTED}">Your provider decides what’s appropriate. This list isn’t an order. 46 Health · Prepared by SureCare Specialty Pharmacy, El Paso, TX.</p>
 </div></div></section>'''
-    scripts = f'<script src="{u("assets/products.js")}"></script><script src="{u("assets/consult-list.js")}"></script>'
+    scripts = f'<script src="{u("assets/products.js") + "?v=" + ASSET_V}"></script><script src="{u("assets/consult-list.js") + "?v=" + ASSET_V}"></script>'
     return document("My Consult List", "A private list of treatments to discuss with your 46 Health provider.", body, scripts=scripts)
 
 def products_js():
