@@ -446,38 +446,25 @@ def from_price(f):
     return f"From ${lo}{suffix}"
 
 def home():
-    hero_html = f'''<section style="background: #ECE6DA; overflow: hidden"><div style="display: flex; flex-wrap: wrap">
-<div class="hero-text" style="flex: 1 1 520px; display: flex; justify-content: flex-end; padding: 80px 56px 80px 40px"><div style="width: 100%; max-width: 560px"><p style="{EYEBROW}">Physician-guided telehealth</p>{H("h1", 60, "The pursuit of excellence.")}
-<p style="margin: 24px 0 0; font-size: 17px; line-height: 1.65; max-width: 520px">Browse {len(PRODUCTS)} provider-guided treatments, save the ones you’re curious about, and talk them through with a licensed provider. Prepared by SureCare Specialty Pharmacy and delivered to your door.</p>
-<div style="display: flex; gap: 20px; flex-wrap: wrap; align-items: center; margin-top: 32px">{consult()}{link("Browse &amp; build your list", u("treatments.html"))}</div></div></div>
-<div class="hero-img" style="flex: 1 1 480px; position: relative"><img src="{u("assets/img/h_home.jpg")}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top"><div style="position: absolute; top: 0; bottom: 0; left: 0; width: 120px; background: linear-gradient(90deg, #ECE6DA, rgba(0,0,0,0))"></div></div></div></section>'''
-    trust = "".join(f'<li style="flex: 1 1 200px; text-align: center; font-size: 13px; letter-spacing: 0.1em; line-height: 1.5; padding: 6px 16px">{t}</li>' for t in ["LICENSED U.S.<br>PROVIDERS", "PREPARED BY SURECARE<br>SPECIALTY PHARMACY", "DISCREET<br>SHIPPING", "NO MEMBERSHIP<br>FEES"])
-    trust_html = f'<section aria-label="Why patients choose us" style="background: {NAVY}; color: #FFFFFF; padding: 24px 0"><ul style="{WRAP}; list-style: none; margin-top: 0; margin-bottom: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between">{trust}</ul></section>'
-    cols = ""
-    for i, (t, d, vig) in enumerate(HOME_STEPS, 1):
-        cols += f'''<li style="display: flex; flex-direction: column; gap: 16px"><div class="hiw-visual">{vig()}</div>
-<div style="display: flex; align-items: center; gap: 12px"><span aria-hidden="true" style="flex: 0 0 32px; height: 32px; border-radius: 50%; background: {NAVY}; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600">{i}</span><h3 style="margin: 0; {LABEL}; font-size: 15px"><span class="sr-only">Step {i}: </span>{t}</h3></div>
-<p style="margin: 0; font-size: 15px; line-height: 1.6">{d}</p></li>'''
-    hiw = f'''<section style="padding: 80px 0"><div style="{WRAP}">
-<div style="display: flex; justify-content: space-between; align-items: end; gap: 32px; flex-wrap: wrap; margin-bottom: 40px"><div><p style="{EYEBROW}">How it works</p>{H("h2", 48, "Start with a list, not a checkout.")}</div><p style="margin: 0; font-size: 16px; line-height: 1.6; max-width: 420px">Save what you’re curious about, then talk it through with a licensed provider. Nothing is charged until they decide a treatment is right for you.</p></div>
-<ol style="list-style: none; margin: 0; padding: 0; {grid(250)}; gap: 28px">{cols}</ol>
-<div style="display: flex; gap: 20px; align-items: center; margin-top: 44px; flex-wrap: wrap">{consult()}{link("See the full process", u("how-it-works.html"))}</div></div></section>'''
-    pills = "".join(f'<a href="{u(c[0])}" class="goal-pill"><span>{c[2]}</span><span class="goal-from">{from_price(c[0])}</span></a>' for c in CATEGORY_PAGES)
-    feat = "".join(product_card(BY_ID[i]) for i in ("sema", "bpc15", "nadinj", "pt141"))
-    shop = f'''<section style="background: {TAUPE}; padding: 64px 0"><div style="{WRAP}">
-<div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 24px">{H("h2", 40, "Shop by goal")}{link(f"View all {len(PRODUCTS)} treatments", u("treatments.html"))}</div>
-<nav aria-label="Treatment categories" class="goal-pills">{pills}</nav>
-<div style="display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin: 40px 0 16px"><h3 style="margin: 0; {LABEL}; font-size: 14px">Popular places to start</h3><span style="font-size: 13px; color: {MUTED}">Tap + to save for your consult</span></div>
-<div style="{grid_fill(240)}; gap: 16px">{feat}</div></div></section>'''
-    ladder = "".join(f'<a href="{u("pricing.html")}#{c[0][:-5]}" class="ladder-row"><span>{c[2]}</span><span class="ladder-from">from <strong>{from_price(c[0]).replace("From ", "").replace(" per vial", "").replace(" / month", "/mo")}</strong></span></a>' for c in CATEGORY_PAGES)
-    pricing_band = f'''<section style="background: {NAVY}; color: #fff; padding: 64px 0"><div style="{WRAP}; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr)); gap: 48px; align-items: center">
-<div>{H("h2", 40, "Clear pricing.<br>No surprises.", "color: #F2F0EA")}<p style="margin: 14px 0 0; font-size: 15px; line-height: 1.6; color: #F2F0EA; max-width: 420px">Every price is listed. No membership fees. Up to five medications ship for one fee.</p><div style="margin-top: 22px">{btn("See all prices", u("pricing.html"), "light", "min-height: 44px")}</div></div>
-<nav aria-label="Starting prices by category" class="ladder">{ladder}</nav></div></section>'''
-    cta = f'''<section style="background: #ADB7BD; padding: 80px 0; text-align: center"><div style="{NARROW}">{H("h2", 52, "Excellence is a practice.<br>Start yours today.", "line-height: 1.08")}
-<p style="margin: 22px auto 0; font-size: 17px; line-height: 1.6; max-width: 560px">Your consultation takes about 10 minutes. A provider will be in touch within [X] business days.</p>
-<div style="margin-top: 32px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap">{consult()}{btn("View my consult list", u("consult-list.html"), "light")}</div></div></section>'''
-    body = hero_html + trust_html + hiw + shop + pricing_band + cta
-    return document("46 Health", "Physician-guided telehealth: browse provider-guided treatments, save the ones you’re curious about, and talk them through with a licensed provider.", body)
+    trust = "".join(f'<li style="flex: 1 1 200px; text-align: center; font-size: 14px; letter-spacing: 0.1em; line-height: 1.5; padding: 8px 16px">{t}</li>' for t in ["LICENSED U.S.<br>PROVIDERS", "PREPARED BY SURECARE<br>SPECIALTY PHARMACY", "DISCREET<br>SHIPPING", "ONGOING PROVIDER<br>SUPPORT"])
+    steps = [("Tell us about you.", "Complete a short online health intake. About 10 minutes."),
+             ("Meet your provider.", "A licensed provider reviews your history, may order labs, and decides with you whether treatment is appropriate."),
+             ("Receive your plan.", "If prescribed, your medication is prepared by our partner pharmacy and shipped to your door, with follow-ups as you go.")]
+    vals = [("rx", "Medicine, not a marketplace", "Every prescription starts with a licensed provider who reviews your health first."),
+            ("dial", "Personalized, not one-size-fits-all", "Dosing and protocols are set for you and adjusted as you progress."),
+            ("shield", "A pharmacy you can trust", "Medications are prepared by SureCare Specialty Pharmacy, a licensed 503A compounding pharmacy in El Paso, Texas."),
+            ("chat", "Support that keeps going", "Follow-ups, dose adjustments and refills are handled through your patient portal.")]
+    prices = "".join(f'<div style="flex: 1 1 200px; border-top: 1px solid #3A464C; padding-top: 18px"><div style="font-family: {SERIF}; font-size: 40px; color: #FFFFFF">{a}</div><div style="margin-top: 8px; font-size: 14px; letter-spacing: 0.06em; color: #ADB7BD">{b}</div></div>' for a, b in [("$69", "PEPTIDES FROM, PER VIAL"), ("$139", "GLP-1 PROGRAMS FROM, PER MONTH"), ("Up to 5", "MEDICATIONS SHIP FOR ONE FEE"), ("$0", "MEMBERSHIP FEES")])
+    body = (hero("h_home.jpg", "#ECE6DA", "The pursuit of excellence.",
+        "Personalized peptide, NAD+, hormone and weight management programs from licensed providers, prepared by SureCare Specialty Pharmacy in El Paso, Texas, and delivered to your door.",
+        "Physician-guided telehealth", consult() + link("Explore Treatments", u("treatments.html")))
+      + f'<section aria-label="Why patients choose us" style="background: {NAVY}; color: #FFFFFF; padding: 28px 0"><ul style="{WRAP}; list-style: none; margin-top: 0; margin-bottom: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between">{trust}</ul></section>'
+      + f'<section style="padding: 80px 0 72px"><div style="{WRAP}">{H("h2", 44, "The 3-step process", "text-align: center; margin-bottom: 56px")}{bignum_steps(steps)}<div style="text-align: center; margin-top: 48px">{btn("See How It Works", u("how-it-works.html"))}</div></div></section>'
+      + f'<section style="background: {TAUPE}; padding: 72px 0"><div style="{WRAP}"><div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 40px">{H("h2", 44, "Treatments")}{link("View all treatments", u("treatments.html"))}</div>{cat_grid()}</div></section>'
+      + values_panel("Why 46 Health", vals, top=0)
+      + f'''<section style="background: {NAVY}; color: #FFFFFF; padding: 80px 0"><div style="{WRAP}"><div style="text-align: center; max-width: 640px; margin: 0 auto">{H("h2", 56, "Clear pricing.<br>No surprises.", "color: #F2F0EA; line-height: 1.08")}<p style="margin: 24px 0 0; font-size: 17px; line-height: 1.6; color: #F2F0EA">Your consultation fee and medication price are shown before you commit. No hidden membership fees.</p></div><div style="display: flex; flex-wrap: wrap; gap: 32px; margin-top: 64px">{prices}</div><div style="text-align: center; margin-top: 56px">{btn("See Pricing", u("pricing.html"), "light")}</div></div></section>'''
+      + cta_band())
+    return document("46 Health", "Physician-guided telehealth: peptides, NAD+, hormones and weight management from licensed providers, prepared by SureCare Specialty Pharmacy and delivered to your door.", body)
 
 def treatments():
     body = (hero("h_treat.jpg", "#D9D3D0", "Therapies built around your goals.",
