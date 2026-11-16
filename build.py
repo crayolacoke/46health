@@ -678,6 +678,7 @@ def main():
         shutil.copy(os.path.join(ROOT, "assets_src", f), os.path.join(DIST, "assets", f))
     shutil.copytree(os.path.join(ROOT, "assets_src", "img"), os.path.join(DIST, "assets", "img"), dirs_exist_ok=True)
     write("assets/favicon.svg", FAVICON)
+    write("CNAME", "fortysixhealth.com\n")
     for js in ("consult-list.js", "pricing.js"):
         shutil.copy(os.path.join(ROOT, "assets_src", js), os.path.join(DIST, "assets", js))
     PFX = ""
