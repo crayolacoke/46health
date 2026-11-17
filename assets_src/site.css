@@ -130,7 +130,6 @@ details[open] > summary svg { transform: rotate(180deg); }
 .goal-from { font-size: 13px; color: #4A545B; white-space: nowrap; }
 @media (max-width: 900px) { .goal-pills { grid-template-columns: 1fr; } .goal-pill, .goal-pill:nth-child(n+4) { grid-column: auto; } }
 
-/* 46 chromosomes panel: photo sits just right of the copy, edges melt into the background */
-.chromo-art{position:absolute;top:0;left:calc(50% - 120px);height:100%;width:auto;max-width:none;pointer-events:none;
--webkit-mask-image:linear-gradient(90deg,transparent 0,#000 12%);mask-image:linear-gradient(90deg,transparent 0,#000 12%)}
-@media (max-width:900px){.chromo-art{left:auto;right:-25%;opacity:.4}}
+/* 46 chromosomes panel: full-bleed background photo */
+.chromo-panel>div{min-height:max(520px,33vw);display:flex;align-items:center}
+@media (max-width:900px){.chromo-panel{background-position:78% center!important}.chromo-panel::before{content:"";position:absolute;inset:0;background:rgba(6,26,35,.55)}}
