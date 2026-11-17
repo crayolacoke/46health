@@ -129,3 +129,9 @@ details[open] > summary svg { transform: rotate(180deg); }
 .goal-pill:hover { border-color: #141D21; color: #141D21; }
 .goal-from { font-size: 13px; color: #4A545B; white-space: nowrap; }
 @media (max-width: 900px) { .goal-pills { grid-template-columns: 1fr; } .goal-pill, .goal-pill:nth-child(n+4) { grid-column: auto; } }
+
+/* 46 chromosomes panel: image bleeds into the charcoal block */
+.chromo-art{position:absolute;top:0;bottom:0;right:max(4vw,calc((100% - 1240px)/2 + 40px));height:100%;width:auto;pointer-events:none;
+-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 15%,#000 85%,transparent 100%),linear-gradient(180deg,transparent 0,#000 12%,#000 88%,transparent 100%);
+-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent 0,#000 15%,#000 85%,transparent 100%),linear-gradient(180deg,transparent 0,#000 12%,#000 88%,transparent 100%);mask-composite:intersect}
+@media (max-width:900px){.chromo-art{right:-40px;opacity:.35}}
