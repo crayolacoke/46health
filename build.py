@@ -665,7 +665,20 @@ def notfound():
 FAVICON = f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="{NAVY}"/><text x="32" y="43" text-anchor="middle" font-family="Georgia, serif" font-size="32" fill="#F2F0EA">46</text></svg>'
 
 # ---------------------------------------------------------------- build
+CLEAN_URL = re.compile(r'(["\'(=])((?:\.\./)*(?:[\w-]+/)*[\w-]+)\.html(?=[#?"\')])')
+
+def clean_urls(text):
+    # GitHub Pages serves /page.html at /page, so links drop the .html
+    def rep(m):
+        q, p = m.group(1), m.group(2)
+        if p == "index" or p.endswith("/index"):
+            p = p[:-5] or "./"
+        return q + p
+    return CLEAN_URL.sub(rep, text)
+
 def write(path, text):
+    if path.endswith((".html", ".js")):
+        text = clean_urls(text)
     full = os.path.join(DIST, path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
     open(full, "w", encoding="utf-8").write(text)

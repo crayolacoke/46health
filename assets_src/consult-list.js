@@ -20,7 +20,7 @@
       var empty = el("div", { "class": "list-empty" });
       empty.appendChild(el("p", { "class": "list-empty-title" }, "Your list is empty."));
       empty.appendChild(el("p", null, "Tap the + on any treatment to add it here."));
-      var a = el("a", { href: "treatments.html", "class": "list-browse" }, "Browse treatments");
+      var a = el("a", { href: "treatments", "class": "list-browse" }, "Browse treatments");
       empty.appendChild(a);
       root.appendChild(empty);
       return;

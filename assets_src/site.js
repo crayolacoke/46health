@@ -78,7 +78,7 @@ window.SITE_CONFIG = {
   function toast(text, showLink) {
     if (!toastEl) { toastEl = document.createElement("div"); toastEl.className = "toast"; toastEl.setAttribute("role", "status"); document.body.appendChild(toastEl); }
     toastEl.textContent = text;
-    if (showLink) { var a = document.createElement("a"); a.href = (document.querySelector(".list-link") || {}).getAttribute ? document.querySelector(".list-link").getAttribute("href") : "consult-list.html"; a.textContent = "View list"; toastEl.appendChild(a); }
+    if (showLink) { var a = document.createElement("a"); a.href = (document.querySelector(".list-link") || {}).getAttribute ? document.querySelector(".list-link").getAttribute("href") : "consult-list"; a.textContent = "View list"; toastEl.appendChild(a); }
     toastEl.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(function () { toastEl.hidden = true; }, 3500);
   }
   function syncList() {
