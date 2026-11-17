@@ -131,6 +131,6 @@ details[open] > summary svg { transform: rotate(180deg); }
 @media (max-width: 900px) { .goal-pills { grid-template-columns: 1fr; } .goal-pill, .goal-pill:nth-child(n+4) { grid-column: auto; } }
 
 /* 46 chromosomes panel: photo sits just right of the copy, edges melt into the background */
-.chromo-art{position:absolute;top:0;left:calc(50% - 20px);height:100%;width:auto;max-width:none;pointer-events:none;
--webkit-mask-image:linear-gradient(90deg,transparent 0,#000 18%,#000 88%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 18%,#000 88%,transparent 100%)}
+.chromo-art{position:absolute;top:0;left:calc(50% - 120px);height:100%;width:auto;max-width:none;pointer-events:none;
+-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 12%);mask-image:linear-gradient(90deg,transparent 0,#000 12%)}
 @media (max-width:900px){.chromo-art{left:auto;right:-25%;opacity:.4}}
