@@ -320,7 +320,7 @@ def product_page(p):
     f, gid, gt, siblings = HOME[p["id"]]
     cat = NAV_TITLE[f].replace("&", "&amp;")
     img_src = u("assets/img/" + p["image"])
-    alt = E(p["title"]) + " vial"
+    alt = E(p["title"]) + (" vial" if p["image"].endswith((".jpg",)) and not p["image"].startswith("skin_") else "")
     if p["photo"]:
         media = f'<div style="border-radius: 16px; overflow: hidden; background: {TAUPE}"><img src="{img_src}" alt="{alt}" style="display: block; width: 100%; aspect-ratio: 921 / 722; object-fit: cover"></div>'
     else:
