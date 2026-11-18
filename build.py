@@ -156,7 +156,7 @@ def centered_intro(title, body, crumbs=None):
 def cta_band():
     return f'''<section style="background: #ADB7BD; padding: 80px 0; text-align: center">
 <div style="{NARROW}">{H("h2", 64, "Excellence is a practice.<br>Start yours today.", "line-height: 1.08")}
-<p style="margin: 28px auto 0; font-size: 17px; line-height: 1.6; max-width: 560px">Your consultation takes about 10 minutes. A provider will be in touch within [X] business days.</p>
+<p style="margin: 28px auto 0; font-size: 17px; line-height: 1.6; max-width: 560px">Your intake takes about 10 minutes. A provider typically reviews it within 4 hours.</p>
 <div style="margin-top: 40px">{consult()}</div></div></section>'''
 
 def bignum_steps(steps):
@@ -539,7 +539,7 @@ def contact():
 FAQ = [
  ("Getting started", [
    ("Do I need a prescription?", "Yes. Every treatment requires a consultation with a licensed provider, who decides whether it’s appropriate for you."),
-   ("How long does the consultation take?", "The online intake takes about 10 minutes. A provider typically reviews it within [X] business days and may follow up by message or video."),
+   ("How long does the consultation take?", "The online intake takes about 10 minutes. A provider typically reviews it within 4 hours and may follow up by message or video."),
    ("Do I need lab work?", "Not to start. Depending on the treatment and your history, your provider may order labs. If you have recent results, you can share them in your intake."),
    ("Which states do you serve?", "[List of states served.]"),
    ("What if I’m not approved?", "Not everyone is a candidate for every treatment. If your provider decides a therapy isn’t right for you, they’ll explain why and what else to consider. [Refund policy for the consultation fee.]")]),
