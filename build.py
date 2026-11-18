@@ -54,6 +54,7 @@ def btn(label, href, kind="dark", extra="", attrs=""):
     s = {"dark": f"background: {NAVY}; color: #FFFFFF; border: 1px solid {NAVY}",
          "light": f"background: #FFFFFF; color: {NAVY}; border: 1px solid #FFFFFF",
          "ghost": f"background: #FFFFFF; color: {INK}; border: 1px solid #E4E1DB"}[kind]
+    attrs = attrs.replace('class="', 'class="btn ', 1) if 'class="' in attrs else 'class="btn" ' + attrs
     return f'<a href="{href}" {attrs} style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 28px; border-radius: 999px; {s}; font-size: 15px; font-weight: 500; text-decoration: none; white-space: nowrap; {extra}">{label}</a>'
 
 def consult(label="Start Your Consultation", slug="", kind="dark", extra=""):
@@ -83,7 +84,7 @@ def header(active):
 <header class="site-header"><div class="bar">
 {logo()}
 <nav class="site-nav" aria-label="Main">{links}</nav>
-<div class="nav-actions"><a href="{u('consult-list.html')}" class="list-link" aria-label="My Consult List"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M9 3.5V2.5h6v1M8.5 9h7M8.5 13h7M8.5 17h4"/></svg><span class="list-count" hidden></span></a>{btn("Log In", u("waitlist.html"), "ghost", "min-height: 44px; padding: 0 22px; font-size: 14px", 'class="login" data-portal')}{consult("Get Started", extra="min-height: 44px; padding: 0 24px; font-size: 14px").replace("<a ", '<a class="cta" ', 1)}
+<div class="nav-actions"><a href="{u('consult-list.html')}" class="list-link" aria-label="My Consult List"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M9 3.5V2.5h6v1M8.5 9h7M8.5 13h7M8.5 17h4"/></svg><span class="list-count" hidden></span></a>{btn("Log In", u("waitlist.html"), "ghost", "min-height: 44px; padding: 0 22px; font-size: 14px", 'class="login" data-portal')}{consult("Get Started", extra="min-height: 44px; padding: 0 24px; font-size: 14px").replace('class="btn"', 'class="btn cta"', 1)}
 <button class="menu-btn" type="button" aria-label="Menu" aria-expanded="false"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true" fill="none" stroke="{INK}" stroke-width="1.5"><path d="M3 7h16M3 15h16"/></svg></button></div>
 </div></header>'''
 
@@ -181,7 +182,7 @@ def values_panel(title, vals, top=56):
 def why_band(vals):
     eye = "font-size: 12px; letter-spacing: 0.24em; font-weight: 500"
     cells = "".join(f'''<div style="padding-top: 22px; border-top: 1px solid rgba(192,170,150,0.55)"><div style="{eye}; color: {TAN}; margin-bottom: 14px">0{i}</div><h3 style="margin: 0; font-family: {SERIF}; font-weight: 400; font-size: 26px; line-height: 1.15; color: {BG}">{t}.</h3><p style="margin: 12px 0 0; font-size: 16px; line-height: 1.6; color: #ADB7BD">{d}</p></div>''' for i, (_, t, d) in enumerate(vals, 1))
-    strip = "".join(f'<div style="height: 300px; border-radius: 8px; overflow: hidden"><img src="{u("assets/img/" + k)}" alt="" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: {pos}; display: block"></div>' for k, pos in [("h_about.jpg", "50% 30%"), ("sema.jpg", "50% 45%"), ("h_how.jpg", "50% 30%")])
+    strip = "".join(f'<div class="zoom" style="height: 300px; border-radius: 8px; overflow: hidden"><img src="{u("assets/img/" + k)}" alt="" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: {pos}; display: block"></div>' for k, pos in [("h_about.jpg", "50% 30%"), ("sema.jpg", "50% 45%"), ("h_how.jpg", "50% 30%")])
     return f'''<section style="background: {NAVY}; padding: 104px 0 96px"><div style="{WRAP}">
 <div style="display: flex; flex-wrap: wrap; gap: 56px 72px">
 <div style="flex: 1 1 300px; max-width: 380px"><div style="{eye}; color: {TAN}; margin-bottom: 18px">WHY 46 HEALTH</div>{H("h2", 52, "Medicine,<br>made personal.", "color: " + BG + "; line-height: 1.08")}
@@ -191,8 +192,8 @@ def why_band(vals):
 
 def cat_card(c, cta="Learn More", tall=False):
     href, _, t, d, img = c
-    return f'''<article style="background: {CARD}; border-radius: 8px; padding: 16px; display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(20,29,33,0.06)">
-<img src="{u('assets/img/' + img)}" alt="" style="width: 100%; height: {300 if tall else 220}px; object-fit: cover; border-radius: 6px; display: block">
+    return f'''<article class="hover-card" style="background: {CARD}; border-radius: 8px; padding: 16px; display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(20,29,33,0.06)">
+<div class="zoom" style="border-radius: 6px; overflow: hidden"><img src="{u('assets/img/' + img)}" alt="" style="width: 100%; height: {300 if tall else 220}px; object-fit: cover; display: block"></div>
 <div style="padding: 24px 10px 8px; display: flex; flex-direction: column; gap: 10px; flex: 1"><h3 style="margin: 0; {LABEL}; font-size: 17px; line-height: 1.35">{t}</h3><p style="margin: 0; font-size: 15px; line-height: 1.6">{d}</p><div style="margin-top: auto; padding-top: 8px">{link(cta + f'<span class="sr-only"> about {t}</span>', u(href))}</div></div></article>'''
 
 def cat_grid(cta="Learn More"):
@@ -222,19 +223,19 @@ def product_card(p):
     href = u(ppath(p))
     name = E(p["name"])
     if p["photo"]:
-        media = f'<img src="{u("assets/img/" + p["image"])}" alt="" loading="lazy" style="display: block; width: 100%; aspect-ratio: 921 / 722; object-fit: cover">'
+        media = f'<div class="zoom" style="overflow: hidden"><img src="{u("assets/img/" + p["image"])}" alt="" loading="lazy" style="display: block; width: 100%; aspect-ratio: 921 / 722; object-fit: cover"></div>'
         title = f'<h3 style="margin: 0; font-size: 14px; letter-spacing: 0.06em; font-weight: 600; text-transform: uppercase">{name}</h3><div style="font-size: 13px; color: {MUTED}">{E(p["detail"])}</div>'
         u_html = f'<span style="font-size: 13px; color: {MUTED}; font-weight: 400"> / {unit}</span>' if unit else ""
         unit_line = ""
     else:
         blend = "; mix-blend-mode: multiply" if p["image"] == "gel.png" else ""
-        media = f'<div style="height: 150px; display: flex; align-items: center; justify-content: center; padding-top: 16px"><img src="{u("assets/img/" + p["image"])}" alt="" loading="lazy" style="max-height: 100px; max-width: 60%; object-fit: contain{blend}"></div>'
+        media = f'<div class="zoom" style="height: 150px; display: flex; align-items: center; justify-content: center; padding-top: 16px"><img src="{u("assets/img/" + p["image"])}" alt="" loading="lazy" style="max-height: 100px; max-width: 60%; object-fit: contain{blend}"></div>'
         title = f'<h3 style="margin: 0; font-size: 13.5px; letter-spacing: 0.03em; font-weight: 500; line-height: 1.4; text-transform: uppercase">{name}</h3>'
         u_html = ""
         unit_line = f'<div style="font-size: 12px; color: {MUTED}">{E(unit)}</div>' if unit else ""
     badge = NEW if p["new"] else ""
     toggle = list_toggle(p)
-    return f'''<article style="position: relative; background: {TAUPE}; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; text-align: center">
+    return f'''<article class="hover-card" style="position: relative; background: {TAUPE}; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; text-align: center">
 <a href="{href}" class="card-link" style="display: flex; flex-direction: column; flex: 1">{media}{badge}
 <div style="padding: 18px 18px 0; display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1">{title}
 <div style="font-size: 20px; font-weight: 500; font-variant-numeric: tabular-nums; margin-top: auto; padding-top: 10px">{E(price_text(p))}{u_html}</div>{unit_line}</div></a>{toggle}

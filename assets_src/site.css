@@ -133,3 +133,13 @@ details[open] > summary svg { transform: rotate(180deg); }
 /* 46 chromosomes panel: full-bleed background photo */
 .chromo-panel>div{min-height:max(520px,33vw);display:flex;align-items:center}
 @media (max-width:900px){.chromo-panel{background-position:78% center!important}.chromo-panel::before{content:"";position:absolute;inset:0;background:rgba(6,26,35,.55)}}
+
+/* Hover: cards lift, photos zoom, buttons rise (pointer devices only, respects reduced motion) */
+.hover-card,.btn{transition:transform .28s ease,box-shadow .28s ease}
+.zoom img{transition:transform .5s ease}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+.hover-card:hover{transform:translateY(-4px);box-shadow:0 14px 32px -12px rgba(20,29,33,.28)!important}
+.hover-card:hover .zoom img,.zoom:hover>img{transform:scale(1.04)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px -8px rgba(20,29,33,.35)}
+.list-toggle{transition:transform .2s ease}.list-toggle:hover{transform:scale(1.08)}
+}
