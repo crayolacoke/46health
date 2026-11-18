@@ -143,3 +143,11 @@ details[open] > summary svg { transform: rotate(180deg); }
 .btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px -8px rgba(20,29,33,.35)}
 .list-toggle{transition:transform .2s ease}.list-toggle:hover{transform:scale(1.08)}
 }
+
+/* Shimmer on consultation buttons: a soft light sweep every few seconds */
+.btn[data-intake]{position:relative;overflow:hidden;isolation:isolate}
+.btn[data-intake]::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:45%;z-index:-1;pointer-events:none;
+background:linear-gradient(100deg,transparent 0%,rgba(255,255,255,.08) 30%,rgba(255,255,255,.38) 50%,rgba(255,255,255,.08) 70%,transparent 100%);
+transform:skewX(-20deg);animation:btn-shimmer 3.6s ease-in-out infinite}
+@keyframes btn-shimmer{0%{left:-60%}45%,100%{left:130%}}
+@media (prefers-reduced-motion:reduce){.btn[data-intake]::after{animation:none;display:none}}
