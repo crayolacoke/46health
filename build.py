@@ -238,7 +238,7 @@ def product_card(p):
     return f'''<article class="hover-card" style="position: relative; background: {TAUPE}; border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; text-align: center">
 <a href="{href}" class="card-link" style="display: flex; flex-direction: column; flex: 1">{media}{badge}
 <div style="padding: 18px 18px 0; display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1">{title}
-<div style="font-size: 20px; font-weight: 500; font-variant-numeric: tabular-nums; margin-top: auto; padding-top: 10px">{E(price_text(p))}{u_html}</div>{unit_line}</div></a>{toggle}
+<div style="font-size: 20px; font-weight: 500; font-variant-numeric: tabular-nums; margin-top: auto; padding-top: 10px">{'<span style="font-size: 12px; letter-spacing: 0.1em; font-weight: 400; color: ' + MUTED + '">FROM </span>' if p["id"] in ("sema", "tirz") else ""}{E(price_text(p))}{u_html}</div>{unit_line}</div></a>{toggle}
 <div style="padding: 12px 18px 22px; display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap">{consult("Get Started", p["slug"], extra="min-height: 40px; padding: 0 20px; font-size: 13px")}{link('Learn More<span class="sr-only"> about ' + name + '</span>', href, "font-size: 13px")}</div>
 </article>'''
 
@@ -264,7 +264,7 @@ PAGES = {
     ("skin", "Skin", ids("ghk"), "Copper peptide for skin. See Skin &amp; Aesthetics for compounded skincare."),
     ("sexual", "Sexual Wellness", ids("pt141"), "For desire and arousal, prescribed after a private consult.")]),
  "weight-management.html": ("Lasting change,<br>medically guided.", "GLP-1 medications act on the hormones that regulate appetite and blood sugar. Paired with nutrition, movement and regular check-ins, your provider builds a program that fits your body and your life.", [
-    ("glp1", "GLP-1 programs", ids("sema", "tirz"), "Compounded semaglutide and tirzepatide, dosed weekly and adjusted by your provider. One monthly price at every dose."),
+    ("glp1", "GLP-1 programs", ids("sema", "tirz"), "Compounded semaglutide and tirzepatide, dosed weekly and adjusted by your provider. Your monthly price follows your dose, with no teaser pricing."),
     ("support", "Supporting peptides", ids("mots10", "mots40", "cjc", "sermipa"), "Peptides your provider may add alongside a weight program.")]),
  "mens-health.html": ("Built around how<br>you want to feel.", "Your provider reviews your health history, labs and goals, then recommends options that fit — from testosterone and hair to prescription options for desire and intimacy. No treatment is prescribed without a consult.", [
     ("testosterone", "Testosterone &amp; Hormones", in_group("m_test"), "Testosterone replacement in gels, creams, tablets and injection, plus the support medications often prescribed alongside it."),
@@ -317,6 +317,28 @@ DISCLAIMER_PEPTIDE = "This peptide is not FDA-approved. Much of the research on 
 DISCLAIMER_GLP1 = "Compounded semaglutide and tirzepatide are not FDA-approved and are not generic versions of any brand-name medication. They are prescribed only when a provider determines they meet a patient’s individual clinical needs. Do not use if you or a family member have had medullary thyroid carcinoma or Multiple Endocrine Neoplasia syndrome type 2. Tell your provider if you have a history of pancreatitis, gallbladder disease, kidney problems or diabetic retinopathy, or are pregnant or planning pregnancy."
 DISCLAIMER_COS = "Cosmetic items are not drugs and make no therapeutic claims. Prepared by SureCare Specialty Pharmacy."
 
+TAKEN = {"Injectable": "Self-injected, per your plan", "Injection": "Self-injected, per your plan", "Topical cream": "Applied to the skin", "Topical gel": "Applied to the skin",
+         "Topical": "Applied to the skin", "Topical serum": "Applied to the skin", "Topical solution": "Applied to the scalp", "Shampoo": "Used as a shampoo",
+         "Rapid-dissolve tablet": "Dissolved in the mouth", "Sublingual troche": "Dissolved under the tongue", "Sublingual tablet": "Dissolved under the tongue",
+         "Capsule": "Taken by mouth", "Tablet": "Taken by mouth", "Vaginal gel": "Applied vaginally", "Vaginal cream": "Applied vaginally", "Vaginal": "Applied vaginally",
+         "Vaginal suppository": "Inserted vaginally", "Urethral gel": "Applied as directed", "Nasal spray": "Nasal spray"}
+CROSS = {"weight-management.html": ["nadinj", "testosterone-5pct-chrysin", "progesterone-100-mg-slow", "ascorbic-acid-10pct"],
+         "peptides.html": ["sema", "testosterone-5pct-chrysin", "ascorbic-acid-10pct", "progesterone-100-mg-slow"],
+         "mens-health.html": ["sema", "nadinj", "bpc15", "minoxidil-5pct-melatonin"],
+         "womens-health.html": ["sema", "nadinj", "ascorbic-acid-10pct", "pt141"],
+         "skin-aesthetics.html": ["glow", "ghk", "nadinj", "sema"]}
+
+def quick_facts(p):
+    if p["id"] in ("sema", "tirz"):
+        size, supply = "Weekly dose set by your provider", "Monthly, with refills"
+    elif p["kind"] == "peptide":
+        size, supply = p["detail"].split(" · ")[0] + " per vial", "Per vial"
+    else:
+        size, supply = None, (p["unit"].split(" · ")[0] if p["unit"] else "As prescribed")
+    second = ("Strength", size) if size else ("Form", p["form"])
+    facts = [("Taken", TAKEN.get(p["form"], p["form"])), second, ("Supply", supply), ("Pharmacy", "SureCare · El Paso, TX")]
+    return '<dl class="pp-facts">' + "".join(f'<div><dt>{a}</dt><dd>{E(b)}</dd></div>' for a, b in facts) + '</dl>'
+
 def product_page(p):
     f, gid, gt, siblings = HOME[p["id"]]
     cat = NAV_TITLE[f].replace("&", "&amp;")
@@ -355,11 +377,16 @@ def product_page(p):
     acc = [safety, ("How it’s used", "Your provider sets your dose and schedule and explains how to use it. [Use instructions — supplied by medical team.]"),
            ("Shipping &amp; refills", shipping + " Refills are managed through your patient portal. [Shipping time.]")]
     accs = "".join(f'<details style="border-top: 1px solid #E2DDD6"{" open" if i == 0 else ""}><summary style="list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; min-height: 56px; font-size: 15px; font-weight: 600">{q}{CHEV}</summary><p style="{P}; font-size: 15px; padding-bottom: 18px">{a}</p></details>' for i, (q, a) in enumerate(acc))
-    related = [q for q in siblings if q["id"] != p["id"]][:4]
+    same = [q for q in siblings if q["id"] != p["id"]][:2]
+    cross = [pid(x) for x in CROSS[f]]
+    related, seen = [], {p["id"]}
+    for q in same + cross:
+        if q["id"] not in seen and len(related) < 4:
+            related.append(q); seen.add(q["id"])
     rel = ""
     if related:
         cards = "".join(product_card(q) for q in related)
-        rel = f'<section style="background: {TAUPE}; padding: 56px 0"><div style="{WRAP}">{H("h2", 36, "More in " + gt, "margin-bottom: 32px")}<div style="{grid_fill(250)}; gap: 20px">{cards}</div></div></section>'
+        rel = f'<section style="background: {TAUPE}; padding: 56px 0"><div style="{WRAP}"><div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 32px"><div><p style="{EYEBROW}; font-size: 12px; color: #61757D; margin-bottom: 10px">Across your care</p>{H("h2", 36, "Often discussed alongside")}</div><p style="margin: 0; font-size: 15px; color: {MUTED}; max-width: 360px">Add any of these to your list. One consultation covers them all.</p></div><div style="{grid_fill(250)}; gap: 20px">{cards}</div></div></section>'
     if p["id"] in ("sema", "tirz"):
         disc = DISCLAIMER_GLP1
     elif p["kind"] == "peptide" and p["id"] not in ("nadinj", "nadnasal"):
@@ -381,11 +408,14 @@ def product_page(p):
 <div style="max-width: 560px">
 <p style="{EYEBROW}; font-size: 12px; color: {MUTED}; margin-bottom: 12px">{cat}</p>
 {H("h1", 48, title_html)}
-<div style="font-size: 28px; margin-top: 18px; font-variant-numeric: tabular-nums">{E(price_text(p))}{unit}</div>
+<div style="font-size: 28px; margin-top: 18px; font-variant-numeric: tabular-nums">{'<span style="font-size: 14px; letter-spacing: 0.12em; color: ' + MUTED + '">FROM </span>' if p["id"] in ("sema", "tirz") else ""}{E(price_text(p))}{unit}</div>
 {summary_html}<p style="margin: 18px 0 0; font-size: 17px; line-height: 1.6">{desc}</p>{other_html}
+{quick_facts(p)}
 {cta}
 <button type="button" class="list-btn" data-list-add="{p["slug"]}" data-list-name="{E(p["title"])}" aria-pressed="false"><span class="when-off">+ Add to My Consult List</span><span class="when-on">✓ On your consult list</span></button>
 <p style="margin: 12px 0 0; font-size: 13px; color: {MUTED}; text-align: center">Prescribed only if appropriate after a provider review. <a href="{u('consult-list.html')}">View my list</a></p>
+<div class="pp-note">{LIST_ICON}<span><b>Bring this and anything else to one consultation.</b> Up to 5 medications ship together for one fee.</span></div>
+<div class="pp-incl"><h2>Included with your plan</h2><ul>{"".join(f"<li>{CHECK_DOT}<span>{t}</span></li>" for t in ["Provider consultation and ongoing check-ins", "Dose adjustments as you progress", "Prepared by SureCare Specialty Pharmacy", "Discreet shipping, up to 5 meds for one fee"])}</ul></div>
 <div style="margin-top: 40px; border-bottom: 1px solid #E2DDD6">{accs}</div>
 <p style="margin: 24px 0 0; font-size: 12px; line-height: 1.6; color: {MUTED}">{disc}</p>
 </div></div></div></section>
@@ -457,27 +487,128 @@ def from_price(f):
     suffix = " / month" if f == "weight-management.html" else (" per vial" if f == "peptides.html" else "")
     return f"From ${lo}{suffix}"
 
+def pid(prefix):
+    for p in PRODUCTS:
+        if p["id"] == prefix or p["id"].startswith(prefix):
+            return p
+    raise KeyError(prefix)
+
+def num_text(p):
+    n = price_num(p)
+    return f"${n}" if n else price_text(p)
+
+CHECK_DOT = f'<span aria-hidden="true" style="flex: 0 0 20px; height: 20px; border-radius: 50%; background: #61757D; color: #fff; display: inline-flex; align-items: center; justify-content: center">{CHECK_W}</span>'
+LIST_ICON = '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M9 3.5V2.5h6v1M8.5 9h7M8.5 13h7M8.5 17h4"/></svg>'
+
+HOME_AREAS = [  # (category file, name, count label, example chips, image)
+ ("weight-management.html", "Weight care", "2 GLP-1 programs", ["Semaglutide", "Tirzepatide"], "cat1.jpg"),
+ ("peptides.html", "Peptides &amp; longevity", None, ["BPC-157", "NAD+", "GLOW", "CJC / Ipamorelin"], "cat5.jpg"),
+ ("mens-health.html", "Men’s health &amp; sexual wellness", None, ["Testosterone", "Tadalafil", "Finasteride"], "cat3.jpg"),
+ ("womens-health.html", "Women’s health &amp; sexual wellness", None, ["Progesterone", "Bi-Est", "DHEA"], "cat4.jpg"),
+ ("skin-aesthetics.html", "Skin &amp; hair", None, ["Vitamin C serum", "Kojic acid gel", "Hair solutions"], "cat2.jpg"),
+]
+
+def area_slide(i, a):
+    f, name, count, chips, img = a
+    n = len(HOME_AREAS)
+    count = count or f"{len(page_products(f))} treatments"
+    lo = from_price(f).replace("From ", "").replace(" / month", "/mo").replace(" per vial", "")
+    chip_html = "".join(f'<span class="hc-chip">{c}</span>' for c in chips)
+    plain = re.sub("<[^>]+>", "", name).replace("&amp;", "&")
+    lazy = "" if i == 0 else 'loading="lazy" '
+    return (f'<article class="hc-slide" role="group" aria-roledescription="slide" aria-label="{i + 1} of {n}: {E(plain)}">'
+            f'<a href="{u(f)}" class="hc-media zoom" tabindex="-1" aria-hidden="true"><img src="{u("assets/img/" + img)}" alt="" {lazy}><span class="hc-num">{i + 1} / {n}</span></a>'
+            f'<div class="hc-body"><div class="hc-head"><h3>{name}</h3><span>{count}</span></div>'
+            f'<div class="hc-chips">{chip_html}</div>'
+            f'<div class="hc-foot"><div><span class="hc-from">FROM</span> <span class="hc-price">{lo}</span></div>'
+            f'{btn("Explore " + ARROW + f"<span class=sr-only> {E(plain)}</span>", u(f), extra="min-height: 42px; padding: 0 18px; font-size: 14px")}</div></div></article>')
+
+def home_carousel():
+    slides = "".join(area_slide(i, a) for i, a in enumerate(HOME_AREAS))
+    dots = "".join(f'<button type="button" class="hc-dot" aria-label="Show slide {i + 1}"' + (' aria-current="true"' if i == 0 else "") + '></button>' for i in range(len(HOME_AREAS)))
+    def chev(d):
+        return f'<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="{d}"/></svg>'
+    return (f'<div class="hc" aria-roledescription="carousel" aria-label="Areas of care"><div class="hc-back" aria-hidden="true"></div>'
+            f'<div class="hc-card"><div class="hc-track" tabindex="0">{slides}</div>'
+            f'<div class="hc-controls"><div class="hc-dots">{dots}</div><div class="hc-arrows">'
+            f'<button type="button" class="hc-prev" aria-label="Previous slide">{chev("M11 4L6 9l5 5")}</button>'
+            f'<button type="button" class="hc-next" aria-label="Next slide">{chev("M7 4l5 5-5 5")}</button></div></div></div></div>')
+
+def example_list():
+    items = [(pid("sema"), "Weight care", "Semaglutide"), (pid("testosterone-5pct-chrysin"), "Men’s health", "Testosterone / Chrysin cream"), (pid("ascorbic-acid-10pct"), "Skin", "Vitamin C 10% serum"), (pid("bpc15"), "Peptides", "BPC-157")]
+    rows = "".join(f'<div class="ex-row"><img src="{u("assets/img/" + p["image"])}" alt="" loading="lazy"><div style="flex: 1; min-width: 0"><div class="ex-cat">{c}</div><div class="ex-name">{n}</div></div><div class="ex-price">{num_text(p)}{"/mo" if p["unit"] == "per month" else ""}</div></div>' for p, c, n in items)
+    return (f'<figure class="ex-wrap" style="margin: 0"><div class="ex-back" aria-hidden="true"></div><div class="ex-card">'
+            f'<div style="display: flex; justify-content: space-between; align-items: center; gap: 12px"><div style="display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 600">{LIST_ICON}My Consult List</div><span class="ex-tag">Example</span></div>'
+            f'<div style="font-size: 14px; color: {MUTED}; margin: 6px 0 4px">Four areas of care. One consultation.</div>{rows}'
+            f'<div class="ex-ship">{CHECK_DOT}<span><b style="font-weight: 600">Ships together</b> &middot; up to 5 medications for one shipping fee</span></div></div>'
+            f'<figcaption class="sr-only">Example consult list with semaglutide, a testosterone cream, a vitamin C serum and BPC-157</figcaption></figure>')
+
+GOALS = [
+ ("popular", "Most popular", ["sema", "testosterone-5pct-chrysin", "ascorbic-acid-10pct", "progesterone-100-mg-slow", "bpc15"]),
+ ("weight", "Weight care", ["sema", "tirz"]),
+ ("hormones", "Hormones", ["testosterone-cypionate", "testosterone-5pct-chrysin", "testosterone-0-1pct-10pct", "progesterone-100-mg-slow", "bi-est-topical-cream"]),
+ ("sexual", "Sexual wellness", ["tadalafil-22", "pt141", "sildenafil-25-mg-tadalafil", "sildenafil-1pct-arginine", "tadalafil-20-mg-oxytocin"]),
+ ("recovery", "Recovery", ["bpc15", "bpctb30", "klow", "bpctbkpv", "cjc"]),
+ ("longevity", "Longevity", ["nadinj", "nadnasal", "mots10", "epi", "serm"]),
+ ("skin", "Skin &amp; hair", ["ascorbic-acid-10pct", "kojic", "glow", "ghk", "minoxidil-5pct-melatonin"]),
+]
+
+def shop_by_goal():
+    tabs = "".join(f'<button type="button" role="tab" id="goal-tab-{g}" aria-controls="goal-{g}" aria-selected="{"true" if i == 0 else "false"}" tabindex="{0 if i == 0 else -1}">{t}</button>' for i, (g, t, _) in enumerate(GOALS))
+    panels = "".join(f'<div role="tabpanel" id="goal-{g}" aria-labelledby="goal-tab-{g}" class="goal-panel"' + ("" if i == 0 else " hidden") + f'><div style="{grid_fill(210)}; gap: 18px">{"".join(product_card(pid(x)) for x in xs)}</div></div>' for i, (g, _, xs) in enumerate(GOALS))
+    return (f'<section style="background: {BG}; padding: clamp(64px, 8vw, 96px) 0"><div style="{WRAP}">'
+            f'<div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 24px"><div><p style="{EYEBROW}; font-size: 12px; color: #61757D; margin-bottom: 12px">Find your program</p>{H("h2", 46, "Shop by goal")}</div>{link("View all treatments", u("treatments.html"))}</div>'
+            f'<div class="goal-tabs" role="tablist" aria-label="Goals">{tabs}</div>{panels}</div></section>')
+
 def home():
-    trust = "".join(f'<li style="flex: 1 1 200px; text-align: center; font-size: 14px; letter-spacing: 0.1em; line-height: 1.5; padding: 8px 16px">{t}</li>' for t in ["LICENSED U.S.<br>PROVIDERS", "PREPARED BY SURECARE<br>SPECIALTY PHARMACY", "DISCREET<br>SHIPPING", "ONGOING PROVIDER<br>SUPPORT"])
-    steps = [("Tell us about you.", "Complete a short online health intake. About 10 minutes."),
-             ("Meet your provider.", "A licensed provider reviews your history, may order labs, and decides with you whether treatment is appropriate."),
-             ("Receive your plan.", "If prescribed, your medication is prepared by our partner pharmacy and shipped to your door, with follow-ups as you go.")]
+    checks = ["Men’s and women’s care", f"{len(PRODUCTS)} pharmacy-made treatments", "One consult for everything", "Up to 5 meds ship for one fee", "Licensed U.S. providers", "No membership fees"]
+    checkgrid = "".join(f'<li style="display: flex; align-items: center; gap: 10px; font-size: 15px">{CHECK_DOT}<span>{c}</span></li>' for c in checks)
+    hero_html = (f'<section class="home-hero"><div class="home-hero-in" style="{WRAP}">'
+        f'<div class="home-hero-copy"><p style="{EYEBROW}; font-size: 12px; color: #61757D">Physician-guided telehealth · XX · XY</p>'
+        + H("h1", 60, "One provider so that you can be the best version of you.", "line-height: 1.08")
+        + f'<p style="margin: 22px 0 0; max-width: 540px; font-size: 18px; line-height: 1.6; color: {MUTED}">Build a list of everything you want to ask about. A licensed provider reviews it with you in one consultation, and SureCare Specialty Pharmacy prepares what’s prescribed.</p>'
+        f'<ul class="hero-checks">{checkgrid}</ul>'
+        f'<div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 34px">{consult()}{btn("Explore All Treatments", u("treatments.html"), "ghost")}</div>'
+        f'<p style="margin: 14px 0 0; font-size: 13px; color: {MUTED}">Intake takes about 10 minutes. A provider typically reviews it within 4 hours.</p></div>'
+        f'{home_carousel()}</div></section>')
+    trust = "".join(f'<li style="flex: 1 1 200px; text-align: center; font-size: 13px; letter-spacing: 0.16em; line-height: 1.5; padding: 8px 16px">{t}</li>' for t in ["LICENSED U.S. PROVIDERS", "PREPARED BY SURECARE PHARMACY", "DISCREET SHIPPING", "NO MEMBERSHIP FEES"])
+    steps = [("Add anything", "Tap + on any treatment, from any category. Your list stays on your device."),
+             ("One intake", "Health history, medications and goals, once. About 10 minutes."),
+             ("One provider", "A licensed provider reviews your whole list and decides with you what’s appropriate."),
+             ("One shipment", "SureCare prepares everything prescribed. Up to 5 medications ship for one fee.")]
+    steps_html = "".join(f'<li style="display: flex; gap: 16px; padding: 16px 0; border-top: 1px solid #E3DED6"><span style="font-size: 12px; letter-spacing: 0.2em; font-weight: 600; color: #8A7663; padding-top: 4px">0{i}</span><div><h3 style="margin: 0; font-size: 18px; font-weight: 600">{t}</h3><p style="margin: 4px 0 0; font-size: 15px; line-height: 1.55; color: {MUTED}">{d}</p></div></li>' for i, (t, d) in enumerate(steps, 1))
+    one = (f'<section style="background: {BG}; padding: clamp(64px, 8vw, 96px) 0"><div style="{WRAP}; display: flex; flex-wrap: wrap; gap: clamp(40px, 6vw, 80px); align-items: center">'
+        f'<div style="flex: 1 1 440px"><p style="{EYEBROW}; font-size: 12px; color: #61757D; margin-bottom: 14px">How it works</p>' + H("h2", 48, "Bring everything to one consultation.")
+        + f'<p style="margin: 20px 0 24px; font-size: 17px; line-height: 1.65; color: {MUTED}">Most telehealth brands treat one thing. Your weight, hormones, skin and recovery are connected, so your provider looks at them together.</p>'
+        f'<ol style="list-style: none; margin: 0; padding: 0; border-bottom: 1px solid #E3DED6">{steps_html}</ol>'
+        f'<div style="display: flex; gap: 18px; flex-wrap: wrap; align-items: center; margin-top: 28px">{consult()}{link("See how it works", u("how-it-works.html"))}</div></div>'
+        f'<div style="flex: 1 1 380px; display: flex; justify-content: center">{example_list()}</div></div></section>')
+    chromo = (f'<section class="chromo-panel" style="position: relative; background: #061A23 url({u("assets/img/chromo.jpg")}) 70% center / cover no-repeat; color: {BG}; overflow: hidden"><div style="{WRAP}; position: relative; z-index: 1"><div style="max-width: 620px; padding: 104px 0">'
+        + H("h2", 64, "46 chromosomes.<br>XX or XY. One of you.", "color: " + BG + "; line-height: 1.06")
+        + f'<div style="width: 64px; height: 1.5px; background: {TAN}; margin: 32px 0"></div><p style="margin: 0; font-size: 13px; letter-spacing: 0.26em; line-height: 1.8; color: {TAN}">MEN’S &nbsp;·&nbsp; WOMEN’S &nbsp;·&nbsp; WEIGHT &nbsp;·&nbsp; PEPTIDES &nbsp;·&nbsp; SKIN</p>'
+        f'<p style="margin: 24px 0 0; max-width: 480px; font-size: 17px; line-height: 1.65; color: #ADB7BD">Care built for the whole person, not one condition. Men’s and women’s health, weight, recovery and skin, under one licensed provider.</p></div></div></section>')
     vals = [("rx", "Medicine, not a marketplace", "Every prescription starts with a licensed provider who reviews your health first."),
             ("dial", "Personalized, not one-size-fits-all", "Dosing and protocols are set for you and adjusted as you progress."),
             ("shield", "A pharmacy you can trust", "Medications are prepared by SureCare Specialty Pharmacy, a licensed 503A compounding pharmacy in El Paso, Texas."),
             ("chat", "Support that keeps going", "Follow-ups, dose adjustments and refills are handled through your patient portal.")]
     prices = "".join(f'<div style="flex: 1 1 200px; border-top: 1px solid #3A464C; padding-top: 18px"><div style="font-family: {SERIF}; font-size: 40px; color: #FFFFFF">{a}</div><div style="margin-top: 8px; font-size: 14px; letter-spacing: 0.06em; color: #ADB7BD">{b}</div></div>' for a, b in [("$69", "PEPTIDES FROM, PER VIAL"), ("$139", "GLP-1 PROGRAMS FROM, PER MONTH"), ("Up to 5", "MEDICATIONS SHIP FOR ONE FEE"), ("$0", "MEMBERSHIP FEES")])
-    body = (hero("h_home.jpg", BG, "The pursuit of excellence.",
-        "Personalized peptide, NAD+, hormone and weight management programs from licensed providers, prepared by SureCare Specialty Pharmacy in El Paso, Texas, and delivered to your door.",
-        "Physician-guided telehealth", consult() + link("Explore Treatments", u("treatments.html")))
-      + f'<section aria-label="Why patients choose us" style="background: #61757D; color: #FFFFFF; padding: 28px 0"><ul style="{WRAP}; list-style: none; margin-top: 0; margin-bottom: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between">{trust}</ul></section>'
-      + f'<section style="padding: 80px 0 72px"><div style="{WRAP}">{H("h2", 44, "The 3-step process", "text-align: center; margin-bottom: 56px")}{bignum_steps(steps)}<div style="text-align: center; margin-top: 48px">{btn("See How It Works", u("how-it-works.html"))}</div></div></section>'
-      + f'''<section class="chromo-panel" style="position: relative; background: #061A23 url({u("assets/img/chromo.jpg")}) 70% center / cover no-repeat; color: {BG}; overflow: hidden"><div style="{WRAP}; position: relative; z-index: 1"><div style="max-width: 620px; padding: 104px 0">{H("h2", 64, "46 chromosomes.<br>One of you.", "color: " + BG + "; line-height: 1.06")}<div style="width: 64px; height: 1.5px; background: {TAN}; margin: 32px 0"></div><p style="margin: 0; font-size: 13px; letter-spacing: 0.28em; color: {TAN}">PEPTIDES &nbsp;·&nbsp; LONGEVITY &nbsp;·&nbsp; PERFORMANCE &nbsp;·&nbsp; WELLNESS</p><p style="margin: 28px 0 0; max-width: 460px; font-size: 17px; line-height: 1.65; color: #ADB7BD">Every protocol starts with you: your history, your goals, your biology. A licensed provider builds the plan around the person, not the product.</p></div></div></section>'''
-      + f'<section style="background: {TAUPE}; padding: 72px 0"><div style="{WRAP}"><div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 40px">{H("h2", 44, "Treatments")}{link("View all treatments", u("treatments.html"))}</div>{cat_grid()}</div></section>'
-      + why_band(vals)
-      + f'''<section style="background: {NAVY}; color: #FFFFFF; padding: 0 0 80px"><div style="{WRAP}"><div style="border-top: 1px solid rgba(192,170,150,0.3); padding-top: 80px"><div style="text-align: center; max-width: 640px; margin: 0 auto">{H("h2", 56, "Clear pricing.<br>No surprises.", "color: #F2F0EA; line-height: 1.08")}<p style="margin: 24px 0 0; font-size: 17px; line-height: 1.6; color: #F2F0EA">Your consultation fee and medication price are shown before you commit. No hidden membership fees.</p></div><div style="display: flex; flex-wrap: wrap; gap: 32px; margin-top: 64px">{prices}</div><div style="text-align: center; margin-top: 56px">{btn("See Pricing", u("pricing.html"), "light")}</div></div></div></section>'''
-      + cta_band())
-    return document("46 Health", "Physician-guided telehealth: peptides, NAD+, hormones and weight management from licensed providers, prepared by SureCare Specialty Pharmacy and delivered to your door.", body)
+    pricing_band = (f'<section style="background: {NAVY}; color: #FFFFFF; padding: 0 0 80px"><div style="{WRAP}"><div style="border-top: 1px solid rgba(192,170,150,0.3); padding-top: 80px"><div style="text-align: center; max-width: 640px; margin: 0 auto">'
+        + H("h2", 56, "Clear pricing.<br>No surprises.", "color: #F2F0EA; line-height: 1.08")
+        + f'<p style="margin: 24px 0 0; font-size: 17px; line-height: 1.6; color: #F2F0EA">Your consultation fee and medication price are shown before you commit. No membership fees, and no teaser prices that jump later.</p></div>'
+        f'<div style="display: flex; flex-wrap: wrap; gap: 32px; margin-top: 64px">{prices}</div><div style="text-align: center; margin-top: 56px">{btn("See Pricing", u("pricing.html"), "light")}</div></div></div></section>')
+    qs = [FAQ[0][1][0], FAQ[0][1][1], FAQ[1][1][0], FAQ[0][1][3], FAQ[3][1][0]]
+    faq_items = "".join(f'<details class="home-faq"><summary>{q}{CHEV}</summary><p>{a}</p></details>' for q, a in qs)
+    faq_html = (f'<section style="background: {WHITE}; padding: clamp(64px, 8vw, 96px) 0"><div style="{WRAP}; display: flex; flex-wrap: wrap; gap: clamp(32px, 6vw, 72px)">'
+        f'<div style="flex: 1 1 300px"><p style="{EYEBROW}; font-size: 12px; color: #61757D; margin-bottom: 12px">FAQ</p>' + H("h2", 46, "Questions, answered")
+        + f'<div style="margin-top: 20px">{link("See all FAQs", u("faq.html"))}</div></div>'
+        f'<div style="flex: 2 1 520px; border-bottom: 1px solid #E3DED6">{faq_items}</div></div></section>')
+    floatbar = (f'<div class="float-bar" hidden><a href="{u("consult-list.html")}" class="float-count">{LIST_ICON}<span><b class="float-num">0</b> on your consult list</span></a>'
+        + consult("Start Your Consultation", extra="min-height: 44px; padding: 0 22px; font-size: 14px") + '</div>')
+    body = (hero_html
+      + f'<section aria-label="Why patients choose us" style="background: #61757D; color: #FFFFFF; padding: 22px 0"><ul style="{WRAP}; list-style: none; margin-top: 0; margin-bottom: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between">{trust}</ul></section>'
+      + one + chromo + shop_by_goal() + why_band(vals) + pricing_band + faq_html + cta_band() + floatbar)
+    return document("46 Health", "Physician-guided telehealth for men and women: weight care, peptides, hormones, sexual wellness and skin from licensed providers, prepared by SureCare Specialty Pharmacy.", body,
+                    scripts=f'\n<script src="{u("assets/home.js") + "?v=" + ASSET_V}"></script>')
 
 def treatments():
     body = (hero("h_treat.jpg", "#D9D3D0", "Therapies built around your goals.",
@@ -692,7 +823,7 @@ def main():
     shutil.copytree(os.path.join(ROOT, "assets_src", "img"), os.path.join(DIST, "assets", "img"), dirs_exist_ok=True)
     write("assets/favicon.svg", FAVICON)
     write("CNAME", "fortysixhealth.com\n")
-    for js in ("consult-list.js", "pricing.js"):
+    for js in ("consult-list.js", "pricing.js", "home.js"):
         shutil.copy(os.path.join(ROOT, "assets_src", js), os.path.join(DIST, "assets", js))
     PFX = ""
     pages = {"index.html": home(), "treatments.html": treatments(), "how-it-works.html": how(), "about.html": about(),
