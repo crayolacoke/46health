@@ -245,3 +245,27 @@ body.has-float-bar .toast{bottom:88px}
   .goal-panel>div::-webkit-scrollbar{display:none}
   .goal-panel>div>article{flex:0 0 74%;scroll-snap-align:start}
 }
+
+/* ---------- How it works: horizontal rail ---------- */
+.rail-sec{background:#D3CCC4;padding:clamp(64px,8vw,104px) 0}
+.rail-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
+.rail-head>div:first-child{max-width:640px}
+.rail{list-style:none;margin:clamp(48px,6vw,72px) 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:32px;position:relative}
+.rail::before{content:"";position:absolute;left:11px;right:12px;top:11px;height:1.6px;background:#C0AA96}
+.rail::after{content:"";position:absolute;right:12px;top:6px;width:9px;height:9px;border-top:1.6px solid #C0AA96;border-right:1.6px solid #C0AA96;transform:rotate(45deg)}
+.rail-step{position:relative;padding-top:64px}
+.rail-node{position:absolute;top:0;left:0;width:22px;height:22px;border-radius:50%;background:#fff;border:1.5px solid #141D21;box-sizing:border-box;z-index:1}
+.rail-step.last .rail-node{background:#141D21}
+.rail-n{font-size:11px;letter-spacing:.22em;font-weight:600;color:#8A7663}
+.rail-big{margin-top:14px;font-family:Prata,Georgia,serif;font-size:clamp(32px,3vw,42px);line-height:1.1}
+.rail-step h3{margin:18px 0 0;font-size:19px;font-weight:600}
+.rail-step p{margin:8px 0 0;font-size:15px;line-height:1.6;color:#4A545B;max-width:250px}
+.rail-pill{margin-top:16px;display:inline-flex;align-items:center;gap:8px;background:#fff;border-radius:999px;padding:7px 14px 7px 8px;font-size:13px}
+@media (max-width:900px){
+  .rail{grid-template-columns:1fr;gap:0}
+  .rail::before{left:10px;right:auto;top:11px;bottom:20px;width:1.6px;height:auto}
+  .rail::after{right:auto;left:6px;top:auto;bottom:18px;transform:rotate(135deg)}
+  .rail-step{padding:0 0 40px 48px}
+  .rail-step.last{padding-bottom:44px}
+  .rail-big{margin-top:8px}
+}

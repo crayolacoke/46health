@@ -560,6 +560,24 @@ def shop_by_goal():
             f'<div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 24px"><div><p style="{EYEBROW}; font-size: 12px; color: #61757D; margin-bottom: 12px">Find your program</p>{H("h2", 46, "Shop by goal")}</div>{link("View all treatments", u("treatments.html"))}</div>'
             f'<div class="goal-tabs" role="tablist" aria-label="Goals">{tabs}</div>{panels}</div></section>')
 
+RAIL_STEPS = [("Your list", "Add anything", "Tap + on any treatment, from any category.", "Stays on your device"),
+              ("10 minutes", "One intake", "Health history, medications and goals, once.", "One form for everything"),
+              ("Within 4 hrs", "One provider", "A licensed provider reviews your whole list with you.", "Typical review time"),
+              ("1 fee", "One shipment", "SureCare prepares everything prescribed.", "Up to 5 medications")]
+
+def rail_section():
+    steps = "".join(
+        f'<li class="rail-step{" last" if i == len(RAIL_STEPS) - 1 else ""}"><span class="rail-node" aria-hidden="true"></span>'
+        f'<div class="rail-n">0{i + 1}</div><div class="rail-big">{big}</div>'
+        f'<h3>{t}</h3><p>{d}</p><span class="rail-pill">{CHECK_DOT}{pill}</span></li>'
+        for i, (big, t, d, pill) in enumerate(RAIL_STEPS))
+    return (f'<section class="rail-sec"><div style="{WRAP}">'
+        f'<div class="rail-head"><div><p style="{EYEBROW}; font-size: 12px; color: #61757D; margin-bottom: 14px">How it works</p>'
+        + H("h2", 52, "Bring everything to<br>one consultation.", "line-height: 1.08")
+        + f'<p style="margin: 18px 0 0; font-size: 17px; line-height: 1.6; color: {MUTED}">One list, one intake, one provider and one shipment, whatever you’re treating.</p></div>'
+        f'<div class="rail-cta">{consult()}</div></div>'
+        f'<ol class="rail">{steps}</ol></div></section>')
+
 def home():
     checks = ["Men’s and women’s care", f"{len(PRODUCTS)} pharmacy-made treatments", "One consult for everything", "Up to 5 meds ship for one fee", "Licensed U.S. providers", "No membership fees"]
     checkgrid = "".join(f'<li style="display: flex; align-items: center; gap: 10px; font-size: 15px">{CHECK_DOT}<span>{c}</span></li>' for c in checks)
@@ -606,7 +624,7 @@ def home():
         + consult("Start Your Consultation", extra="min-height: 44px; padding: 0 22px; font-size: 14px") + '</div>')
     body = (hero_html
       + f'<section aria-label="Why patients choose us" style="background: #61757D; color: #FFFFFF; padding: 22px 0"><ul style="{WRAP}; list-style: none; margin-top: 0; margin-bottom: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between">{trust}</ul></section>'
-      + one + chromo + shop_by_goal() + why_band(vals) + pricing_band + faq_html + cta_band() + floatbar)
+      + rail_section() + chromo + shop_by_goal() + why_band(vals) + pricing_band + faq_html + cta_band() + floatbar)
     return document("46 Health", "Physician-guided telehealth for men and women: weight care, peptides, hormones, sexual wellness and skin from licensed providers, prepared by SureCare Specialty Pharmacy.", body,
                     scripts=f'\n<script src="{u("assets/home.js") + "?v=" + ASSET_V}"></script>')
 
