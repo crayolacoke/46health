@@ -118,6 +118,15 @@ def document(title, desc, body, active="", scripts=""):
 <meta property="og:title" content="{E(t)}">
 <meta property="og:description" content="{E(desc)}">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="46 Health">
+<meta property="og:url" content="https://fortysixhealth.com/">
+<meta property="og:image" content="https://fortysixhealth.com/assets/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="46 Health">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://fortysixhealth.com/assets/img/og.jpg">
+<link rel="apple-touch-icon" href="{u('assets/img/apple-touch-icon.png')}">
 <link rel="icon" href="{u('assets/favicon.svg')}" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Prata&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
