@@ -500,12 +500,12 @@ def num_text(p):
 CHECK_DOT = f'<span aria-hidden="true" style="flex: 0 0 20px; height: 20px; border-radius: 50%; background: #61757D; color: #fff; display: inline-flex; align-items: center; justify-content: center">{CHECK_W}</span>'
 LIST_ICON = '<svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="5" y="3.5" width="14" height="17" rx="2"/><path d="M9 3.5V2.5h6v1M8.5 9h7M8.5 13h7M8.5 17h4"/></svg>'
 
-HOME_AREAS = [  # (category file, name, count label, example chips, image)
- ("weight-management.html", "Weight care", "2 GLP-1 programs", ["Semaglutide", "Tirzepatide"], "cat1.jpg"),
- ("peptides.html", "Peptides &amp; longevity", None, ["BPC-157", "NAD+", "GLOW", "CJC / Ipamorelin"], "cat5.jpg"),
- ("mens-health.html", "Men’s health &amp; sexual wellness", None, ["Testosterone", "Tadalafil", "Finasteride"], "cat3.jpg"),
- ("womens-health.html", "Women’s health &amp; sexual wellness", None, ["Progesterone", "Bi-Est", "DHEA"], "cat4.jpg"),
- ("skin-aesthetics.html", "Skin &amp; hair", None, ["Vitamin C serum", "Kojic acid gel", "Hair solutions"], "cat2.jpg"),
+HOME_AREAS = [  # (category file, name, count label, example chips, image). Lifestyle photos kept as cat1-cat5.jpg (weight, skin, mens, womens, peptides) if we switch back.
+ ("weight-management.html", "Weight care", "2 GLP-1 programs", ["Semaglutide", "Tirzepatide"], "hero_weight.jpg"),
+ ("peptides.html", "Peptides &amp; longevity", None, ["BPC-157", "NAD+", "GLOW", "CJC / Ipamorelin"], "hero_peptides.jpg"),
+ ("mens-health.html", "Men’s health &amp; sexual wellness", None, ["Testosterone", "Tadalafil", "Finasteride"], "hero_mens.jpg"),
+ ("womens-health.html", "Women’s health &amp; sexual wellness", None, ["Progesterone", "Bi-Est", "DHEA"], "hero_womens.jpg"),
+ ("skin-aesthetics.html", "Skin &amp; hair", None, ["Vitamin C serum", "Kojic acid gel", "Hair solutions"], "hero_skin.jpg"),
 ]
 
 def area_slide(i, a):
