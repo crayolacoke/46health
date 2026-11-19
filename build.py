@@ -119,7 +119,6 @@ def document(title, desc, body, active="", scripts=""):
 <meta property="og:description" content="{E(desc)}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="46 Health">
-<meta property="og:url" content="https://fortysixhealth.com/">
 <meta property="og:image" content="https://fortysixhealth.com/assets/img/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
