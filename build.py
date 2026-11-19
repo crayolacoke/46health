@@ -584,7 +584,7 @@ def home():
         f'<div style="display: flex; gap: 18px; flex-wrap: wrap; align-items: center; margin-top: 28px">{consult()}{link("See how it works", u("how-it-works.html"))}</div></div>'
         f'<div style="flex: 1 1 380px; display: flex; justify-content: center">{example_list()}</div></div></section>')
     chromo = (f'<section class="chromo-panel" style="position: relative; background: #061A23 url({u("assets/img/chromo.jpg")}) 70% center / cover no-repeat; color: {BG}; overflow: hidden"><div style="{WRAP}; position: relative; z-index: 1"><div style="max-width: 620px; padding: 104px 0">'
-        + H("h2", 64, "46 chromosomes.<br>XX or XY. One of you.", "color: " + BG + "; line-height: 1.06")
+        + H("h2", 64, "46 chromosomes.<br>Only one of you.", "color: " + BG + "; line-height: 1.06")
         + f'<div style="width: 64px; height: 1.5px; background: {TAN}; margin: 32px 0"></div><p style="margin: 0; font-size: 13px; letter-spacing: 0.26em; line-height: 1.8; color: {TAN}">MEN’S &nbsp;·&nbsp; WOMEN’S &nbsp;·&nbsp; WEIGHT &nbsp;·&nbsp; PEPTIDES &nbsp;·&nbsp; SKIN</p>'
         f'<p style="margin: 24px 0 0; max-width: 480px; font-size: 17px; line-height: 1.65; color: #ADB7BD">Care built for the whole person, not one condition. Men’s and women’s health, weight, recovery and skin, under one licensed provider.</p></div></div></section>')
     vals = [("rx", "Medicine, not a marketplace", "Every prescription starts with a licensed provider who reviews your health first."),
