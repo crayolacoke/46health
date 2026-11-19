@@ -157,7 +157,7 @@ transform:skewX(-20deg);animation:btn-shimmer 3.6s ease-in-out infinite}
 .home-hero-in{display:grid;grid-template-columns:1.12fr 1fr;gap:clamp(40px,6vw,80px);align-items:center}
 .hero-checks{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px 24px;max-width:560px}
 .hc{position:relative;min-width:0}
-.hc-back{position:absolute;inset:22px -18px -18px 22px;border-radius:22px;background:#D3CCC4}
+.hc-back{display:none}
 .hc-card{position:relative;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(20,29,33,.35)}
 .hc-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;outline-offset:-3px}
 .hc-track::-webkit-scrollbar{display:none}
