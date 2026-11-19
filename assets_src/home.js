@@ -37,10 +37,13 @@
       if (e.key === "ArrowRight") { e.preventDefault(); go(cur + 1); restart(); }
       if (e.key === "ArrowLeft") { e.preventDefault(); go(cur - 1); restart(); }
     });
+    // Cycles on its own. Only keyboard focus inside it holds it still (so it doesn't move under someone tabbing through);
+    // a swipe or click just restarts the timer.
     function tick() { if (!paused && !document.hidden) go(cur + 1); }
-    function restart() { if (reduce) return; clearInterval(timer); timer = setInterval(tick, 6000); }
-    ["mouseenter", "focusin", "touchstart"].forEach(function (ev) { hc.addEventListener(ev, function () { paused = true; }, { passive: true }); });
-    ["mouseleave", "focusout"].forEach(function (ev) { hc.addEventListener(ev, function () { paused = false; }); });
+    function restart() { if (reduce) return; clearInterval(timer); timer = setInterval(tick, 4500); }
+    hc.addEventListener("focusin", function (e) { if (e.target.matches(":focus-visible")) paused = true; });
+    hc.addEventListener("focusout", function () { paused = false; });
+    track.addEventListener("touchend", restart, { passive: true });
     window.addEventListener("resize", function () { go(cur, false); });
     mark(); restart();
   }
