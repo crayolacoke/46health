@@ -564,7 +564,7 @@ def home():
     checks = ["Men’s and women’s care", f"{len(PRODUCTS)} pharmacy-made treatments", "One consult for everything", "Up to 5 meds ship for one fee", "Licensed U.S. providers", "No membership fees"]
     checkgrid = "".join(f'<li style="display: flex; align-items: center; gap: 10px; font-size: 15px">{CHECK_DOT}<span>{c}</span></li>' for c in checks)
     hero_html = (f'<section class="home-hero"><div class="home-hero-in" style="{WRAP}">'
-        f'<div class="home-hero-copy"><p style="{EYEBROW}; font-size: 12px; color: #61757D">Physician-guided telehealth · XX · XY</p>'
+        f'<div class="home-hero-copy"><p style="{EYEBROW}; font-size: 12px; color: #61757D">Physician-guided telehealth</p>'
         + H("h1", 60, "One provider so that you can be the best version of you.", "line-height: 1.08")
         + f'<p style="margin: 22px 0 0; max-width: 540px; font-size: 18px; line-height: 1.6; color: {MUTED}">Build a list of everything you want to ask about. A licensed provider reviews it with you in one consultation, and SureCare Specialty Pharmacy prepares what’s prescribed.</p>'
         f'<ul class="hero-checks">{checkgrid}</ul>'
