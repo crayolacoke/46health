@@ -164,7 +164,7 @@ def centered_intro(title, body, crumbs=None):
 def cta_band():
     return f'''<section style="background: #ADB7BD; padding: 80px 0; text-align: center">
 <div style="{NARROW}">{H("h2", 64, "Excellence is a practice.<br>Start yours today.", "line-height: 1.08")}
-<p style="margin: 28px auto 0; font-size: 17px; line-height: 1.6; max-width: 560px">Your intake takes about 10 minutes. A provider typically reviews it within 4 hours.</p>
+<p style="margin: 28px auto 0; font-size: 17px; line-height: 1.6; max-width: 560px">Start your consultation today for just $35. Your intake takes about 10 minutes, and a provider typically reviews it within 4 hours.</p>
 <div style="margin-top: 40px">{consult()}</div></div></section>'''
 
 def bignum_steps(steps):
@@ -193,8 +193,8 @@ def why_band(vals):
     strip = "".join(f'<div class="zoom" style="height: 300px; border-radius: 8px; overflow: hidden"><img src="{u("assets/img/" + k)}" alt="" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: {pos}; display: block"></div>' for k, pos in [("h_about.jpg", "50% 30%"), ("sema.jpg", "50% 45%"), ("h_how.jpg", "50% 30%")])
     return f'''<section style="background: {NAVY}; padding: 104px 0 96px"><div style="{WRAP}">
 <div style="display: flex; flex-wrap: wrap; gap: 56px 72px">
-<div style="flex: 1 1 300px; max-width: 380px"><div style="{eye}; color: {TAN}; margin-bottom: 18px">WHY 46 HEALTH</div>{H("h2", 52, "Medicine,<br>made personal.", "color: " + BG + "; line-height: 1.08")}
-<p style="margin: 24px 0 32px; font-size: 17px; line-height: 1.65; color: #ADB7BD">A licensed provider, a licensed pharmacy and a plan built around you, from first consult to every refill.</p>{btn("See How It Works", u("how-it-works.html"), "light")}</div>
+<div style="flex: 1 1 300px; max-width: 380px"><div style="{eye}; color: {TAN}; margin-bottom: 18px">WHY 46 HEALTH</div>{H("h2", 52, "Longevity,<br>made personal.", "color: " + BG + "; line-height: 1.08")}
+<p style="margin: 24px 0 32px; font-size: 17px; line-height: 1.65; color: #ADB7BD">A licensed provider, a trusted pharmacy and a plan built around your health and wellness, from first consult to every refill.</p>{btn("See How It Works", u("how-it-works.html"), "light")}</div>
 <div style="flex: 2 1 520px; {grid(260)}; gap: 48px">{cells}</div></div>
 <div style="{grid(260)}; gap: 20px; margin-top: 80px">{strip}</div></div></section>'''
 
@@ -397,6 +397,8 @@ def product_page(p):
         rel = f'<section style="background: {TAUPE}; padding: 56px 0"><div style="{WRAP}"><div style="display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 32px"><div><p style="{EYEBROW}; font-size: 12px; color: #61757D; margin-bottom: 10px">Across your care</p>{H("h2", 36, "Often discussed alongside")}</div><p style="margin: 0; font-size: 15px; color: {MUTED}; max-width: 360px">Add any of these to your list. One consultation covers them all.</p></div><div style="{grid_fill(250)}; gap: 20px">{cards}</div></div></section>'
     if p["id"] in ("sema", "tirz"):
         disc = DISCLAIMER_GLP1
+    elif "pregnyl" in p["id"]:
+        disc = "Pregnyl is a brand-name, FDA-approved medication dispensed by prescription. Descriptions are for education and are not claims of therapeutic efficacy. A licensed prescriber determines whether it is appropriate for you."
     elif p["kind"] == "peptide" and p["id"] not in ("nadinj", "nadnasal"):
         disc = DISCLAIMER_PEPTIDE
     elif p["kind"] == "cosmetic":
@@ -490,7 +492,7 @@ def price_num(p):
 
 def from_price(f):
     prods = PAGES[f][2][0][2] if f == "weight-management.html" else page_products(f)
-    nums = [n for n in (price_num(p) for p in prods) if n]
+    nums = [n for n in (price_num(p) for p in prods if "10 count" not in p["name"]) if n]
     lo = min(nums)
     suffix = " / month" if f == "weight-management.html" else (" per vial" if f == "peptides.html" else "")
     return f"From ${lo}{suffix}"
@@ -591,11 +593,12 @@ def home():
     checkgrid = "".join(f'<li style="display: flex; align-items: center; gap: 10px; font-size: 15px">{CHECK_DOT}<span>{c}</span></li>' for c in checks)
     hero_html = (f'<section class="home-hero"><div class="home-hero-in" style="{WRAP}">'
         f'<div class="home-hero-copy"><p style="{EYEBROW}; font-size: 12px; color: #61757D">Physician-guided telehealth</p>'
-        + H("h1", 60, "One provider so that you can be the best version of you.", "line-height: 1.08")
+        + H("h1", 60, "One team to become the best version of you.", "line-height: 1.08")
+        + f'<p style="margin: 16px 0 0; font-family: {SERIF}; font-size: 24px; color: #8A7663">Your health. Your life. Our science.</p>'
         + f'<p style="margin: 22px 0 0; max-width: 540px; font-size: 18px; line-height: 1.6; color: {MUTED}">Build a list of everything you want to ask about. A licensed provider reviews it with you in one consultation, and SureCare Specialty Pharmacy prepares what’s prescribed.</p>'
         f'<ul class="hero-checks">{checkgrid}</ul>'
         f'<div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 34px">{consult()}{btn("Explore All Treatments", u("treatments.html"), "ghost")}</div>'
-        f'<p style="margin: 14px 0 0; font-size: 13px; color: {MUTED}">Intake takes about 10 minutes. A provider typically reviews it within 4 hours.</p></div>'
+        f'<p style="margin: 14px 0 0; font-size: 14px; color: {MUTED}"><b style="color: #141D21; font-weight: 600">Start your consultation for just $35.</b> Intake takes about 10 minutes, and a provider typically reviews it within 4 hours.</p></div>'
         f'{home_carousel()}</div></section>')
     trust = "".join(f'<li style="flex: 1 1 200px; text-align: center; font-size: 13px; letter-spacing: 0.16em; line-height: 1.5; padding: 8px 16px">{t}</li>' for t in ["LICENSED U.S. PROVIDERS", "PREPARED BY SURECARE PHARMACY", "DISCREET SHIPPING", "NO MEMBERSHIP FEES"])
     steps = [("Add anything", "Tap + on any treatment, from any category. Your list stays on your device."),
@@ -613,14 +616,14 @@ def home():
         + H("h2", 64, "46 chromosomes.<br>Only one of you.", "color: " + BG + "; line-height: 1.06")
         + f'<div style="width: 64px; height: 1.5px; background: {TAN}; margin: 32px 0"></div><p style="margin: 0; font-size: 13px; letter-spacing: 0.26em; line-height: 1.8; color: {TAN}">MEN’S &nbsp;·&nbsp; WOMEN’S &nbsp;·&nbsp; WEIGHT &nbsp;·&nbsp; PEPTIDES &nbsp;·&nbsp; SKIN</p>'
         f'<p style="margin: 24px 0 0; max-width: 480px; font-size: 17px; line-height: 1.65; color: #ADB7BD">Care built for the whole person, not one condition. Men’s and women’s health, weight, recovery and skin, under one licensed provider.</p></div></div></section>')
-    vals = [("rx", "Medicine, not a marketplace", "Every prescription starts with a licensed provider who reviews your health first."),
-            ("dial", "Personalized, not one-size-fits-all", "Dosing and protocols are set for you and adjusted as you progress."),
-            ("shield", "A pharmacy you can trust", "Medications are prepared by SureCare Specialty Pharmacy, a licensed 503A compounding pharmacy in El Paso, Texas."),
-            ("chat", "Support that keeps going", "Follow-ups, dose adjustments and refills are handled through your patient portal.")]
-    prices = "".join(f'<div style="flex: 1 1 200px; border-top: 1px solid #3A464C; padding-top: 18px"><div style="font-family: {SERIF}; font-size: 40px; color: #FFFFFF">{a}</div><div style="margin-top: 8px; font-size: 14px; letter-spacing: 0.06em; color: #ADB7BD">{b}</div></div>' for a, b in [("$69", "PEPTIDES FROM, PER VIAL"), ("$139", "GLP-1 PROGRAMS FROM, PER MONTH"), ("Up to 5", "MEDICATIONS SHIP FOR ONE FEE"), ("$0", "MEMBERSHIP FEES")])
+    vals = [("rx", "Your journey starts with a physician, not a shopping cart", "Every prescription begins with a licensed medical provider who reviews your health history before anything is prescribed."),
+            ("dial", "Optimization based on your medical needs", "Your dosing and protocols are set for your body and your goals, then adjusted as you progress."),
+            ("shield", "Compounded by a pharmacy you can trust", "Your medication is prepared to order by SureCare Specialty Pharmacy, a licensed 503A compounding pharmacy in El Paso, Texas."),
+            ("chat", "Ongoing support and care throughout your journey", "Follow-ups, dosage changes and refills are all handled in your patient portal, with your provider a message away.")]
+    prices = "".join(f'<div style="flex: 1 1 200px; border-top: 1px solid #3A464C; padding-top: 18px"><div style="font-family: {SERIF}; font-size: 40px; color: #FFFFFF">{a}</div><div style="margin-top: 8px; font-size: 14px; letter-spacing: 0.06em; color: #ADB7BD">{b}</div></div>' for a, b in [("$69", "PEPTIDES FROM, PER VIAL"), ("$139", "GLP-1 PROGRAMS FROM, PER MONTH"), ("Up to 5", "MEDICATIONS SHIP FOR ONE FEE"), ("$35", "CONSULTATION")])
     pricing_band = (f'<section style="background: {NAVY}; color: #FFFFFF; padding: 0 0 80px"><div style="{WRAP}"><div style="border-top: 1px solid rgba(192,170,150,0.3); padding-top: 80px"><div style="text-align: center; max-width: 640px; margin: 0 auto">'
         + H("h2", 56, "Clear pricing.<br>No surprises.", "color: #F2F0EA; line-height: 1.08")
-        + f'<p style="margin: 24px 0 0; font-size: 17px; line-height: 1.6; color: #F2F0EA">Your consultation fee and medication price are shown before you commit. No membership fees, and no teaser prices that jump later.</p></div>'
+        + f'<p style="margin: 24px 0 0; font-size: 17px; line-height: 1.6; color: #F2F0EA">Your consultation is just $35, and your medication price is shown before you commit. No teaser prices that jump later.</p></div>'
         f'<div style="display: flex; flex-wrap: wrap; gap: 32px; margin-top: 64px">{prices}</div><div style="text-align: center; margin-top: 56px">{btn("See Pricing", u("pricing.html"), "light")}</div></div></div></section>')
     qs = [FAQ[0][1][0], FAQ[0][1][1], FAQ[1][1][0], FAQ[0][1][3], FAQ[3][1][0]]
     faq_items = "".join(f'<details class="home-faq"><summary>{q}{CHEV}</summary><p>{a}</p></details>' for q, a in qs)
@@ -650,9 +653,9 @@ def how():
              ("Get your personalized prescription", "If treatment is right for you, your provider sends a prescription for your specific dose to SureCare Specialty Pharmacy."),
              ("Delivered to your door", "Your medication ships in discreet, temperature-appropriate packaging with clear instructions. [Typical delivery time.]"),
              ("Ongoing care", "Scheduled check-ins let your provider track progress, adjust your plan and handle refills through your patient portal.")]
-    need = check_list(["A government-issued ID", "Your current medications and supplements", f"Recent lab results, if you have them<br><span style='color:{MUTED}'>(not required to start)</span>", f"A shipping address in a state we serve<br><span style='color:{MUTED}'>[List states]</span>"])
-    body = (hero("h_how.jpg", "#C9CDCD", "From first question to your front door.",
-        "46 Health pairs licensed medical providers with SureCare Specialty Pharmacy, a licensed compounding pharmacy in El Paso, Texas, so you get real medical oversight without the waiting room.")
+    need = check_list(["A government-issued ID", "Your current medications and supplements", f"Recent lab results, if you have them<br><span style='color:{MUTED}'>(not required to start)</span>", f"A U.S. shipping address<br><span style='color:{MUTED}'>(all 50 states)</span>"])
+    body = (hero("h_how.jpg", "#C9CDCD", "How 46 Health works.",
+        "You complete a brief medical intake covering your health history and treatment goals. A licensed 46 Health provider reviews your intake and, if treatment is clinically appropriate, issues your prescription. Your medication is compounded to order by SureCare Specialty Pharmacy, a licensed 503A compounding pharmacy in El Paso, Texas, and shipped directly to you. Ongoing care — follow-up evaluations, dose adjustments and refills — is managed by your 46 Health provider through your patient portal.")
       + f'''<section style="padding: 80px 0"><div style="{WRAP}">{H("h2", 44, "Here’s exactly what happens", "text-align: center; margin-bottom: 56px")}{bignum_steps(steps)}
 <div style="background: {TAUPE}; border-radius: 8px; padding: 56px clamp(20px, 4vw, 40px); margin-top: 88px"><h2 style="margin: 0 0 40px; {LABEL}; font-size: 18px; text-align: center">What you’ll need</h2><ul style="list-style: none; margin: 0 auto; padding: 0; {grid(280)}; gap: 28px 56px; max-width: 760px">{need}</ul></div>
 <p style="text-align: center; margin: 32px auto 0; max-width: 680px; font-size: 15px; line-height: 1.6">Not everyone is a candidate for every treatment. If your provider decides a therapy isn’t right for you, they’ll explain why and what else to consider.</p>
@@ -698,7 +701,7 @@ FAQ = [
    ("Do I need a prescription?", "Yes. Every treatment requires a consultation with a licensed provider, who decides whether it’s appropriate for you."),
    ("How long does the consultation take?", "The online intake takes about 10 minutes. A provider typically reviews it within 4 hours and may follow up by message or video."),
    ("Do I need lab work?", "Not to start. Depending on the treatment and your history, your provider may order labs. If you have recent results, you can share them in your intake."),
-   ("Which states do you serve?", "[List of states served.]"),
+   ("Which states do you serve?", "All 50 U.S. states. We don’t currently serve U.S. territories or patients outside the United States."),
    ("What if I’m not approved?", "Not everyone is a candidate for every treatment. If your provider decides a therapy isn’t right for you, they’ll explain why and what else to consider. [Refund policy for the consultation fee.]")]),
  ("About the medications", [
    ("What is a compounded medication?", "A medication prepared by a licensed pharmacy for an individual patient’s prescription, often to provide a specific strength or combination. Compounded medications are not FDA-approved, meaning FDA hasn’t reviewed them for safety, effectiveness or quality."),
@@ -707,11 +710,11 @@ FAQ = [
    ("Are these safe for competitive athletes?", "Many peptides — including BPC-157, TB-500 and growth hormone secretagogues — are on the World Anti-Doping Agency prohibited list. If you compete in a tested sport, talk with your provider before starting.")]),
  ("Orders and shipping", [
    ("How is my medication shipped?", "In discreet packaging, with cold packs when required, directly from SureCare Specialty Pharmacy. Up to five medications ship together for one shipping fee. Most orders arrive within [X] business days after the prescription is approved."),
-   ("Are needles and supplies included?", "[Confirm which supplies ship with each order.]"),
+   ("Are needles and supplies included?", "Yes. Injectable medications ship with the needles and alcohol pads you need."),
    ("How do refills work?", "Your provider reviews your progress at each check-in and authorizes refills when appropriate."),
-   ("Can I cancel?", "[Cancellation and refund policy.] Prescription medications generally cannot be returned once shipped.")]),
+   ("Can I cancel?", "Medication orders can’t be cancelled once placed, and prescription medications can’t be returned.")]),
  ("Costs", [
-   ("How much does it cost?", "Your consultation fee and medication price are shown before you commit. Peptides start at $69 per vial and GLP-1 programs at $139 per month. See every price on our <a href=\"pricing.html\">pricing page</a>. [Consultation fee.]"),
+   ("How much does it cost?", "Your consultation is $35. Your medication price is shown before you commit. Peptides start at $69 per vial and GLP-1 programs at $139 per month. See every price on our <a href=\"pricing.html\">pricing page</a>."),
    ("Do you take insurance?", "[Insurance policy — e.g. HSA/FSA eligibility.]")]),
  ("Privacy", [
    ("Is my information private?", "Your health information is protected under HIPAA and shared only with your care team and pharmacy as needed for your treatment. See our <a href=\"privacy.html\">Privacy Policy</a> and <a href=\"notice-of-privacy-practices.html\">Notice of Privacy Practices</a>.")]),

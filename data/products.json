@@ -570,10 +570,10 @@
  },
  {
   "id": "hcg-human-chorionic-gonadotropin-injection-pregnyl",
-  "slug": "hcg-human-chorionic-gonadotropin-injection",
-  "name": "HCG (Human Chorionic Gonadotropin) Injection",
+  "slug": "hcg-pregnyl-injection",
+  "name": "HCG (Pregnyl) Injection",
   "size": "",
-  "title": "HCG (Human Chorionic Gonadotropin) Injection",
+  "title": "HCG (Pregnyl) Injection",
   "detail": "",
   "concentration": "",
   "contents": "",
@@ -581,9 +581,9 @@
   "unit": "",
   "new": false,
   "form": "Injection",
-  "image": "hcg.jpg",
+  "image": "hcg_pregnyl.jpg",
   "photo": true,
-  "desc": "Often prescribed alongside testosterone to help maintain the body's own testosterone production and testicular function, or on its own for fertility and natural testosterone support. Reconstituted and injected subcutaneously per the prescriber's schedule.",
+  "desc": "Brand-name Pregnyl (human chorionic gonadotropin). Often prescribed alongside testosterone to help maintain the body’s own testosterone production and testicular function, or on its own for fertility and natural testosterone support. Reconstituted and injected subcutaneously per the prescriber’s schedule.",
   "kind": "rx",
   "groups": [
    "m_test"
@@ -691,7 +691,8 @@
   "desc": "The oral DHT-blocker for male-pattern hair loss, taken once daily. Blocks the hormone that shrinks hair follicles, slowing loss and supporting regrowth over 3–6 months of consistent use.",
   "kind": "cosmetic",
   "groups": [
-   "hair"
+   "hair",
+   "m_test"
   ]
  },
  {
