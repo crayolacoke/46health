@@ -589,7 +589,7 @@ def rail_section():
         f'<ol class="rail">{steps}</ol></div></section>')
 
 def home():
-    checks = ["Men’s and women’s care", f"{len(PRODUCTS)} pharmacy-made treatments", "One consult for everything", "Up to 5 meds ship for one fee", "Licensed U.S. providers", "No membership fees"]
+    checks = ["Men’s and women’s care", f"{len(PRODUCTS)} pharmacy-made treatments", "One consult for everything", "Up to 5 meds ship for one fee", "Licensed U.S. providers", "No membership required"]
     checkgrid = "".join(f'<li style="display: flex; align-items: center; gap: 10px; font-size: 15px">{CHECK_DOT}<span>{c}</span></li>' for c in checks)
     hero_html = (f'<section class="home-hero"><div class="home-hero-in" style="{WRAP}">'
         f'<div class="home-hero-copy"><p style="{EYEBROW}; font-size: 12px; color: #61757D">Physician-guided telehealth</p>'
@@ -600,7 +600,7 @@ def home():
         f'<div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 34px">{consult()}{btn("Explore All Treatments", u("treatments.html"), "ghost")}</div>'
         f'<p style="margin: 14px 0 0; font-size: 14px; color: {MUTED}"><b style="color: #141D21; font-weight: 600">Start your consultation for just $35.</b> Intake takes about 10 minutes, and a provider typically reviews it within 4 hours.</p></div>'
         f'{home_carousel()}</div></section>')
-    trust = "".join(f'<li style="flex: 1 1 200px; text-align: center; font-size: 13px; letter-spacing: 0.16em; line-height: 1.5; padding: 8px 16px">{t}</li>' for t in ["LICENSED U.S. PROVIDERS", "PREPARED BY SURECARE PHARMACY", "DISCREET SHIPPING", "NO MEMBERSHIP FEES"])
+    trust = "".join(f'<li style="flex: 1 1 200px; text-align: center; font-size: 13px; letter-spacing: 0.16em; line-height: 1.5; padding: 8px 16px">{t}</li>' for t in ["LICENSED U.S. PROVIDERS", "PREPARED BY SURECARE PHARMACY", "DISCREET SHIPPING", "NO MEMBERSHIP REQUIRED"])
     steps = [("Add anything", "Tap + on any treatment, from any category. Your list stays on your device."),
              ("One intake", "Health history, medications and goals, once. About 10 minutes."),
              ("One provider", "A licensed provider reviews your whole list and decides with you what’s appropriate."),
@@ -754,7 +754,7 @@ def pricing():
 <div class="pr-body"><div class="table-wrap"><table class="price-table"><thead><tr><th scope="col">Treatment</th><th scope="col">Supply</th><th scope="col" style="text-align: right">Price</th><th scope="col"><span class="sr-only">Add to list</span></th></tr></thead><tbody>{rows}</tbody></table></div>
 <p class="pr-empty" hidden>No treatments in this category match that filter.</p><div style="margin-top: 12px">{link("View " + label, u(f))}</div></div></details>'''
     filters = "".join(f'<button type="button" class="pr-filter" data-filter="{k}" aria-pressed="{"true" if k == "all" else "false"}">{t}</button>' for k, t in [("all", "All"), ("under100", "Under $100"), ("monthly", "Monthly programs"), ("new", "New")])
-    body = (centered_intro("Clear pricing.<br>No surprises.", "Every treatment has one listed price. Your consultation fee and medication price are shown before you commit, with no membership fees. Up to five medications ship together for one shipping fee.")
+    body = (centered_intro("Clear pricing.<br>No surprises.", "Every treatment has one listed price. Your $35 consultation and medication price are shown before you commit. No membership is required, and up to five medications ship together for one shipping fee.")
             + f'''<div style="max-width: 1000px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px) 80px">
 <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px"><div role="group" aria-label="Filter prices" style="display: flex; gap: 8px; flex-wrap: wrap">{filters}</div><button type="button" id="pr-expand" class="pr-expand">Expand all</button></div>
 {blocks}<p style="margin: 24px 0 0; font-size: 13px; color: {MUTED}; line-height: 1.6">Prices are for medication only and are subject to change. [Consultation fee and shipping cost.] Treatments require a consultation with a licensed provider and are prescribed only when appropriate.</p></div>'''
