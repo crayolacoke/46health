@@ -620,7 +620,7 @@ def home():
             ("dial", "Optimization based on your medical needs", "Your dosing and protocols are set for your body and your goals, then adjusted as you progress."),
             ("shield", "Compounded by a pharmacy you can trust", "Your medication is prepared to order by SureCare Specialty Pharmacy, a licensed 503A compounding pharmacy in El Paso, Texas."),
             ("chat", "Ongoing support and care throughout your journey", "Follow-ups, dosage changes and refills are all handled in your patient portal, with your provider a message away.")]
-    prices = "".join(f'<div style="flex: 1 1 200px; border-top: 1px solid #3A464C; padding-top: 18px"><div style="font-family: {SERIF}; font-size: 40px; color: #FFFFFF">{a}</div><div style="margin-top: 8px; font-size: 14px; letter-spacing: 0.06em; color: #ADB7BD">{b}</div></div>' for a, b in [("$69", "PEPTIDES FROM, PER VIAL"), ("$139", "GLP-1 PROGRAMS FROM, PER MONTH"), ("Up to 5", "MEDICATIONS SHIP FOR ONE FEE"), ("$35", "CONSULTATION")])
+    prices = "".join(f'<div style="flex: 1 1 200px; border-top: 1px solid #3A464C; padding-top: 18px"><div style="font-family: {SERIF}; font-size: 40px; color: #FFFFFF">{re.sub(r"(\d+)", r'<span data-to="\1">\1</span>', a)}</div><div style="margin-top: 8px; font-size: 14px; letter-spacing: 0.06em; color: #ADB7BD">{b}</div></div>' for a, b in [("$69", "PEPTIDES FROM, PER VIAL"), ("$139", "GLP-1 PROGRAMS FROM, PER MONTH"), ("Up to 5", "MEDICATIONS SHIP FOR ONE FEE"), ("$35", "CONSULTATION")])
     pricing_band = (f'<section style="background: {NAVY}; color: #FFFFFF; padding: 0 0 80px"><div style="{WRAP}"><div style="border-top: 1px solid rgba(192,170,150,0.3); padding-top: 80px"><div style="text-align: center; max-width: 640px; margin: 0 auto">'
         + H("h2", 56, "Clear pricing.<br>No surprises.", "color: #F2F0EA; line-height: 1.08")
         + f'<p style="margin: 24px 0 0; font-size: 17px; line-height: 1.6; color: #F2F0EA">Your consultation is just $35, and your medication price is shown before you commit. No teaser prices that jump later.</p></div>'
@@ -637,7 +637,7 @@ def home():
       + f'<section aria-label="Why patients choose us" style="background: #61757D; color: #FFFFFF; padding: 22px 0"><ul style="{WRAP}; list-style: none; margin-top: 0; margin-bottom: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between">{trust}</ul></section>'
       + rail_section() + chromo + shop_by_goal() + why_band(vals) + pricing_band + faq_html + cta_band() + floatbar)
     return document("46 Health", "Physician-guided telehealth for men and women: weight care, peptides, hormones, sexual wellness and skin from licensed providers, prepared by SureCare Specialty Pharmacy.", body,
-                    scripts=f'\n<script src="{u("assets/home.js") + "?v=" + ASSET_V}"></script>')
+                    scripts=f'\n<script src="{u("assets/home.js") + "?v=" + ASSET_V}"></script><script src="{u("assets/motion.js") + "?v=" + ASSET_V}"></script>')
 
 def treatments():
     body = (hero("h_treat.jpg", "#D9D3D0", "Therapies built around your goals.",
@@ -739,7 +739,7 @@ def about():
     values = f'<section style="background: {CARD}; padding: clamp(80px, 9vw, 120px) 0"><div style="{WRAP}"><div class="rv" style="text-align: center; margin-bottom: 72px"><p style="{EYE}; color: #61757D">How we practice</p>' + H("h2", 52, "Care built around you.") + f'</div>{rows}</div></section>'
     body = '<script>document.documentElement.classList.add("js")</script>' + hero + stats + values + why46(big_number=True) + journey() + surecare_section() + closing("cat5.jpg")
     return document("About", "46 Health is a health and longevity company: one team of licensed providers for the whole you, with medications compounded to order by SureCare Specialty Pharmacy.", body, "About",
-                    scripts=f'\n<script src="{u("assets/about.js") + "?v=" + ASSET_V}"></script>')
+                    scripts=f'\n<script src="{u("assets/motion.js") + "?v=" + ASSET_V}"></script>')
 
 def contact():
     def field(i, l, t="text", opt="", ac=""):
@@ -915,7 +915,7 @@ def main():
     shutil.copytree(os.path.join(ROOT, "assets_src", "img"), os.path.join(DIST, "assets", "img"), dirs_exist_ok=True)
     write("assets/favicon.svg", FAVICON)
     write("CNAME", "fortysixhealth.com\n")
-    for js in ("consult-list.js", "pricing.js", "home.js", "about.js"):
+    for js in ("consult-list.js", "pricing.js", "home.js", "motion.js"):
         shutil.copy(os.path.join(ROOT, "assets_src", js), os.path.join(DIST, "assets", js))
     PFX = ""
     pages = {"index.html": home(), "treatments.html": treatments(), "how-it-works.html": how(), "about.html": about(),
