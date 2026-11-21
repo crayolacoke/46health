@@ -674,20 +674,28 @@ def surecare_section():
             f'<dl style="flex: 1 1 340px; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px">{facts}</dl></div></div></section>')
 
 def about():
-    vals = [("rx", "Providers first", "Every treatment begins with a licensed provider who reviews your history and decides with you what’s appropriate."),
-            ("search", "Honest about evidence", "Some therapies have decades of clinical use; others are newer. We tell you which is which."),
-            ("flask", "Pharmacy-grade preparation", "Medications are prepared by SureCare Specialty Pharmacy, a licensed 503A compounding pharmacy in El Paso, Texas."),
-            ("chat", "Care that continues", "Dosing and protocols are adjusted as you progress, with follow-ups along the way.")]
-    team = "".join(f'''<article style="display: flex; flex-direction: column; gap: 16px"><div role="img" aria-label="Photo coming soon" style="aspect-ratio: 4 / 5; background: #D9D9D9; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #555">[Photo]</div><div><h3 style="margin: 0; {LABEL}; font-size: 16px">[Firstname Lastname]</h3><div style="font-size: 14px; font-weight: 600; margin-top: 6px">[Credentials]</div><p style="{P}; font-size: 14px; margin-top: 10px">[Two-sentence bio.]</p></div></article>''' for _ in range(3))
-    body = (hero("h_about.jpg", "#EDE8E1", "Better health, on your terms.",
-        "46 Health is a telehealth practice built on a simple idea: good care should fit into your life, not the other way around. Our licensed providers take the time to understand your health and your goals, then recommend treatments that make sense for you. When a prescription is right, it’s prepared by a licensed pharmacy and shipped to your door.")
+    vals = [("dial", "One team, the whole you", "Men’s and women’s health, weight, recovery, skin and longevity under one team of providers, so nothing is treated in isolation."),
+            ("rx", "Physicians first", "Every prescription begins with a licensed provider who reviews your health history before anything is prescribed."),
+            ("search", "Honest about evidence", "Some therapies have decades of clinical use; others are newer. We tell you which is which, so you can decide with clear eyes."),
+            ("chat", "Care that continues", "Follow-ups, dosage changes and refills are all handled in your patient portal, with your provider a message away.")]
+    why46 = (f'<section style="background: #061A23 url({u("assets/img/chromo.jpg")}) 70% center / cover no-repeat; color: {BG}"><div style="{WRAP}"><div style="max-width: 600px; padding: clamp(80px, 10vw, 112px) 0">'
+             f'<p style="{EYEBROW}; font-size: 12px; color: {TAN}">Why 46</p>'
+             + H("h2", 56, "46 chromosomes.<br>Only one of you.", "color: " + BG + "; line-height: 1.08")
+             + '<p style="margin: 24px 0 0; font-size: 17px; line-height: 1.7; color: #ADB7BD">Every cell in your body carries 46 chromosomes, the blueprint that makes you, you. No two people are built the same, so no two plans should be either.</p>'
+             '<p style="margin: 14px 0 0; font-size: 17px; line-height: 1.7; color: #ADB7BD">We named the company for that idea. Care at 46 Health starts with the individual, not the product.</p></div></div></section>')
+    team = (f'<section style="padding: clamp(64px, 8vw, 96px) 0"><div style="{NARROW}; text-align: center">'
+            f'<p style="{EYEBROW}; font-size: 12px; color: #61757D">Our care team</p>'
+            + H("h2", 44, "Real providers. Real follow-up.")
+            + f'<p style="margin: 20px auto 0; max-width: 620px; font-size: 17px; line-height: 1.65; color: {MUTED}">Licensed U.S. medical providers review every intake, prescribe only when treatment is clinically appropriate, and stay with you through dose changes and refills. You’re never handed off to a chatbot or left waiting on a form.</p></div></section>')
+    body = (hero("h_about.jpg", "#EDE8E1", "Your health. Your life. Our science.",
+        "46 Health is a health and longevity company built for the whole person. One team of licensed providers looks at all of you, from weight and hormones to recovery, skin and long-term health, and builds a plan around your body and your goals. When a prescription is right for you, it’s compounded to order by a licensed pharmacy and shipped to your door.")
       + values_panel("How we practice", vals)
-      + f'''<section style="padding: 80px 0"><div style="{WRAP}">{H("h2", 44, "Our team", "text-align: center; margin-bottom: 56px")}
-<div style="{grid(400)}; gap: 56px; align-items: center; margin-bottom: 72px"><div role="img" aria-label="Photo coming soon" style="aspect-ratio: 1 / 1; background: #D9D9D9; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #555">[Medical director photo]</div><div><p style="{EYEBROW}; font-size: 12px; color: {MUTED}">Medical director</p><h3 style="margin: 0; font-size: 24px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase">[Firstname Lastname]</h3><div style="font-size: 16px; font-weight: 600; margin-top: 10px">[Credentials]</div><p style="margin: 24px 0 0; font-size: 16px; line-height: 1.6">[Bio — training, areas of focus, and why they practice telehealth medicine.]</p></div></div>
-<div style="{grid(260)}; gap: 32px">{team}</div></div></section>'''
+      + why46
+      + team
       + surecare_section()
-      + f'<section style="padding: 80px 0; text-align: center"><div style="{NARROW}">{H("h2", 52, "Your best is still ahead.<br>Let’s pursue it together.", "line-height: 1.1")}<div style="margin-top: 36px">{consult()}</div></div></section>')
-    return document("About", "46 Health is a telehealth practice built on a simple idea: good care should fit into your life.", body, "About")
+      + f'<section style="padding: clamp(72px, 9vw, 96px) 0; text-align: center"><div style="{NARROW}">' + H("h2", 52, "One team to become<br>the best version of you.", "line-height: 1.1")
+      + f'<p style="margin: 22px auto 0; font-size: 17px; line-height: 1.6; color: {MUTED}">Start your consultation today for just $35.</p><div style="margin-top: 32px">{consult()}</div></div></section>')
+    return document("About", "46 Health is a health and longevity company: one team of licensed providers for the whole you, with medications compounded to order by SureCare Specialty Pharmacy.", body, "About")
 
 def contact():
     def field(i, l, t="text", opt="", ac=""):
