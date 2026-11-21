@@ -673,73 +673,29 @@ def surecare_section():
             '<p style="margin: 14px 0 0; font-size: 17px; line-height: 1.65">Every 46 Health prescription is prepared to order for the individual patient, checked by a licensed pharmacist and shipped directly to you.</p></div>'
             f'<dl style="flex: 1 1 340px; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px">{facts}</dl></div></div></section>')
 
-IMG = lambda k: u("assets/img/" + k)
-EYE = "font-size: 12px; letter-spacing: 0.24em; font-weight: 500; text-transform: uppercase; margin: 0 0 18px"
-LEDE = "46 Health is a health and longevity company built for the whole person. One team of licensed providers looks at all of you, from weight and hormones to recovery, skin and long-term health, and builds a plan around your body and your goals."
-VALS = [("One team, the whole you", "Men’s and women’s health, weight, recovery, skin and longevity under one team of providers, so nothing is treated in isolation.", "cat1.jpg", "50% 40%"),
-        ("Physicians first", "Every prescription begins with a licensed provider who reviews your health history before anything is prescribed.", "h_about.jpg", "50% 25%"),
-        ("Honest about evidence", "Some therapies have decades of clinical use; others are newer. We tell you which is which, so you can decide with clear eyes.", "h_treat.jpg", "50% 30%"),
-        ("Care that continues", "Follow-ups, dosage changes and refills are all handled in your patient portal, with your provider a message away.", "cat4.jpg", "70% 40%")]
-AREAS = ["Weight", "Hormones", "Recovery", "Skin", "Longevity", "Men’s health", "Women’s health", "Peptides"]
-STATS = [("46", "", "chromosomes. One of you."), ("50", "", "states served"), ("$", "35", "consultation"), ("10", " min", "online intake")]
-
-def stat_strip(dark=False):
-    c, m, line = (BG, "#ADB7BD", "rgba(192,170,150,.35)") if dark else (INK, MUTED, "#D3CCC4")
-    cells = ""
-    for i, (a, b, l) in enumerate(STATS):
-        num = f'<span data-to="{a}">{a}</span>' if a.isdigit() else a
-        if b and not a.isdigit():
-            num = f'{a}<span data-to="{b}">{b}</span>'
-        cells += f'<div class="rv d{i}" style="padding: 28px 0 0; border-top: 1px solid {line}"><div style="font-family: {SERIF}; font-size: clamp(44px, 5vw, 64px); line-height: 1; color: {c}">{num}<span style="font-size: .45em">{b if a.isdigit() else ""}</span></div><div style="margin-top: 12px; font-size: 14px; letter-spacing: .06em; color: {m}">{l}</div></div>'
-    return f'<div style="{grid(150)}; gap: 32px 24px">{cells}</div>'
-
-
-def closing(img=None):
-    if img:
-        return (f'<section style="position: relative; overflow: hidden; color: {BG}; text-align: center"><img class="kb" src="{IMG(img)}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%">'
-                f'<div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,29,33,.35), rgba(20,29,33,.75))"></div>'
-                f'<div class="rv" style="position: relative; {NARROW}; padding-top: clamp(96px, 12vw, 160px); padding-bottom: clamp(96px, 12vw, 160px)">' + H("h2", 56, "One team to become<br>the best version of you.", f"color: {BG}; line-height: 1.08")
-                + f'<p style="margin: 22px auto 0; font-size: 17px; color: #DDE2E4">Start your consultation today for just $35.</p><div style="margin-top: 32px">{consult(kind="light")}</div></div></section>')
-    return (f'<section style="padding: clamp(80px, 10vw, 120px) 0; text-align: center"><div class="rv" style="{NARROW}">' + H("h2", 56, "One team to become<br>the best version of you.", "line-height: 1.08")
-            + f'<p style="margin: 22px auto 0; font-size: 17px; color: {MUTED}">Start your consultation today for just $35.</p><div style="margin-top: 32px">{consult()}</div></div></section>')
-
-
-def why46(big_number=False):
-    num = (f'<div aria-hidden="true" class="hide-m pulse" style="position: absolute; right: clamp(20px, 6vw, 96px); bottom: -0.18em; font-family: {SERIF}; font-size: clamp(200px, 26vw, 380px); line-height: 1; color: rgba(192,170,150,.14)">46</div>' if big_number else "")
-    return (f'<section class="why46" style="position: relative; overflow: hidden; background: #061A23 url({IMG("chromo.jpg")}) 70% center / cover no-repeat; color: {BG}">{num}<div style="position: relative; {WRAP}"><div class="rv" style="max-width: 600px; padding: clamp(96px, 11vw, 140px) 0">'
-            f'<p style="{EYE}; color: {TAN}">Why 46</p>' + H("h2", 60, "46 chromosomes.<br>Only one of you.", f"color: {BG}; line-height: 1.06")
-            + '<p style="margin: 24px 0 0; font-size: 17px; line-height: 1.7; color: #ADB7BD">Every cell in your body carries 46 chromosomes, the blueprint that makes you, you. No two people are built the same, so no two plans should be either.</p>'
-            '<p style="margin: 14px 0 0; font-size: 17px; line-height: 1.7; color: #ADB7BD">We named the company for that idea. Care at 46 Health starts with the individual, not the product.</p></div></div></section>')
-
-
-def journey():
-    steps = [("10 min", "Online intake", "Tell us about your health, history and goals."), ("~4 hrs", "Provider review", "A licensed provider reviews and messages you."),
-             ("Made to order", "Pharmacy", "SureCare compounds and checks your prescription."), ("Ongoing", "Follow-up", "Check-ins, dose changes and refills in your portal.")]
-    cells = "".join(f'<li class="rv d{i}" style="position: relative; padding-top: 34px"><span style="position: absolute; top: 0; left: 0; width: 13px; height: 13px; border-radius: 50%; background: {NAVY}; box-shadow: 0 0 0 6px {BG}"></span><div style="font-family: {SERIF}; font-size: 30px; line-height: 1.1">{a}</div><div style="margin-top: 10px; font-size: 13px; letter-spacing: .14em; font-weight: 600; text-transform: uppercase">{b}</div><p style="margin: 8px 0 0; font-size: 15px; line-height: 1.55; color: {MUTED}; max-width: 240px">{c}</p></li>' for i, (a, b, c) in enumerate(steps))
-    return (f'<section style="padding: clamp(72px, 9vw, 112px) 0"><div style="{WRAP}"><div class="rv" style="max-width: 640px"><p style="{EYE}; color: #61757D">Our care team</p>' + H("h2", 48, "Real providers. Real follow-up.")
-            + f'<p style="margin: 20px 0 0; font-size: 17px; line-height: 1.65; color: {MUTED}">Licensed U.S. medical providers review every intake, prescribe only when treatment is clinically appropriate, and stay with you through dose changes and refills.</p></div>'
-            f'<div style="position: relative; margin-top: 56px"><div class="hide-m" style="position: absolute; top: 6px; left: 0; right: 0; height: 1px; background: #C8C0B6"></div><ol style="list-style: none; margin: 0; padding: 0; position: relative; {grid(220)}; gap: 40px">{cells}</ol></div></div></section>')
-
-
 def about():
-    hero = (f'<section style="position: relative; min-height: min(88vh, 820px); display: flex; align-items: flex-end; overflow: hidden; color: {BG}">'
-            f'<img class="kb" src="{IMG("h_home.jpg")}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%">'
-            f'<div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,29,33,0) 20%, rgba(20,29,33,.85))"></div>'
-            f'<div style="position: relative; {WRAP}; width: 100%; padding-bottom: clamp(56px, 8vw, 96px)"><div class="rv" style="max-width: 760px"><p style="{EYE}; color: #DDE2E4">About 46 Health</p>'
-            + H("h1", 76, "Your health. Your life. Our science.", f"color: {BG}; line-height: 1.04")
-            + f'<p style="margin: 24px 0 0; font-size: 18px; line-height: 1.65; color: #DDE2E4; max-width: 600px">{LEDE}</p></div></div></section>')
-    stats = f'<section style="padding: clamp(56px, 7vw, 88px) 0"><div style="{WRAP}">{stat_strip()}</div></section>'
-    rows = ""
-    for i, (t, d, img, pos) in enumerate(VALS):
-        rev = "row-reverse" if i % 2 else "row"
-        rows += (f'<div class="zz" style="display: flex; flex-direction: {rev}; gap: clamp(32px, 6vw, 88px); align-items: center; margin-top: {0 if i == 0 else 96}px">'
-                 f'<div class="rv tile" style="flex: 1 1 0; min-width: 0; width: 100%; height: clamp(320px, 38vw, 480px); border-radius: 12px; overflow: hidden"><img src="{IMG(img)}" alt="" style="width: 100%; height: 100%; object-fit: cover; object-position: {pos}"></div>'
-                 f'<div class="rv d1" style="flex: 1 1 0; min-width: 0"><div style="font-family: {SERIF}; font-size: 20px; color: {TAN}">0{i+1}</div>' + H("h3", 42, t, "margin-top: 14px")
-                 + f'<p style="margin: 18px 0 0; font-size: 17px; line-height: 1.7; color: {MUTED}; max-width: 460px">{d}</p></div></div>')
-    values = f'<section style="background: {CARD}; padding: clamp(80px, 9vw, 120px) 0"><div style="{WRAP}"><div class="rv" style="text-align: center; margin-bottom: 72px"><p style="{EYE}; color: #61757D">How we practice</p>' + H("h2", 52, "Care built around you.") + f'</div>{rows}</div></section>'
-    body = '<script>document.documentElement.classList.add("js")</script>' + hero + stats + values + why46(big_number=True) + journey() + surecare_section() + closing("cat5.jpg")
-    return document("About", "46 Health is a health and longevity company: one team of licensed providers for the whole you, with medications compounded to order by SureCare Specialty Pharmacy.", body, "About",
-                    scripts=f'\n<script src="{u("assets/motion.js") + "?v=" + ASSET_V}"></script>')
+    vals = [("dial", "One team, the whole you", "Men’s and women’s health, weight, recovery, skin and longevity under one team of providers, so nothing is treated in isolation."),
+            ("rx", "Physicians first", "Every prescription begins with a licensed provider who reviews your health history before anything is prescribed."),
+            ("search", "Honest about evidence", "Some therapies have decades of clinical use; others are newer. We tell you which is which, so you can decide with clear eyes."),
+            ("chat", "Care that continues", "Follow-ups, dosage changes and refills are all handled in your patient portal, with your provider a message away.")]
+    why46 = (f'<section style="background: #061A23 url({u("assets/img/chromo.jpg")}) 70% center / cover no-repeat; color: {BG}"><div style="{WRAP}"><div style="max-width: 600px; padding: clamp(80px, 10vw, 112px) 0">'
+             f'<p style="{EYEBROW}; font-size: 12px; color: {TAN}">Why 46</p>'
+             + H("h2", 56, "46 chromosomes.<br>Only one of you.", "color: " + BG + "; line-height: 1.08")
+             + '<p style="margin: 24px 0 0; font-size: 17px; line-height: 1.7; color: #ADB7BD">Every cell in your body carries 46 chromosomes, the blueprint that makes you, you. No two people are built the same, so no two plans should be either.</p>'
+             '<p style="margin: 14px 0 0; font-size: 17px; line-height: 1.7; color: #ADB7BD">We named the company for that idea. Care at 46 Health starts with the individual, not the product.</p></div></div></section>')
+    team = (f'<section style="padding: clamp(64px, 8vw, 96px) 0"><div style="{NARROW}; text-align: center">'
+            f'<p style="{EYEBROW}; font-size: 12px; color: #61757D">Our care team</p>'
+            + H("h2", 44, "Real providers. Real follow-up.")
+            + f'<p style="margin: 20px auto 0; max-width: 620px; font-size: 17px; line-height: 1.65; color: {MUTED}">Licensed U.S. medical providers review every intake, prescribe only when treatment is clinically appropriate, and stay with you through dose changes and refills. You’re never handed off to a chatbot or left waiting on a form.</p></div></section>')
+    body = (hero("h_about.jpg", "#EDE8E1", "Your health. Your life. Our science.",
+        "46 Health is a health and longevity company built for the whole person. One team of licensed providers looks at all of you, from weight and hormones to recovery, skin and long-term health, and builds a plan around your body and your goals. When a prescription is right for you, it’s compounded to order by a licensed pharmacy and shipped to your door.")
+      + values_panel("How we practice", vals)
+      + why46
+      + team
+      + surecare_section()
+      + f'<section style="padding: clamp(72px, 9vw, 96px) 0; text-align: center"><div style="{NARROW}">' + H("h2", 52, "One team to become<br>the best version of you.", "line-height: 1.1")
+      + f'<p style="margin: 22px auto 0; font-size: 17px; line-height: 1.6; color: {MUTED}">Start your consultation today for just $35.</p><div style="margin-top: 32px">{consult()}</div></div></section>')
+    return document("About", "46 Health is a health and longevity company: one team of licensed providers for the whole you, with medications compounded to order by SureCare Specialty Pharmacy.", body, "About")
 
 def contact():
     def field(i, l, t="text", opt="", ac=""):
