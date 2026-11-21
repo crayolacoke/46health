@@ -383,7 +383,7 @@ def product_page(p):
     know = p.get("know")
     safety = ("What to know", E(know)) if know else ("Important safety information", "[Safety information, side effects and contraindications — supplied by medical team and reviewed by counsel.]")
     acc = [safety, ("How it’s used", "Your provider sets your dose and schedule and explains how to use it. [Use instructions — supplied by medical team.]"),
-           ("Shipping &amp; refills", shipping + " Refills are managed through your patient portal. [Shipping time.]")]
+           ("Shipping &amp; refills", shipping + " Every order ships with two-day delivery. Refills are managed through your patient portal.")]
     accs = "".join(f'<details style="border-top: 1px solid #E2DDD6"{" open" if i == 0 else ""}><summary style="list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; min-height: 56px; font-size: 15px; font-weight: 600">{q}{CHEV}</summary><p style="{P}; font-size: 15px; padding-bottom: 18px">{a}</p></details>' for i, (q, a) in enumerate(acc))
     same = [q for q in siblings if q["id"] != p["id"]][:2]
     cross = [pid(x) for x in CROSS[f]]
@@ -651,7 +651,7 @@ def how():
              ("Complete your health intake", "Answer questions about your health history, medications and goals. It takes about 10 minutes and is reviewed only by your care team."),
              ("Consult with a licensed provider", "Your provider reviews your intake, may request recent labs or order new ones, and talks with you about options, risks and expectations. Prescribing is always at your provider’s discretion."),
              ("Get your personalized prescription", "If treatment is right for you, your provider sends a prescription for your specific dose to SureCare Specialty Pharmacy."),
-             ("Delivered to your door", "Your medication ships in discreet, temperature-appropriate packaging with clear instructions. [Typical delivery time.]"),
+             ("Delivered to your door", "Your medication ships in discreet, temperature-appropriate packaging with clear instructions, with two-day delivery."),
              ("Ongoing care", "Scheduled check-ins let your provider track progress, adjust your plan and handle refills through your patient portal.")]
     need = check_list(["A government-issued ID", "Your current medications and supplements", f"Recent lab results, if you have them<br><span style='color:{MUTED}'>(not required to start)</span>", f"A U.S. shipping address<br><span style='color:{MUTED}'>(all 50 states)</span>"])
     body = (hero("h_how.jpg", "#C9CDCD", "How 46 Health works.",
@@ -772,7 +772,7 @@ FAQ = [
    ("Is compounded semaglutide the same as Ozempic or Wegovy?", "No. It contains the same active ingredient but is a different, compounded product that is not FDA-approved. Your provider will prescribe it only when it fits your individual clinical needs."),
    ("Are these safe for competitive athletes?", "Many peptides — including BPC-157, TB-500 and growth hormone secretagogues — are on the World Anti-Doping Agency prohibited list. If you compete in a tested sport, talk with your provider before starting.")]),
  ("Orders and shipping", [
-   ("How is my medication shipped?", "In discreet packaging, with cold packs when required, directly from SureCare Specialty Pharmacy. Up to five medications ship together for one shipping fee. Most orders arrive within [X] business days after the prescription is approved."),
+   ("How is my medication shipped?", "In discreet packaging, with cold packs when required, directly from SureCare Specialty Pharmacy. Up to five medications ship together for one shipping fee. All medications ship with two-day delivery once your prescription is approved and prepared."),
    ("Are needles and supplies included?", "Yes. Injectable medications ship with the needles and alcohol pads you need."),
    ("How do refills work?", "Your provider reviews your progress at each check-in and authorizes refills when appropriate."),
    ("Can I cancel?", "Medication orders can’t be cancelled once placed, and prescription medications can’t be returned.")]),
