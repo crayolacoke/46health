@@ -270,3 +270,19 @@ body.has-float-bar .toast{bottom:88px}
   .rail-step.last{padding-bottom:44px}
   .rail-big{margin-top:8px}
 }
+
+/* ---------- About page: motion + layout ---------- */
+.rv{opacity:1}
+.js .rv{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.js .rv.in{opacity:1;transform:none}
+.js .rv.d1{transition-delay:.12s}.js .rv.d2{transition-delay:.24s}.js .rv.d3{transition-delay:.36s}
+.kb{animation:kb 22s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1.02)}to{transform:scale(1.12) translate(-1.5%,-1%)}}
+.pulse{animation:pulse 4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.55}50%{opacity:1}}
+.tile{transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s}
+.tile:hover{transform:translateY(-6px);box-shadow:0 24px 48px -24px rgba(20,29,33,.45)}
+.tile img{transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.tile:hover img{transform:scale(1.06)}
+@media (max-width:820px){.zz{flex-direction:column!important}.zz>*{flex:none!important}.why46:before{content:'';position:absolute;inset:0;background:rgba(6,26,35,.7)}.hide-m{display:none!important}}
+@media (prefers-reduced-motion:reduce){.kb,.pulse{animation:none}.js .rv{opacity:1;transform:none;transition:none}}
