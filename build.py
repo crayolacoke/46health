@@ -662,6 +662,17 @@ def how():
 <div style="text-align: center; margin-top: 40px">{consult()}</div></div></section>''')
     return document("How it works", "From a 10-minute online intake to a licensed provider review and pharmacy delivery — here’s exactly what happens.", body, "How it works")
 
+SURECARE_FACTS = [("2013", "Serving patients since"), ("5", "Licensed pharmacists"),
+                  ("Sterile &amp; non-sterile", "Compounding capabilities"), ("Clean room", "For sterile preparations")]
+
+def surecare_section():
+    facts = "".join(f'<div style="background: {WHITE}; border-radius: 12px; padding: 20px 22px"><dt style="font-family: {SERIF}; font-size: 26px; line-height: 1.15">{a}</dt><dd style="margin: 8px 0 0; font-size: 14px; color: {MUTED}">{b}</dd></div>' for a, b in SURECARE_FACTS)
+    return (f'<section style="background: {TAUPE}; padding: clamp(64px, 8vw, 88px) 0"><div style="{WRAP}"><div style="display: flex; flex-wrap: wrap; gap: 40px 72px; align-items: flex-start">'
+            f'<div style="flex: 1 1 420px; max-width: 620px"><p style="{EYEBROW}">Our pharmacy partner</p>' + H("h2", 44, "SureCare Specialty Pharmacy")
+            + '<p style="margin: 18px 0 0; font-size: 17px; line-height: 1.65">A locally owned, independent pharmacy in El Paso, Texas, compounding patient-specific prescriptions since 2013. SureCare prepares both sterile and non-sterile medications, with sterile formulations made in its on-site clean room.</p>'
+            '<p style="margin: 14px 0 0; font-size: 17px; line-height: 1.65">Every 46 Health prescription is prepared to order for the individual patient, checked by a licensed pharmacist and shipped directly to you.</p></div>'
+            f'<dl style="flex: 1 1 340px; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px">{facts}</dl></div></div></section>')
+
 def about():
     vals = [("rx", "Providers first", "Every treatment begins with a licensed provider who reviews your history and decides with you what’s appropriate."),
             ("search", "Honest about evidence", "Some therapies have decades of clinical use; others are newer. We tell you which is which."),
@@ -674,7 +685,7 @@ def about():
       + f'''<section style="padding: 80px 0"><div style="{WRAP}">{H("h2", 44, "Our team", "text-align: center; margin-bottom: 56px")}
 <div style="{grid(400)}; gap: 56px; align-items: center; margin-bottom: 72px"><div role="img" aria-label="Photo coming soon" style="aspect-ratio: 1 / 1; background: #D9D9D9; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #555">[Medical director photo]</div><div><p style="{EYEBROW}; font-size: 12px; color: {MUTED}">Medical director</p><h3 style="margin: 0; font-size: 24px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase">[Firstname Lastname]</h3><div style="font-size: 16px; font-weight: 600; margin-top: 10px">[Credentials]</div><p style="margin: 24px 0 0; font-size: 16px; line-height: 1.6">[Bio — training, areas of focus, and why they practice telehealth medicine.]</p></div></div>
 <div style="{grid(260)}; gap: 32px">{team}</div></div></section>'''
-      + f'''<section style="background: {TAUPE}; padding: 72px 0"><div style="{WRAP}; display: flex; justify-content: space-between; align-items: center; gap: 48px; flex-wrap: wrap"><div style="max-width: 640px"><p style="{EYEBROW}">Our pharmacy partner</p>{H("h2", 40, "SureCare Specialty Pharmacy")}<p style="margin: 18px 0 0; font-size: 16px; line-height: 1.6">A licensed 503A compounding pharmacy in El Paso, Texas, preparing each prescription for the individual patient. [Accreditations / licensure details.]</p></div></div></section>'''
+      + surecare_section()
       + f'<section style="padding: 80px 0; text-align: center"><div style="{NARROW}">{H("h2", 52, "Your best is still ahead.<br>Let’s pursue it together.", "line-height: 1.1")}<div style="margin-top: 36px">{consult()}</div></div></section>')
     return document("About", "46 Health is a telehealth practice built on a simple idea: good care should fit into your life.", body, "About")
 
