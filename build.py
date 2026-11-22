@@ -722,13 +722,13 @@ def journey():
 
 
 def about():
-    hero = (f'<section style="position: relative; min-height: min(calc(100vh - 345px), 620px); display: flex; align-items: flex-end; overflow: hidden; color: {BG}">'
+    hero = (f'<section style="position: relative; min-height: min(calc(100vh - 290px), 680px); display: flex; align-items: flex-end; overflow: hidden; color: {BG}">'
             f'<img class="kb" src="{IMG("h_home.jpg")}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%">'
             f'<div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,29,33,.08) 0%, rgba(20,29,33,.42) 38%, rgba(20,29,33,.85))"></div>'
             f'<div style="position: relative; {WRAP}; width: 100%; padding-bottom: clamp(56px, 8vw, 96px)"><div class="rv" style="max-width: 760px"><p style="{EYE}; color: #DDE2E4">About 46 Health</p>'
             + H("h1", 76, "Your health. Your life. Our science.", f"color: {BG}; line-height: 1.04")
             + f'<p style="margin: 24px 0 0; font-size: 18px; line-height: 1.65; color: #DDE2E4; max-width: 600px">{LEDE}</p></div></div></section>')
-    stats = f'<section style="padding: clamp(56px, 7vw, 88px) 0"><div style="{WRAP}">{stat_strip()}</div></section>'
+    stats = f'<section style="padding: 32px 0 clamp(56px, 7vw, 88px)"><div style="{WRAP}">{stat_strip()}</div></section>'
     rows = ""
     for i, (t, d, img, pos) in enumerate(VALS):
         rev = "row-reverse" if i % 2 else "row"
