@@ -110,3 +110,21 @@ window.SITE_CONFIG = {
     btn.setAttribute("aria-expanded", open ? "true" : "false");
   });
 })();
+
+/* Mobile sticky consultation bar */
+(function () {
+  var bar = document.querySelector(".m-cta");
+  if (!bar || !window.matchMedia) return;
+  var mq = window.matchMedia("(max-width:760px)");
+  var page = location.pathname.replace(/\/$/, "");
+  if (/(waitlist|consult-list)(\.html)?$/.test(page)) return;
+  bar.hidden = false;
+  function update() {
+    var on = mq.matches && window.scrollY > 520 && !document.body.classList.contains("has-float-bar");
+    bar.classList.toggle("show", on);
+    document.body.classList.toggle("has-m-cta", mq.matches);
+  }
+  window.addEventListener("scroll", update, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+})();

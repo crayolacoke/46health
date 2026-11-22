@@ -92,14 +92,14 @@ def footer():
     def col(t, ls):
         return f'<div><h2 style="margin: 0 0 18px; font-family: {SERIF}; font-weight: 400; font-size: 24px">{t}</h2><ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px">' + "".join(f'<li><a href="{u(h)}" style="font-size: 14px; letter-spacing: 0.04em; color: {INK}; text-decoration: none; min-height: 32px; display: flex; align-items: center; text-transform: uppercase">{l}</a></li>' for l, h in ls) + '</ul></div>'
     treat = [(c[2], c[0]) for c in CATEGORY_PAGES]
-    return f'''<section style="background: {NAVY}; color: #FFFFFF; padding: 56px 0">
+    return f'''<section class="nl-band" style="background: {NAVY}; color: #FFFFFF; padding: 56px 0">
 <div style="{WRAP}; display: flex; justify-content: space-between; align-items: center; gap: 40px; flex-wrap: wrap">
 <div>{H("h2", 44, "Stay informed.<br>Choose excellence.", "color: #ADB7BD")}<p style="margin: 18px 0 0; font-size: 16px; line-height: 1.6; color: #F2F0EA; max-width: 380px">Notes on health, performance and longevity from our providers. No spam.</p></div>
 <form data-form="newsletter" style="flex: 0 1 600px; display: flex; gap: 14px; flex-wrap: wrap; align-items: center"><label for="nl-email" class="sr-only">Email address</label><input id="nl-email" name="email" type="email" required autocomplete="email" placeholder="Email address" style="flex: 1 1 260px; min-height: 52px; border-radius: 999px; border: 1.5px solid #FFFFFF; background: transparent; color: #FFFFFF; padding: 0 24px; font: inherit; font-size: 15px"><button type="submit" style="min-height: 52px; padding: 0 34px; border-radius: 999px; background: #FFFFFF; color: {NAVY}; border: 0; font: inherit; font-size: 16px; font-weight: 500; cursor: pointer">Sign Up</button><p class="form-msg" role="status" hidden style="flex-basis: 100%; margin: 4px 0 0; font-size: 14px; color: #F2F0EA"></p></form>
 </div></section>
-<footer style="background: {BG}; padding: 64px 0 48px">
-<div style="{WRAP}; {grid(260)}; gap: 48px">
-<div><div style="display: inline-flex; flex-direction: column; align-items: center; line-height: 1"><span style="font-family: {SERIF}; font-size: 96px; letter-spacing: -0.05em">46</span><span style="font-size: 16px; letter-spacing: 0.5em; padding-left: 0.5em; margin-top: 8px">HEALTH</span><span style="width: 28px; height: 1px; background: {INK}; margin: 10px 0"></span><span style="font-size: 15px; letter-spacing: 0.4em; padding-left: 0.4em">XX·XY</span></div>
+<footer class="site-footer" style="background: {BG}; padding: 64px 0 48px">
+<div class="ft-grid" style="{WRAP}; {grid(260)}; gap: 48px">
+<div class="ft-brand"><div class="ft-logo" style="display: inline-flex; flex-direction: column; align-items: center; line-height: 1"><span style="font-family: {SERIF}; font-size: 96px; letter-spacing: -0.05em">46</span><span style="font-size: 16px; letter-spacing: 0.5em; padding-left: 0.5em; margin-top: 8px">HEALTH</span><span style="width: 28px; height: 1px; background: {INK}; margin: 10px 0"></span><span style="font-size: 15px; letter-spacing: 0.4em; padding-left: 0.4em">XX·XY</span></div>
 <p style="margin: 36px 0 0; font-size: 12px; line-height: 1.6; max-width: 360px">46 Health connects patients with independent licensed healthcare providers through telehealth. Prescriptions are issued only at a provider’s discretion after review of each patient’s medical history. Medications are prepared by SureCare Specialty Pharmacy, a licensed 503A compounding pharmacy in El Paso, Texas. Compounded medications are not FDA-approved; FDA does not review them for safety, effectiveness or quality. Information on this site is for educational purposes and is not medical advice. Individual results vary. If you are experiencing a medical emergency, call 911.</p></div>
 <div style="display: flex; flex-direction: column; gap: 44px">{col("Treatments", treat)}{col("Support", [("FAQ", "faq.html"), ("Shipping", "faq.html#faq-2"), ("Refills", "faq.html#faq-2"), ("Contact", "contact.html")])}</div>
 <div style="display: flex; flex-direction: column; gap: 44px">{col("Company", [("About", "about.html"), ("How it works", "how-it-works.html"), ("Pricing", "pricing.html"), ("Careers", "careers.html")])}{col("Legal", [("Terms of use", "terms.html"), ("Privacy policy", "privacy.html"), ("Notice of privacy practices", "notice-of-privacy-practices.html"), ("Telehealth consent", "telehealth-consent.html")])}</div>
@@ -137,6 +137,7 @@ def document(title, desc, body, active="", scripts=""):
 {body}
 </main>
 {footer()}
+<div class="m-cta" hidden>{consult("Start Your Consultation")}<span class="m-cta-note">$35 consult · 10-min intake</span></div>
 <script src="{u('assets/site.js') + '?v=' + ASSET_V}"></script>{scripts}
 </body>
 </html>
@@ -162,7 +163,7 @@ def centered_intro(title, body, crumbs=None):
     return f'<section style="padding: 56px 0 40px; text-align: center"><div style="{NARROW}">{bc}{H("h1", 60, title, "line-height: 1.08")}<div style="width: 96px; height: 2px; background: {INK}; margin: 28px auto"></div><p style="margin: 0 auto; font-size: 17px; line-height: 1.65; max-width: 620px">{body}</p></div></section>'
 
 def cta_band():
-    return f'''<section style="background: #ADB7BD; padding: 80px 0; text-align: center">
+    return f'''<section class="cta-band" style="background: #ADB7BD; padding: 80px 0; text-align: center">
 <div style="{NARROW}">{H("h2", 64, "Excellence is a practice.<br>Start yours today.", "line-height: 1.08")}
 <p style="margin: 28px auto 0; font-size: 17px; line-height: 1.6; max-width: 560px">Start your consultation today for just $35. Your intake takes about 10 minutes, and a provider typically reviews it within 4 hours.</p>
 <div style="margin-top: 40px">{consult()}</div></div></section>'''
@@ -191,12 +192,12 @@ def why_band(vals):
     eye = "font-size: 12px; letter-spacing: 0.24em; font-weight: 500"
     cells = "".join(f'''<div style="padding-top: 22px; border-top: 1px solid rgba(192,170,150,0.55)"><div style="{eye}; color: {TAN}; margin-bottom: 14px">0{i}</div><h3 style="margin: 0; font-family: {SERIF}; font-weight: 400; font-size: 26px; line-height: 1.15; color: {BG}">{t}.</h3><p style="margin: 12px 0 0; font-size: 16px; line-height: 1.6; color: #ADB7BD">{d}</p></div>''' for i, (_, t, d) in enumerate(vals, 1))
     strip = "".join(f'<div class="zoom" style="height: 300px; border-radius: 8px; overflow: hidden"><img src="{u("assets/img/" + k)}" alt="" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: {pos}; display: block"></div>' for k, pos in [("h_about.jpg", "50% 30%"), ("sema.jpg", "50% 45%"), ("h_how.jpg", "50% 30%")])
-    return f'''<section style="background: {NAVY}; padding: 104px 0 96px"><div style="{WRAP}">
+    return f'''<section class="why-band" style="background: {NAVY}; padding: 104px 0 96px"><div style="{WRAP}">
 <div style="display: flex; flex-wrap: wrap; gap: 56px 72px">
 <div style="flex: 1 1 300px; max-width: 380px"><div style="{eye}; color: {TAN}; margin-bottom: 18px">WHY 46 HEALTH</div>{H("h2", 52, "Longevity,<br>made personal.", "color: " + BG + "; line-height: 1.08")}
 <p style="margin: 24px 0 32px; font-size: 17px; line-height: 1.65; color: #ADB7BD">A licensed provider, a trusted pharmacy and a plan built around your health and wellness, from first consult to every refill.</p>{btn("See How It Works", u("how-it-works.html"), "light")}</div>
-<div style="flex: 2 1 520px; {grid(260)}; gap: 48px">{cells}</div></div>
-<div style="{grid(260)}; gap: 20px; margin-top: 80px">{strip}</div></div></section>'''
+<div class="why-cells" style="flex: 2 1 520px; {grid(260)}; gap: 48px">{cells}</div></div>
+<div class="why-strip" style="{grid(260)}; gap: 20px; margin-top: 80px">{strip}</div></div></section>'''
 
 def cat_card(c, cta="Learn More", tall=False):
     href, _, t, d, img = c
@@ -594,11 +595,11 @@ def home():
     hero_html = (f'<section class="home-hero"><div class="home-hero-in" style="{WRAP}">'
         f'<div class="home-hero-copy"><p style="{EYEBROW}; font-size: 12px; color: #61757D">Physician-guided telehealth</p>'
         + H("h1", 60, "One team to become the best version of you.", "line-height: 1.08")
-        + f'<p style="margin: 16px 0 0; font-family: {SERIF}; font-size: 24px; color: #8A7663">Your health. Your life. Our science.</p>'
-        + f'<p style="margin: 22px 0 0; max-width: 540px; font-size: 18px; line-height: 1.6; color: {MUTED}">Build a list of everything you want to ask about. A licensed provider reviews it with you in one consultation, and SureCare Specialty Pharmacy prepares what’s prescribed.</p>'
+        + f'<p class="hh-tag" style="margin: 16px 0 0; font-family: {SERIF}; font-size: 24px; color: #8A7663">Your health. Your life. Our science.</p>'
+        + f'<p class="m-hide" style="margin: 22px 0 0; max-width: 540px; font-size: 18px; line-height: 1.6; color: {MUTED}">Build a list of everything you want to ask about. A licensed provider reviews it with you in one consultation, and SureCare Specialty Pharmacy prepares what’s prescribed.</p>'
         f'<ul class="hero-checks">{checkgrid}</ul>'
-        f'<div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 34px">{consult()}{btn("Explore All Treatments", u("treatments.html"), "ghost")}</div>'
-        f'<p style="margin: 14px 0 0; font-size: 14px; color: {MUTED}"><b style="color: #141D21; font-weight: 600">Start your consultation for just $35.</b> Intake takes about 10 minutes, and a provider typically reviews it within 4 hours.</p></div>'
+        f'<div class="hh-btns" style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 34px">{consult()}{btn("Explore All Treatments", u("treatments.html"), "ghost")}</div>'
+        f'<p class="hh-micro" style="margin: 14px 0 0; font-size: 14px; color: {MUTED}"><b style="color: #141D21; font-weight: 600">Start your consultation for just $35.</b> Intake takes about 10 minutes, and a provider typically reviews it within 4 hours.</p></div>'
         f'{home_carousel()}</div></section>')
     trust = "".join(f'<li style="flex: 1 1 200px; text-align: center; font-size: 13px; letter-spacing: 0.16em; line-height: 1.5; padding: 8px 16px">{t}</li>' for t in ["LICENSED U.S. PROVIDERS", "PREPARED BY SURECARE PHARMACY", "DISCREET SHIPPING", "NO MEMBERSHIP REQUIRED"])
     steps = [("Add anything", "Tap + on any treatment, from any category. Your list stays on your device."),
@@ -612,7 +613,7 @@ def home():
         f'<ol style="list-style: none; margin: 0; padding: 0; border-bottom: 1px solid #E3DED6">{steps_html}</ol>'
         f'<div style="display: flex; gap: 18px; flex-wrap: wrap; align-items: center; margin-top: 28px">{consult()}{link("See how it works", u("how-it-works.html"))}</div></div>'
         f'<div style="flex: 1 1 380px; display: flex; justify-content: center">{example_list()}</div></div></section>')
-    chromo = (f'<section class="chromo-panel" style="position: relative; background: #061A23 url({u("assets/img/chromo.jpg")}) 70% center / cover no-repeat; color: {BG}; overflow: hidden"><div style="{WRAP}; position: relative; z-index: 1"><div style="max-width: 620px; padding: 104px 0">'
+    chromo = (f'<section class="chromo-panel" style="position: relative; background: #061A23 url({u("assets/img/chromo.jpg")}) 70% center / cover no-repeat; color: {BG}; overflow: hidden"><div style="{WRAP}; position: relative; z-index: 1"><div class="chromo-in" style="max-width: 620px; padding: 104px 0">'
         + H("h2", 64, "46 chromosomes.<br>Only one of you.", "color: " + BG + "; line-height: 1.06")
         + f'<div style="width: 64px; height: 1.5px; background: {TAN}; margin: 32px 0"></div><p style="margin: 0; font-size: 13px; letter-spacing: 0.26em; line-height: 1.8; color: {TAN}">MEN’S &nbsp;·&nbsp; WOMEN’S &nbsp;·&nbsp; WEIGHT &nbsp;·&nbsp; PEPTIDES &nbsp;·&nbsp; SKIN</p>'
         f'<p style="margin: 24px 0 0; max-width: 480px; font-size: 17px; line-height: 1.65; color: #ADB7BD">Care built for the whole person, not one condition. Men’s and women’s health, weight, recovery and skin, under one licensed provider.</p></div></div></section>')
@@ -621,10 +622,10 @@ def home():
             ("shield", "Compounded by a pharmacy you can trust", "Your medication is prepared to order by SureCare Specialty Pharmacy, a licensed 503A compounding pharmacy in El Paso, Texas."),
             ("chat", "Ongoing support and care throughout your journey", "Follow-ups, dosage changes and refills are all handled in your patient portal, with your provider a message away.")]
     prices = "".join(f'<div style="flex: 1 1 200px; border-top: 1px solid #3A464C; padding-top: 18px"><div style="font-family: {SERIF}; font-size: 40px; color: #FFFFFF">{re.sub(r"(\d+)", r'<span data-to="\1">\1</span>', a)}</div><div style="margin-top: 8px; font-size: 14px; letter-spacing: 0.06em; color: #ADB7BD">{b}</div></div>' for a, b in [("$69", "PEPTIDES FROM, PER VIAL"), ("$139", "GLP-1 PROGRAMS FROM, PER MONTH"), ("Up to 5", "MEDICATIONS SHIP FOR ONE FEE"), ("$35", "CONSULTATION")])
-    pricing_band = (f'<section style="background: {NAVY}; color: #FFFFFF; padding: 0 0 80px"><div style="{WRAP}"><div style="border-top: 1px solid rgba(192,170,150,0.3); padding-top: 80px"><div style="text-align: center; max-width: 640px; margin: 0 auto">'
+    pricing_band = (f'<section class="price-band" style="background: {NAVY}; color: #FFFFFF; padding: 0 0 80px"><div style="{WRAP}"><div class="price-in" style="border-top: 1px solid rgba(192,170,150,0.3); padding-top: 80px"><div style="text-align: center; max-width: 640px; margin: 0 auto">'
         + H("h2", 56, "Clear pricing.<br>No surprises.", "color: #F2F0EA; line-height: 1.08")
         + f'<p style="margin: 24px 0 0; font-size: 17px; line-height: 1.6; color: #F2F0EA">Your consultation is just $35, and your medication price is shown before you commit. No teaser prices that jump later.</p></div>'
-        f'<div style="display: flex; flex-wrap: wrap; gap: 32px; margin-top: 64px">{prices}</div><div style="text-align: center; margin-top: 56px">{btn("See Pricing", u("pricing.html"), "light")}</div></div></div></section>')
+        f'<div class="price-stats" style="display: flex; flex-wrap: wrap; gap: 32px; margin-top: 64px">{prices}</div><div style="text-align: center; margin-top: 56px">{btn("See Pricing", u("pricing.html"), "light")}</div></div></div></section>')
     qs = [FAQ[0][1][0], FAQ[0][1][1], FAQ[1][1][0], FAQ[0][1][3], FAQ[3][1][0]]
     faq_items = "".join(f'<details class="home-faq"><summary>{q}{CHEV}</summary><p>{a}</p></details>' for q, a in qs)
     faq_html = (f'<section style="background: {WHITE}; padding: clamp(64px, 8vw, 96px) 0"><div style="{WRAP}; display: flex; flex-wrap: wrap; gap: clamp(32px, 6vw, 72px)">'
@@ -634,7 +635,7 @@ def home():
     floatbar = (f'<div class="float-bar" hidden><a href="{u("consult-list.html")}" class="float-count">{LIST_ICON}<span><b class="float-num">0</b> on your consult list</span></a>'
         + consult("Start Your Consultation", extra="min-height: 44px; padding: 0 22px; font-size: 14px") + '</div>')
     body = (hero_html
-      + f'<section aria-label="Why patients choose us" style="background: #61757D; color: #FFFFFF; padding: 22px 0"><ul style="{WRAP}; list-style: none; margin-top: 0; margin-bottom: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between">{trust}</ul></section>'
+      + f'<section class="trust-bar" aria-label="Why patients choose us" style="background: #61757D; color: #FFFFFF; padding: 22px 0"><ul style="{WRAP}; list-style: none; margin-top: 0; margin-bottom: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between">{trust}</ul></section>'
       + rail_section() + chromo + shop_by_goal() + why_band(vals) + pricing_band + faq_html + cta_band() + floatbar)
     return document("46 Health", "Physician-guided telehealth for men and women: weight care, peptides, hormones, sexual wellness and skin from licensed providers, prepared by SureCare Specialty Pharmacy.", body,
                     scripts=f'\n<script src="{u("assets/home.js") + "?v=" + ASSET_V}"></script><script src="{u("assets/motion.js") + "?v=" + ASSET_V}"></script>')

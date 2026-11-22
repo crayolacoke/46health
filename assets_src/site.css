@@ -286,3 +286,73 @@ body.has-float-bar .toast{bottom:88px}
 .tile:hover img{transform:scale(1.06)}
 @media (max-width:820px){.zz{flex-direction:column!important}.zz>*{flex:none!important}.why46:before{content:'';position:absolute;inset:0;background:rgba(6,26,35,.7)}.hide-m{display:none!important}}
 @media (prefers-reduced-motion:reduce){.kb,.pulse{animation:none}.js .rv{opacity:1;transform:none;transition:none}}
+
+/* ---------- Mobile polish (phones only; desktop untouched) ---------- */
+.m-cta{display:none}
+@media (max-width:760px){
+  /* hero */
+  .home-hero{padding:22px 0 44px}
+  .home-hero .m-hide{display:none}
+  .hh-tag{font-size:19px!important;margin-top:10px!important}
+  .hero-checks{grid-template-columns:1fr 1fr!important;gap:10px 14px!important;margin-top:20px!important}
+  .hero-checks li{font-size:13.5px!important;gap:8px!important;align-items:flex-start!important;line-height:1.35}
+  .hero-checks li svg{flex:none;margin-top:1px}
+  .hero-checks li:nth-child(1),.hero-checks li:nth-child(3){display:none!important}
+  .hh-btns{margin-top:24px!important;gap:10px!important}
+  .hh-btns .btn{flex:1 1 100%;justify-content:center;text-align:center}
+  .hh-micro{font-size:13px!important;text-align:center;line-height:1.5}
+  /* trust bar */
+  .trust-bar{padding:14px 0!important}
+  .trust-bar ul{display:grid!important;grid-template-columns:1fr 1fr;gap:4px 8px!important}
+  .trust-bar li{font-size:10.5px!important;letter-spacing:.12em!important;padding:6px 2px!important;line-height:1.4!important}
+  /* how it works rail */
+  .rail-sec{padding:56px 0 44px}
+  .rail{margin-top:36px}
+  .rail-step{padding:0 0 28px 44px}
+  .rail-step.last{padding-bottom:12px}
+  .rail-big{font-size:28px}
+  .rail-step h3{margin-top:10px;font-size:17px}
+  .rail-step p{font-size:14.5px}
+  .rail-pill{display:none}
+  .rail-cta .btn{width:100%;justify-content:center}
+  .rail-cta{width:100%}
+  /* chromosome panel */
+  .chromo-panel::before{content:"";position:absolute;inset:0;background:rgba(6,26,35,.62)}
+  .chromo-in{padding:72px 0!important}
+  .chromo-panel>div{min-height:0!important}
+  /* why band */
+  .why-band{padding:64px 0 56px!important}
+  .why-cells{gap:28px!important}
+  .why-cells h3{font-size:22px!important}
+  .why-cells p{font-size:15px!important}
+  .why-strip{display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px!important;margin:40px calc(-1 * clamp(20px,4vw,40px)) 0!important;padding:0 clamp(20px,4vw,40px);scrollbar-width:none}
+  .why-strip::-webkit-scrollbar{display:none}
+  .why-strip>div{flex:0 0 78%;height:220px!important;scroll-snap-align:center}
+  /* pricing band */
+  .price-band{padding-bottom:56px!important}
+  .price-in{padding-top:56px!important}
+  .price-stats{display:grid!important;grid-template-columns:1fr 1fr;gap:28px 20px!important;margin-top:40px!important}
+  .price-stats>div>div:first-child{font-size:32px!important}
+  .price-stats>div>div:last-child{font-size:11.5px!important;line-height:1.45}
+  .price-band .btn{margin-top:-16px}
+  /* closing CTA */
+  .cta-band{padding:56px 0!important}
+  .cta-band p{font-size:16px!important}
+  /* newsletter + footer */
+  .nl-band{padding:44px 0!important}
+  .nl-band form .btn,.nl-band form button{width:100%;justify-content:center}
+  .site-footer{padding:44px 0 32px!important}
+  .ft-grid{grid-template-columns:1fr 1fr!important;gap:36px 20px!important}
+  .ft-brand{grid-column:1/-1}
+  .ft-logo{zoom:.55}
+  .ft-brand p{margin-top:20px!important;max-width:none!important;color:#4A545B}
+  .ft-grid>div{gap:32px!important}
+  .ft-grid h2{font-size:20px!important;margin-bottom:10px!important}
+  .ft-grid li a{font-size:12.5px!important;min-height:30px!important}
+  /* sticky consultation bar */
+  .m-cta:not([hidden]){display:flex;position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:19;align-items:center;justify-content:space-between;gap:10px;background:#fff;border:1px solid #E3DED6;border-radius:999px;padding:6px 6px 6px 18px;box-shadow:0 16px 40px -16px rgba(20,29,33,.45);flex-direction:row-reverse;transform:translateY(140%);transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+  .m-cta.show{transform:none}
+  .m-cta .btn{min-height:44px!important;padding:0 20px!important;font-size:14px!important;white-space:nowrap}
+  .m-cta-note{font-size:12.5px;color:#4A545B;line-height:1.3}
+  body.has-m-cta{padding-bottom:76px}
+}
