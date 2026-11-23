@@ -104,7 +104,7 @@ def footer():
 <div style="display: flex; flex-direction: column; gap: 44px">{col("Treatments", treat)}{col("Support", [("FAQ", "faq.html"), ("Shipping", "faq.html#faq-2"), ("Refills", "faq.html#faq-2"), ("Contact", "contact.html")])}</div>
 <div style="display: flex; flex-direction: column; gap: 44px">{col("Company", [("About", "about.html"), ("How it works", "how-it-works.html"), ("Pricing", "pricing.html"), ("Careers", "careers.html")])}{col("Legal", [("Terms of use", "terms.html"), ("Privacy policy", "privacy.html"), ("Notice of privacy practices", "notice-of-privacy-practices.html"), ("Telehealth consent", "telehealth-consent.html")])}</div>
 </div></footer>
-<div style="background: {TAN}; text-align: center; padding: 18px 16px; font-size: 15px">© 2026 46 Health. All rights reserved.</div>'''
+<div style="background: {TAN}; text-align: center; padding: 18px 16px; font-size: 15px">© 2026 46 Health, LLC. All rights reserved.</div>'''
 
 def document(title, desc, body, active="", scripts=""):
     t = f"{title} | 46 Health" if title != "46 Health" else "46 Health — Physician-guided telehealth"
