@@ -291,6 +291,7 @@ body.has-float-bar .toast{bottom:88px}
 .ft-logo{align-items:flex-start!important}
 .ft-logo>span:first-child{margin-left:-0.04em}
 .ft-logo>span:nth-child(2),.ft-logo>span:nth-child(4){padding-left:0!important}
+@media (min-width:761px){.ft-grid{grid-template-columns:minmax(280px,360px) auto auto!important;justify-content:space-between;column-gap:64px!important}}
 
 /* ---------- Mobile polish (phones only; desktop untouched) ---------- */
 .m-cta{display:none}
