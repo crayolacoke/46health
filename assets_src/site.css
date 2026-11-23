@@ -287,9 +287,10 @@ body.has-float-bar .toast{bottom:88px}
 @media (max-width:820px){.zz{flex-direction:column!important}.zz>*{flex:none!important}.why46:before{content:'';position:absolute;inset:0;background:rgba(6,26,35,.7)}.hide-m{display:none!important}}
 @media (prefers-reduced-motion:reduce){.kb,.pulse{animation:none}.js .rv{opacity:1;transform:none;transition:none}}
 
-/* Footer brand: logo and disclaimer share one centered column */
-.ft-brand{display:flex;flex-direction:column;align-items:center;text-align:center}
-.ft-brand p{margin-left:auto!important;margin-right:auto!important}
+/* Footer brand: logo and disclaimer share one left edge */
+.ft-logo{align-items:flex-start!important}
+.ft-logo>span:first-child{margin-left:-0.04em}
+.ft-logo>span:nth-child(2),.ft-logo>span:nth-child(4){padding-left:0!important}
 
 /* ---------- Mobile polish (phones only; desktop untouched) ---------- */
 .m-cta{display:none}
