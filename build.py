@@ -861,10 +861,13 @@ def md_to_html(md):
             out.append(f'<p style="margin: 18px 0 0; font-size: 16px; line-height: 1.7">{inline(" ".join(lines))}</p>')
     return "".join(out)
 
+def md_page(src, title, desc):
+    md = open(os.path.join(ROOT, "data", src), encoding="utf-8").read()
+    body = f'<section style="padding: 80px 0 104px"><div style="{NARROW}">{H("h1", 56, title)}<div style="margin-top: 24px">{md_to_html(md)}</div></div></section>'
+    return document(title, desc, body)
+
 def terms_page():
-    md = open(os.path.join(ROOT, "data", "terms.md"), encoding="utf-8").read()
-    body = f'<section style="padding: 80px 0 104px"><div style="{NARROW}">{H("h1", 56, "Terms of Use")}<div style="margin-top: 24px">{md_to_html(md)}</div></div></section>'
-    return document("Terms of Use", "Terms of Use for 46 Health, LLC and the 46 Health telehealth service.", body)
+    return md_page("terms.md", "Terms of Use", "Terms of Use for 46 Health, LLC and the 46 Health telehealth service.")
 
 def legal(title):
     body = f'<section style="padding: 80px 0 96px"><div style="{NARROW}">{H("h1", 56, title)}<p style="margin: 28px 0 0; font-size: 17px; line-height: 1.65">[{title} — {"to be supplied by counsel" if title != "Careers" else "open roles coming soon"}.]</p><div style="margin-top: 40px">{link("Back to home", u("index.html"))}</div></div></section>'
@@ -952,6 +955,7 @@ def main():
     for f, t in LEGAL.items():
         pages[f] = legal(t)
     pages["terms.html"] = terms_page()
+    pages["privacy.html"] = md_page("privacy.md", "Privacy Policy", "How 46 Health, LLC collects, uses, shares and protects personal information.")
     for f, t in pages.items():
         write(f, t)
     PFX = "../"
