@@ -137,7 +137,7 @@ def document(title, desc, body, active="", scripts=""):
 {body}
 </main>
 {footer()}
-<div class="m-cta" hidden>{consult("Start Your Consultation")}<span class="m-cta-note">$35 consult · 10-min intake</span></div>
+<div class="m-cta" hidden>{consult("Start Your Consultation")}<span class="m-cta-note">$25 consult · 10-min intake</span></div>
 <script src="{u('assets/site.js') + '?v=' + ASSET_V}"></script>{scripts}
 </body>
 </html>
@@ -165,7 +165,7 @@ def centered_intro(title, body, crumbs=None):
 def cta_band():
     return f'''<section class="cta-band" style="background: #ADB7BD; padding: 80px 0; text-align: center">
 <div style="{NARROW}">{H("h2", 64, "Excellence is a practice.<br>Start yours today.", "line-height: 1.08")}
-<p style="margin: 28px auto 0; font-size: 17px; line-height: 1.6; max-width: 560px">Start your consultation today for just $35. Your intake takes about 10 minutes, and a provider typically reviews it within 4 hours.</p>
+<p style="margin: 28px auto 0; font-size: 17px; line-height: 1.6; max-width: 560px">Start your consultation today for just $25. Your intake takes about 10 minutes, and a provider typically reviews it within 4 hours.</p>
 <div style="margin-top: 40px">{consult()}</div></div></section>'''
 
 def bignum_steps(steps):
@@ -599,7 +599,7 @@ def home():
         + f'<p class="m-hide" style="margin: 22px 0 0; max-width: 540px; font-size: 18px; line-height: 1.6; color: {MUTED}">Build a list of everything you want to ask about. A licensed provider reviews it with you in one consultation, and SureCare Specialty Pharmacy prepares what’s prescribed.</p>'
         f'<ul class="hero-checks">{checkgrid}</ul>'
         f'<div class="hh-btns" style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 34px">{consult()}{btn("Explore All Treatments", u("treatments.html"), "ghost")}</div>'
-        f'<p class="hh-micro" style="margin: 14px 0 0; font-size: 14px; color: {MUTED}"><b style="color: #141D21; font-weight: 600">Start your consultation for just $35.</b> Intake takes about 10 minutes, and a provider typically reviews it within 4 hours.</p></div>'
+        f'<p class="hh-micro" style="margin: 14px 0 0; font-size: 14px; color: {MUTED}"><b style="color: #141D21; font-weight: 600">Start your consultation for just $25.</b> Intake takes about 10 minutes, and a provider typically reviews it within 4 hours.</p></div>'
         f'{home_carousel()}</div></section>')
     trust = "".join(f'<li style="flex: 1 1 200px; text-align: center; font-size: 13px; letter-spacing: 0.16em; line-height: 1.5; padding: 8px 16px">{t}</li>' for t in ["LICENSED U.S. PROVIDERS", "PREPARED BY SURECARE PHARMACY", "DISCREET SHIPPING", "NO MEMBERSHIP REQUIRED"])
     steps = [("Add anything", "Tap + on any treatment, from any category. Your list stays on your device."),
@@ -621,10 +621,10 @@ def home():
             ("dial", "Optimization based on your medical needs", "Your dosing and protocols are set for your body and your goals, then adjusted as you progress."),
             ("shield", "Compounded by a pharmacy you can trust", "Your medication is prepared to order by SureCare Specialty Pharmacy, a licensed 503A compounding pharmacy in El Paso, Texas."),
             ("chat", "Ongoing support and care throughout your journey", "Follow-ups, dosage changes and refills are all handled in your patient portal, with your provider a message away.")]
-    prices = "".join(f'<div style="flex: 1 1 200px; border-top: 1px solid #3A464C; padding-top: 18px"><div style="font-family: {SERIF}; font-size: 40px; color: #FFFFFF">{re.sub(r"(\d+)", r'<span data-to="\1">\1</span>', a)}</div><div style="margin-top: 8px; font-size: 14px; letter-spacing: 0.06em; color: #ADB7BD">{b}</div></div>' for a, b in [("$69", "PEPTIDES FROM, PER VIAL"), ("$139", "GLP-1 PROGRAMS FROM, PER MONTH"), ("Up to 3", "MEDICATIONS SHIP FOR ONE FEE"), ("$35", "CONSULTATION")])
+    prices = "".join(f'<div style="flex: 1 1 200px; border-top: 1px solid #3A464C; padding-top: 18px"><div style="font-family: {SERIF}; font-size: 40px; color: #FFFFFF">{re.sub(r"(\d+)", r'<span data-to="\1">\1</span>', a)}</div><div style="margin-top: 8px; font-size: 14px; letter-spacing: 0.06em; color: #ADB7BD">{b}</div></div>' for a, b in [("$69", "PEPTIDES FROM, PER VIAL"), ("$139", "GLP-1 PROGRAMS FROM, PER MONTH"), ("Up to 3", "MEDICATIONS SHIP FOR ONE FEE"), ("$25", "CONSULTATION")])
     pricing_band = (f'<section class="price-band" style="background: {NAVY}; color: #FFFFFF; padding: 0 0 80px"><div style="{WRAP}"><div class="price-in" style="border-top: 1px solid rgba(192,170,150,0.3); padding-top: 80px"><div style="text-align: center; max-width: 640px; margin: 0 auto">'
         + H("h2", 56, "Clear pricing.<br>No surprises.", "color: #F2F0EA; line-height: 1.08")
-        + f'<p style="margin: 24px 0 0; font-size: 17px; line-height: 1.6; color: #F2F0EA">Your consultation is just $35, and your medication price is shown before you commit. No teaser prices that jump later.</p></div>'
+        + f'<p style="margin: 24px 0 0; font-size: 17px; line-height: 1.6; color: #F2F0EA">Your consultation is just $25, and your medication price is shown before you commit. No teaser prices that jump later.</p></div>'
         f'<div class="price-stats" style="display: flex; flex-wrap: wrap; gap: 32px; margin-top: 64px">{prices}</div><div style="text-align: center; margin-top: 56px">{btn("See Pricing", u("pricing.html"), "light")}</div></div></div></section>')
     qs = [FAQ[0][1][0], FAQ[0][1][1], FAQ[1][1][0], FAQ[0][1][3], FAQ[3][1][0]]
     faq_items = "".join(f'<details class="home-faq"><summary>{q}{CHEV}</summary><p>{a}</p></details>' for q, a in qs)
@@ -682,7 +682,7 @@ VALS = [("One team, the whole you", "Men’s and women’s health, weight, recov
         ("Honest about evidence", "Some therapies have decades of clinical use; others are newer. We tell you which is which, so you can decide with clear eyes.", "h_treat.jpg", "50% 30%"),
         ("Care that continues", "Follow-ups, dosage changes and refills are all handled in your patient portal, with your provider a message away.", "cat4.jpg", "70% 40%")]
 AREAS = ["Weight", "Hormones", "Recovery", "Skin", "Longevity", "Men’s health", "Women’s health", "Peptides"]
-STATS = [("46", "", "chromosomes. One of you."), ("50", "", "states served"), ("$", "35", "consultation"), ("10", " min", "online intake")]
+STATS = [("46", "", "chromosomes. One of you."), ("50", "", "states served"), ("$", "25", "consultation"), ("10", " min", "online intake")]
 
 def stat_strip(dark=False):
     c, m, line = (BG, "#ADB7BD", "rgba(192,170,150,.35)") if dark else (INK, MUTED, "#D3CCC4")
@@ -700,9 +700,9 @@ def closing(img=None):
         return (f'<section style="position: relative; overflow: hidden; color: {BG}; text-align: center"><img class="kb" src="{IMG(img)}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%">'
                 f'<div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,29,33,.35), rgba(20,29,33,.75))"></div>'
                 f'<div class="rv" style="position: relative; {NARROW}; padding-top: clamp(96px, 12vw, 160px); padding-bottom: clamp(96px, 12vw, 160px)">' + H("h2", 56, "One team to become<br>the best version of you.", f"color: {BG}; line-height: 1.08")
-                + f'<p style="margin: 22px auto 0; font-size: 17px; color: #DDE2E4">Start your consultation today for just $35.</p><div style="margin-top: 32px">{consult(kind="light")}</div></div></section>')
+                + f'<p style="margin: 22px auto 0; font-size: 17px; color: #DDE2E4">Start your consultation today for just $25.</p><div style="margin-top: 32px">{consult(kind="light")}</div></div></section>')
     return (f'<section style="padding: clamp(80px, 10vw, 120px) 0; text-align: center"><div class="rv" style="{NARROW}">' + H("h2", 56, "One team to become<br>the best version of you.", "line-height: 1.08")
-            + f'<p style="margin: 22px auto 0; font-size: 17px; color: {MUTED}">Start your consultation today for just $35.</p><div style="margin-top: 32px">{consult()}</div></div></section>')
+            + f'<p style="margin: 22px auto 0; font-size: 17px; color: {MUTED}">Start your consultation today for just $25.</p><div style="margin-top: 32px">{consult()}</div></div></section>')
 
 
 def why46(big_number=False):
@@ -766,7 +766,7 @@ FAQ = [
    ("How long does the consultation take?", "The online intake takes about 10 minutes. A provider typically reviews it within 4 hours and may follow up by message or video."),
    ("Do I need lab work?", "Not to start. Depending on the treatment and your history, your provider may order labs. If you have recent results, you can share them in your intake."),
    ("Which states do you serve?", "All 50 U.S. states. We don’t currently serve U.S. territories or patients outside the United States."),
-   ("What if I’m not approved?", "Not everyone is a candidate for every treatment. If your provider decides a therapy isn’t right for you, they’ll explain why and what else to consider. [Refund policy for the consultation fee.]")]),
+   ("What if I’m not approved?", "Not everyone is a candidate for every treatment. If your provider decides a therapy isn’t right for you, they’ll explain why and what else to consider. The $25 consultation fee covers your provider’s review and is non-refundable. If a medication you paid for isn’t prescribed, you’re refunded for that medication.")]),
  ("About the medications", [
    ("What is a compounded medication?", "A medication prepared by a licensed pharmacy for an individual patient’s prescription, often to provide a specific strength or combination. Compounded medications are not FDA-approved, meaning FDA hasn’t reviewed them for safety, effectiveness or quality."),
    ("Who makes my medication?", "SureCare Specialty Pharmacy, a licensed 503A compounding pharmacy in El Paso, Texas."),
@@ -778,7 +778,7 @@ FAQ = [
    ("How do refills work?", "Your provider reviews your progress at each check-in and authorizes refills when appropriate."),
    ("Can I cancel?", "Medication orders can’t be cancelled once placed, and prescription medications can’t be returned.")]),
  ("Costs", [
-   ("How much does it cost?", "Your consultation is $35. Your medication price is shown before you commit. Peptides start at $69 per vial and GLP-1 programs at $139 per month. See every price on our <a href=\"pricing.html\">pricing page</a>."),
+   ("How much does it cost?", "Your consultation is $25. Your medication price is shown before you commit. Peptides start at $69 per vial and GLP-1 programs at $139 per month. See every price on our <a href=\"pricing.html\">pricing page</a>."),
    ("Do you take insurance?", "[Insurance policy — e.g. HSA/FSA eligibility.]")]),
  ("Privacy", [
    ("Is my information private?", "Your health information is protected under HIPAA and shared only with your care team and pharmacy as needed for your treatment. See our <a href=\"privacy.html\">Privacy Policy</a> and <a href=\"notice-of-privacy-practices.html\">Notice of Privacy Practices</a>.")]),
@@ -818,7 +818,7 @@ def pricing():
 <div class="pr-body"><div class="table-wrap"><table class="price-table"><thead><tr><th scope="col">Treatment</th><th scope="col">Supply</th><th scope="col" style="text-align: right">Price</th><th scope="col"><span class="sr-only">Add to list</span></th></tr></thead><tbody>{rows}</tbody></table></div>
 <p class="pr-empty" hidden>No treatments in this category match that filter.</p><div style="margin-top: 12px">{link("View " + label, u(f))}</div></div></details>'''
     filters = "".join(f'<button type="button" class="pr-filter" data-filter="{k}" aria-pressed="{"true" if k == "all" else "false"}">{t}</button>' for k, t in [("all", "All"), ("under100", "Under $100"), ("monthly", "Monthly programs"), ("new", "New")])
-    body = (centered_intro("Clear pricing.<br>No surprises.", "Every treatment has one listed price. Your $35 consultation and medication price are shown before you commit. No membership is required, and up to three medications ship together for one shipping fee.")
+    body = (centered_intro("Clear pricing.<br>No surprises.", "Every treatment has one listed price. Your $25 consultation and medication price are shown before you commit. No membership is required, and up to three medications ship together for one shipping fee.")
             + f'''<div style="max-width: 1000px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px) 80px">
 <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px"><div role="group" aria-label="Filter prices" style="display: flex; gap: 8px; flex-wrap: wrap">{filters}</div><button type="button" id="pr-expand" class="pr-expand">Expand all</button></div>
 {blocks}<p style="margin: 24px 0 0; font-size: 13px; color: {MUTED}; line-height: 1.6">Prices are for medication only and are subject to change. [Consultation fee and shipping cost.] Treatments require a consultation with a licensed provider and are prescribed only when appropriate.</p></div>'''
@@ -841,6 +841,31 @@ def waitlist():
 
 LEGAL = {"terms.html": "Terms of use", "privacy.html": "Privacy policy", "notice-of-privacy-practices.html": "Notice of privacy practices",
          "telehealth-consent.html": "Telehealth consent", "careers.html": "Careers"}
+def md_to_html(md):
+    """Tiny Markdown renderer for legal pages: ## headings, paragraphs, - bullets, **bold**, [links](url)."""
+    import html as _h, re as _re
+    def inline(t):
+        t = _h.escape(t, quote=False)
+        t = _re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", t)
+        t = _re.sub(r"\[([^\]]+)\]\(([^)]+)\)", lambda m: f'<a href="{u(m.group(2))}" style="color: inherit; text-decoration: underline; text-underline-offset: 3px">{m.group(1)}</a>', t)
+        return t
+    out = []
+    for block in md.strip().split("\n\n"):
+        lines = block.strip().split("\n")
+        if lines[0].startswith("## "):
+            out.append(f'<h2 style="margin: 56px 0 0; font-family: {SERIF}; font-weight: 400; font-size: 30px; line-height: 1.2">{inline(lines[0][3:])}</h2>')
+        elif all(l.startswith("- ") for l in lines):
+            items = "".join(f'<li style="margin-top: 8px">{inline(l[2:])}</li>' for l in lines)
+            out.append(f'<ul style="margin: 12px 0 0; padding-left: 22px; font-size: 16px; line-height: 1.7">{items}</ul>')
+        else:
+            out.append(f'<p style="margin: 18px 0 0; font-size: 16px; line-height: 1.7">{inline(" ".join(lines))}</p>')
+    return "".join(out)
+
+def terms_page():
+    md = open(os.path.join(ROOT, "data", "terms.md"), encoding="utf-8").read()
+    body = f'<section style="padding: 80px 0 104px"><div style="{NARROW}">{H("h1", 56, "Terms of Use")}<div style="margin-top: 24px">{md_to_html(md)}</div></div></section>'
+    return document("Terms of Use", "Terms of Use for 46 Health, LLC and the 46 Health telehealth service.", body)
+
 def legal(title):
     body = f'<section style="padding: 80px 0 96px"><div style="{NARROW}">{H("h1", 56, title)}<p style="margin: 28px 0 0; font-size: 17px; line-height: 1.65">[{title} — {"to be supplied by counsel" if title != "Careers" else "open roles coming soon"}.]</p><div style="margin-top: 40px">{link("Back to home", u("index.html"))}</div></div></section>'
     return document(title, f"46 Health {title.lower()}.", body)
@@ -926,6 +951,7 @@ def main():
         pages[f] = document(t, re.sub("<[^>]+>", "", PAGES[f][1]), category_page(f), "Treatments")
     for f, t in LEGAL.items():
         pages[f] = legal(t)
+    pages["terms.html"] = terms_page()
     for f, t in pages.items():
         write(f, t)
     PFX = "../"
